@@ -1,3 +1,4 @@
+import { cn } from '../../lib/cn.js'
 import { categoryAnchor } from '../../lib/menu.js'
 
 /**
@@ -16,7 +17,7 @@ function scrollToSection(event, anchor) {
 }
 
 /** Horizontally scrolling jump links to each menu section. */
-function CategoryTabs({ categories }) {
+function CategoryTabs({ categories, hoverClassName = 'hover:border-vibrant-orange' }) {
   return (
     <nav aria-label="Menu categories" className="no-scrollbar -mx-4 mt-2 flex gap-2 overflow-x-auto px-4 py-1">
       {categories.map(({ id, label }) => {
@@ -27,7 +28,10 @@ function CategoryTabs({ categories }) {
             key={id}
             href={`#${anchor}`}
             onClick={(event) => scrollToSection(event, anchor)}
-            className="shrink-0 rounded-full border border-line bg-white px-3 py-1 font-body text-label-sm whitespace-nowrap text-deep-charcoal transition-colors duration-200 ease-swift hover:border-vibrant-orange"
+            className={cn(
+              'shrink-0 rounded-full border border-line bg-white px-3 py-1 font-body text-label-sm whitespace-nowrap text-deep-charcoal transition-colors duration-200 ease-swift',
+              hoverClassName,
+            )}
           >
             {label}
           </a>

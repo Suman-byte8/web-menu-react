@@ -3,6 +3,7 @@
  *
  * Dish shape
  *   variant      'featured' (large photo card) | 'compact' (thumbnail row)
+ *                | 'text' (no image; see barMenu.js)
  *   diet         key of DIETS: 'veg' | 'nonveg' | 'other'
  *   price        number, in rupees
  *   image        path under /public (optional for compact dishes)
@@ -15,13 +16,17 @@
  *     placeholder{ icon, label, tone }            (shown when there is no image)
  */
 
-// encodeURI handles original filenames that contain spaces.
-const img = (file) => `/images/${encodeURI(file)}`
+import { publicImage as img } from '../lib/assets.js'
 
 export const RESTAURANT = {
   pageTitle: 'SILK INN Malda — Restaurant Menu',
   badge: 'Restaurant',
   tagline: 'Continental & Italian',
+  empty: {
+    icon: 'restaurant_menu',
+    title: 'No items found',
+    message: 'No dishes match this dietary filter.',
+  },
 }
 
 export const RESTAURANT_MENU = [

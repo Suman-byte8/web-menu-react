@@ -2,6 +2,11 @@ import { useState } from 'react'
 import { cn } from '../../lib/cn.js'
 import { Icon } from '../../UI/index.js'
 
+const SIZES = {
+  sm: 'size-20',
+  md: 'size-24',
+}
+
 const ICON_TONES = {
   gold: 'text-soft-gold',
   orange: 'text-vibrant-orange',
@@ -9,10 +14,10 @@ const ICON_TONES = {
 }
 
 /**
- * 96px square dish thumbnail. Falls back to an icon tile when the dish has
- * no photo, or when the photo fails to load.
+ * Square dish thumbnail (96px, or 80px with size="sm"). Falls back to an
+ * icon tile when the dish has no photo, or when the photo fails to load.
  */
-function DishThumb({ image, alt, placeholder }) {
+function DishThumb({ image, alt, placeholder, size = 'md' }) {
   const [failed, setFailed] = useState(false)
 
   if (image && !failed) {
@@ -22,7 +27,7 @@ function DishThumb({ image, alt, placeholder }) {
         alt={alt}
         loading="lazy"
         onError={() => setFailed(true)}
-        className="size-24 shrink-0 rounded-xl bg-cream object-cover"
+        className={cn('shrink-0 rounded-xl bg-cream object-cover', SIZES[size])}
       />
     )
   }
@@ -30,7 +35,12 @@ function DishThumb({ image, alt, placeholder }) {
   const { icon = 'restaurant', label, tone = 'gold' } = placeholder ?? {}
 
   return (
-    <div className="flex size-24 shrink-0 flex-col items-center justify-center rounded-xl border border-line bg-cream p-2 text-center">
+    <div
+      className={cn(
+        'flex shrink-0 flex-col items-center justify-center rounded-xl border border-line bg-cream p-2 text-center',
+        SIZES[size],
+      )}
+    >
       <Icon name={icon} className={cn('text-headline-lg-mobile', ICON_TONES[tone], label && 'mb-1')} />
       {label && <span className="font-body text-label-sm uppercase text-muted-olive">{label}</span>}
     </div>

@@ -29,9 +29,10 @@ export const HERO = {
   },
 }
 
+/** `accent` colours the active tab's icon (see shared/BottomNav.jsx). */
 export const NAV_ITEMS = [
-  { label: 'Home', icon: 'home', href: ROUTES.home },
-  { label: 'Restaurant', icon: 'restaurant', href: ROUTES.restaurant },
-  { label: 'Bar', icon: 'local_bar', href: ROUTES.bar },
-  { label: 'Rooms', icon: 'room_service', href: ROUTES.rooms },
+  { label: 'Home', icon: 'home', href: ROUTES.home, accent: 'orange' },
+  { label: 'Restaurant', icon: 'restaurant', href: ROUTES.restaurant, accent: 'orange' },
+  { label: 'Bar', icon: 'local_bar', href: ROUTES.bar, accent: 'olive' },
+  { label: 'Rooms', icon: 'room_service', href: ROUTES.rooms, accent: 'orange' },
 ]

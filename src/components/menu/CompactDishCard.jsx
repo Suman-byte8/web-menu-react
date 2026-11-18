@@ -8,16 +8,20 @@ const HIGHLIGHT_TONES = {
   gold: 'text-soft-gold',
   orange: 'text-vibrant-orange',
   olive: 'text-muted-olive',
+  ink: 'text-deep-charcoal',
 }
 
-/** Row card: thumbnail on the left, name / description / price on the right. */
+/**
+ * Row card: thumbnail on the left, name / description / price on the right.
+ * size "sm" uses an 80px thumbnail and a tighter footer.
+ */
 function CompactDishCard({ dish }) {
-  const { name, description, diet, price, image, placeholder, highlight } = dish
+  const { name, description, diet, price, image, placeholder, highlight, size = 'md' } = dish
   const d = DIETS[diet]
 
   return (
     <article className="surface-card flex gap-3 p-3.5 shadow-xs">
-      <DishThumb image={image} alt={name} placeholder={placeholder} />
+      <DishThumb image={image} alt={name} placeholder={placeholder} size={size} />
 
       <div className="flex flex-1 flex-col justify-between">
         <div>
@@ -31,7 +35,12 @@ function CompactDishCard({ dish }) {
           <p className="line-clamp-2 font-body text-body-sm leading-relaxed text-pretty">{description}</p>
         </div>
 
-        <div className="mt-2 flex items-center justify-between border-t border-cream pt-1">
+        <div
+          className={cn(
+            'flex items-center justify-between border-t border-cream pt-1',
+            size === 'sm' ? 'mt-1' : 'mt-2',
+          )}
+        >
           <span
             className={cn(
               'font-body text-label-sm uppercase tracking-wider',

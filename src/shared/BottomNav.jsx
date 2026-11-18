@@ -3,7 +3,12 @@ import { NAV_ITEMS } from '../data/site.js'
 import { cn } from '../lib/cn.js'
 import { Icon } from '../UI/index.js'
 
-function NavItem({ href, icon, label }) {
+const ACCENTS = {
+  orange: 'text-vibrant-orange',
+  olive: 'text-muted-olive',
+}
+
+function NavItem({ href, icon, label, accent = 'orange' }) {
   return (
     <NavLink
       to={href}
@@ -17,7 +22,7 @@ function NavItem({ href, icon, label }) {
     >
       {({ isActive }) => (
         <>
-          <Icon name={icon} className={cn('text-title-lg', isActive && 'text-vibrant-orange')} />
+          <Icon name={icon} className={cn('text-title-lg', isActive && ACCENTS[accent])} />
           <span className="text-label-sm">{label}</span>
         </>
       )}

@@ -1,13 +1,14 @@
 import { cn } from '../../lib/cn.js'
 import { categoryAnchor } from '../../lib/menu.js'
 import DishCard from './DishCard.jsx'
+import { MENU_THEMES } from './themes.js'
 
 /** Large photo cards get a little more breathing room between them. */
 function hasLargeCards(items) {
   return items.some((item) => item.variant === 'featured' && item.size !== 'sm')
 }
 
-function MenuSection({ category }) {
+function MenuSection({ category, theme = MENU_THEMES.warm }) {
   const { id, eyebrow, title, note, items } = category
   const anchor = categoryAnchor(id)
 
@@ -15,12 +16,12 @@ function MenuSection({ category }) {
     <section id={anchor} aria-labelledby={`${anchor}-title`} className="flex scroll-mt-40 flex-col gap-4">
       <div className="flex items-end justify-between border-b border-line pb-2">
         <div>
-          {eyebrow && <span className="text-eyebrow font-semibold text-muted-olive">{eyebrow}</span>}
+          {eyebrow && <span className={cn('text-eyebrow font-semibold', theme.eyebrow)}>{eyebrow}</span>}
           <h2 id={`${anchor}-title`} className="heading-section font-bold">
             {title}
           </h2>
         </div>
-        {note && <span className="font-headline text-body-sm italic text-soft-gold">{note}</span>}
+        {note && <span className={cn('font-headline text-body-sm italic', theme.note)}>{note}</span>}
       </div>
 
       <div className={cn('flex flex-col', hasLargeCards(items) ? 'gap-4' : 'gap-3')}>
