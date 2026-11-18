@@ -13,6 +13,19 @@ function BotanicalAccent() {
   )
 }
 
+/** Attribution required by the photo's Creative Commons licence. */
+function PhotoCredit({ credit }) {
+  return (
+    <p className="mt-1.5 truncate px-1 font-body text-label-sm font-normal tracking-normal text-ink-soft/80">
+      Photo:{' '}
+      <a href={credit.page} target="_blank" rel="noreferrer" className="underline underline-offset-2">
+        {credit.author}
+      </a>{' '}
+      · {credit.license} · Wikimedia Commons
+    </p>
+  )
+}
+
 /** Large dish photo with diet + highlight badges and the category pill. */
 function DishHero({ dish }) {
   const fallback = (
@@ -33,8 +46,10 @@ function DishHero({ dish }) {
       >
         <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-deep-charcoal/40 via-transparent to-transparent" />
 
-        <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
-          <DietBadge diet={dish.diet} size="lg" />
+        <div className="absolute top-4 right-4 left-4 z-10 flex flex-wrap items-center gap-2">
+          {dish.diets.map((diet) => (
+            <DietBadge key={diet} diet={diet} size="lg" />
+          ))}
           {dish.badge && (
             <LabelBadge tone="accent" size="lg">
               {dish.badge}
@@ -49,6 +64,8 @@ function DishHero({ dish }) {
           </span>
         </div>
       </ImageOverlay>
+
+      {dish.imageCredit && <PhotoCredit credit={dish.imageCredit} />}
 
       <BotanicalAccent />
     </div>

@@ -1,13 +1,12 @@
 import { Link } from 'react-router'
-import { DIETS } from '../../data/diets.js'
 import { dishPath } from '../../lib/dishes.js'
-import { Dot, Icon } from '../../UI/index.js'
+import { dietLabels } from '../../lib/menu.js'
+import { Icon } from '../../UI/index.js'
+import DietDots from '../menu/DietDots.jsx'
 import DishThumb from '../menu/DishThumb.jsx'
 import PriceTag from '../menu/PriceTag.jsx'
 
 function RelatedDishCard({ dish }) {
-  const d = DIETS[dish.diet]
-
   return (
     <Link
       to={dishPath(dish.id)}
@@ -23,16 +22,16 @@ function RelatedDishCard({ dish }) {
 
       <div className="min-w-0 flex-1">
         <div className="mb-0.5 flex items-center gap-1.5">
-          <Dot className={d.dot} />
+          <DietDots diets={dish.diets} />
           <span className="truncate font-body text-label-sm font-medium text-muted-olive">
-            <span className="sr-only">{d.label} · </span>
+            <span className="sr-only">{dietLabels(dish.diets)} · </span>
             {dish.category}
           </span>
         </div>
         <h3 className="truncate font-headline text-title-lg font-bold transition-colors group-hover:text-vibrant-orange">
           {dish.name}
         </h3>
-        <PriceTag amount={dish.price} className="mt-0.5 block" />
+        <PriceTag amount={dish.price.min} max={dish.price.max} className="mt-0.5 block" />
       </div>
 
       <Icon

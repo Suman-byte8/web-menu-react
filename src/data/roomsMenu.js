@@ -3,6 +3,7 @@
  */
 
 import { publicImage as img } from '../lib/assets.js'
+import { photo } from '../lib/photos.js'
 
 export const ROOMS = {
   pageTitle: 'SILK INN Malda — In-Room Dining',
@@ -57,7 +58,7 @@ export const ROOMS_MENU = [
         price: 410,
         description:
           'Tender chicken sautéed with fresh mushrooms in creamy sour sauce, served with buttered rice.',
-        image: img('Chicken stroganoff.png'),
+        image: photo('stroganoff'),
         highlight: { label: 'Comfort Bowl', tone: 'gold' },
       },
       {
@@ -93,24 +94,24 @@ export const ROOMS_MENU = [
       },
       {
         id: 'room-mixed-sauce-pasta-veg',
-        ref: 'mixed-sauce-pasta-veg',
+        ref: 'mixed-sauce-pasta',
         variant: 'compact',
         diet: 'veg',
         name: 'Mixed Sauce Pasta (Veg)',
         price: 350,
         description: 'Rich blend of béchamel and pomodoro with garden veggies and cheese.',
-        image: img('mixed-sauce-pasta(veg).webp'),
+        placeholder: { icon: 'dinner_dining', label: 'Pink Sauce', tone: 'gold' },
         highlight: { label: 'Chef Special', tone: 'gold' },
       },
       {
         id: 'room-mixed-sauce-pasta-chicken',
-        ref: 'mixed-sauce-pasta-chicken',
+        ref: 'mixed-sauce-pasta',
         variant: 'compact',
         diet: 'nonveg',
         name: 'Mixed Sauce Pasta (Chicken)',
         price: 370,
         description: 'Cream and tomato fusion sauce loaded with juicy chicken cubes.',
-        image: img('mixed-sauce-pasta(non-veg).webp'),
+        placeholder: { icon: 'dinner_dining', label: 'Pink Sauce', tone: 'gold' },
         highlight: { label: 'Chef Special', tone: 'orange' },
       },
     ],
@@ -124,24 +125,24 @@ export const ROOMS_MENU = [
     items: [
       {
         id: 'room-paneer-shashlik',
-        ref: 'paneer-shashlik',
+        ref: 'shashlik',
         variant: 'compact',
         diet: 'veg',
         name: 'Paneer Shashlik Stick',
         price: 350,
         description: 'Char-grilled spiced cottage cheese with peppers and onions.',
-        image: img('paneer-shashlik.webp'),
+        image: photo('paneer-tikka'),
         highlight: { label: 'Popular Veg', tone: 'gold' },
       },
       {
         id: 'room-chicken-shashlik',
-        ref: 'chicken-shashlik',
+        ref: 'shashlik',
         variant: 'compact',
         diet: 'nonveg',
         name: 'Chicken Shashlik Stick',
         price: 370,
         description: 'Herb-marinated grilled chicken skewers with bell peppers.',
-        image: img('chicken-shashlik.webp'),
+        image: photo('shashlik'),
         highlight: { label: 'Popular Non-Veg', tone: 'orange' },
       },
     ],
@@ -162,19 +163,18 @@ export const ROOMS_MENU = [
         name: 'Italian Tiramisu',
         price: 200,
         description: 'Honey mascarpone cream with espresso dust.',
-        image: img('dessert-tiramisu.webp'),
+        image: photo('tiramisu'),
         highlight: { label: 'Veg', tone: 'ink' },
       },
       {
         id: 'room-mango-mousse',
-        ref: 'mango-mousse',
+        ref: 'orange-mango-mousse',
         variant: 'compact',
         size: 'sm',
         diet: 'veg',
         name: 'Malda Mango Mousse',
         price: 200,
         description: 'Fluffy local mango purée whipped with cream.',
-        image: img('Mango Mousse.png'),
         highlight: { label: 'Malda Treat', tone: 'ink' },
       },
     ],

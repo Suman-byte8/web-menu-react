@@ -3,6 +3,8 @@ import { DISH_DETAILS } from '../data/dishDetails.js'
 import { RESTAURANT_MENU } from '../data/restaurantMenu.js'
 import { ROOMS_MENU } from '../data/roomsMenu.js'
 import { ROUTES } from '../data/site.js'
+import { itemDiets, priceRange } from './menu.js'
+import { photoCredit } from './photos.js'
 
 /** Every menu, in the order used for "Availability" text ("Dine-In, Bar & Rooms"). */
 const MENUS = [
@@ -57,14 +59,16 @@ export function getDish(id) {
     id: item.id,
     canonicalId: canonical,
     name: details.fullName ?? item.name,
-    diet: item.diet,
-    price: item.price,
+    diets: itemDiets(item),
+    price: priceRange(item),
+    options: item.options ?? [],
     image: item.image,
+    imageCredit: item.image ? photoCredit(item.image) : null,
     placeholder: item.placeholder,
     description: details.description ?? item.description,
     badge: details.badge ?? item.badge?.label ?? item.highlight?.label,
     ingredients: details.ingredients ?? item.tags ?? [],
-    style: details.style ?? 'Chef Prepared',
+    style: details.style ?? category.style ?? 'Chef Prepared',
     availability: availabilityOf(canonical),
     category: category.title,
     eyebrow: category.eyebrow,

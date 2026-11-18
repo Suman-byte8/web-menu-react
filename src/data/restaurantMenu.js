@@ -1,27 +1,67 @@
 /**
- * Restaurant menu content.
+ * Cocoon Restaurant menu (source: Restaurant_compressed.pdf).
  *
  * Dish shape
- *   variant      'featured' (large photo card) | 'compact' (thumbnail row)
- *                | 'text' (no image; see barMenu.js)
- *   diet         key of DIETS: 'veg' | 'nonveg' | 'other'
- *   price        number, in rupees
- *   image        path under /public (optional for compact dishes)
- *   featured only:
- *     size       'lg' | 'md' | 'sm'               (default 'lg')
- *     badge      { label, tone: 'accent' | 'cream' | 'olive' }
- *     tags       string[]                         (ingredient chips)
- *   compact only:
- *     highlight  { label, tone: 'gold' | 'orange' | 'olive' }
- *     placeholder{ icon, label, tone }            (shown when there is no image)
+ *   variant      'compact' (thumbnail row) | 'featured' (large photo card)
+ *                | 'text' (no image, no detail page — used for drinks)
+ *   diet         key of DIETS: 'veg' | 'nonveg' | 'other' (egg dishes)
+ *   price        number, in rupees — or `options` for several versions:
+ *   options      [{ label, price, diet? }]  e.g. Plain ₹130 / Grilled ₹165,
+ *                or Veg ₹160 / Non-Veg ₹180 (option diet overrides the dish's)
+ *   description  optional
+ *   image        photo('key') for Wikimedia Commons photos (see
+ *                scripts/fetch-dish-photos.mjs) or publicImage('file') for
+ *                the hotel's own photos in /public/images
+ *   highlight    { label, tone: 'gold' | 'orange' | 'olive' | 'ink' }
+ *                footer label on compact cards (portion size, "Popular", ...)
+ *   featured:    size 'lg' | 'md' | 'sm', badge { label, tone }, tags []
+ *   text:        note (italic footer), tag (footer chip), altPrice
  */
 
-import { publicImage as img } from '../lib/assets.js'
+import { publicImage } from '../lib/assets.js'
+import { photo } from '../lib/photos.js'
+
+/** Food on a compact card with an 80px thumbnail. */
+const dish = (id, name, diet, price, more = {}) => ({ id, variant: 'compact', size: 'sm', name, diet, price, ...more })
+
+/** Same, but in several versions: options [{ label, price, diet? }]. */
+const choice = (id, name, diet, options, more = {}) => ({
+  id,
+  variant: 'compact',
+  size: 'sm',
+  name,
+  diet,
+  options,
+  ...more,
+})
+
+/** Drinks: text-only card (no photo, no detail page). */
+const drink = (id, name, price, more = {}) => ({ id, variant: 'text', name, diet: 'veg', price, ...more })
+const drinkChoice = (id, name, options, more = {}) => ({ id, variant: 'text', name, diet: 'veg', options, ...more })
+
+/** Veg / non-veg pair of versions, e.g. vegNonVeg(160, 180). */
+const vegNonVeg = (veg, nonveg, [vegLabel, nonvegLabel] = ['Veg', 'Non-Veg']) => [
+  { label: vegLabel, price: veg, diet: 'veg' },
+  { label: nonvegLabel, price: nonveg, diet: 'nonveg' },
+]
+
+/** Wok dishes: Veg / Egg / Chicken / Mixed. */
+const wok = (veg, egg, chicken, mixed) => [
+  { label: 'Veg', price: veg, diet: 'veg' },
+  { label: 'Egg', price: egg, diet: 'other' },
+  { label: 'Chicken', price: chicken, diet: 'nonveg' },
+  { label: 'Mixed', price: mixed, diet: 'nonveg' },
+]
+
+/** Same-diet versions: versions(['Plain', 130], ['Grilled', 165]). */
+const versions = (...pairs) => pairs.map(([label, price]) => ({ label, price }))
+
+const pcs = (count) => ({ label: `${count} pcs`, tone: 'ink' })
 
 export const RESTAURANT = {
-  pageTitle: 'SILK INN Malda — Restaurant Menu',
+  pageTitle: 'SILK INN Malda — Cocoon Restaurant Menu',
   badge: 'Restaurant',
-  tagline: 'Continental & Italian',
+  tagline: 'Cocoon • Multi-Cuisine',
   empty: {
     icon: 'restaurant_menu',
     title: 'No items found',
@@ -31,114 +71,145 @@ export const RESTAURANT = {
 
 export const RESTAURANT_MENU = [
   {
-    id: 'salad',
-    label: 'Salad',
-    eyebrow: 'Fresh & Healthy',
-    title: 'Salads',
-    note: 'Crisp Greens',
+    id: 'breakfast',
+    label: 'Breakfast',
+    eyebrow: 'Morning Favourites',
+    title: 'Breakfast',
+    note: '07:30 – 10:30 hrs',
     items: [
-      {
-        id: 'chicken-hawaiian-salad',
-        variant: 'featured',
-        diet: 'nonveg',
-        name: 'Chicken Hawaiian Salad',
-        price: 270,
+      dish('farm-fresh-eggs', 'Farm Fresh Eggs', 'other', 90, {
+        description: 'Poached, fried, scrambled or boiled.',
+        image: photo('fried-egg'),
+      }),
+      dish('omelette', 'Omelette', 'other', 90, { description: 'Plain or masala.', image: photo('omelette') }),
+      dish('bread-butter-jam', 'Bread', 'veg', 100, {
+        description: 'Plain or toasted, served with butter & jam.',
+        image: photo('toast'),
+      }),
+      choice('veg-sandwich', 'Veg Sandwich', 'veg', versions(['Plain', 130], ['Grilled', 165]), {
+        image: photo('veg-sandwich'),
+      }),
+      choice('veg-cheese-sandwich', 'Veg & Cheese Sandwich', 'veg', versions(['Plain', 200], ['Grilled', 220]), {
+        image: photo('cheese-sandwich'),
+      }),
+      choice('chicken-sandwich', 'Chicken Sandwich', 'nonveg', versions(['Plain', 210], ['Grilled', 230]), {
+        image: photo('chicken-sandwich'),
+      }),
+      choice(
+        'chicken-cheese-sandwich',
+        'Chicken & Cheese Sandwich',
+        'nonveg',
+        versions(['Plain', 240], ['Grilled', 265]),
+        { image: photo('club-sandwich') },
+      ),
+      choice('paratha', 'Aloo / Paneer Paratha', 'veg', versions(['Aloo', 150], ['Paneer', 180]), {
+        description: 'Served with natural yogurt & pickle.',
+        image: photo('aloo-paratha'),
+        highlight: pcs(2),
+      }),
+      dish('poori-bhaji', 'Poori Bhaji', 'veg', 120, {
+        description: 'Deep-fried whole wheat breads, home style, served with bhaji.',
+        image: photo('puri-bhaji'),
+        highlight: pcs(4),
+      }),
+      dish('idly-vada', 'Idly / Vada', 'veg', 110, { image: photo('idli'), highlight: pcs(3) }),
+      dish('upma', 'Upma', 'veg', 110, { image: photo('upma') }),
+      dish('poha', 'Poha', 'veg', 110),
+      choice('uttapam', 'Uttapam', 'veg', versions(['Plain', 130], ['Masala', 150]), {
+        image: photo('uttapam'),
+        highlight: pcs(2),
+      }),
+      drink('breakfast-tea', 'Selection of Tea', 55, { description: 'Regular, masala or green.' }),
+      drinkChoice('breakfast-coffee', 'Coffee', versions(['Regular', 70], ['Black', 60])),
+    ],
+  },
+  {
+    id: 'soups',
+    label: 'Soups',
+    eyebrow: "Cocoon's Favourites",
+    title: 'Soups',
+    note: '12:30 – 22:30 hrs',
+    items: [
+      choice('hot-sour-soup', 'Hot & Sour Soup', null, vegNonVeg(160, 180), { image: photo('hot-and-sour-soup') }),
+      choice('manchow-soup', 'Manchow Soup', null, vegNonVeg(160, 180), { image: photo('manchow-soup') }),
+      choice('sweet-corn-soup', 'Sweet Corn Soup', null, vegNonVeg(160, 180), { image: photo('corn-soup') }),
+      choice('lemon-coriander-soup', 'Lemon Coriander Soup', null, vegNonVeg(160, 180)),
+      choice('clear-soup', 'Clear Soup', null, vegNonVeg(160, 180)),
+      choice('cream-of-mushroom', 'Cream of Mushroom / Chicken', null, vegNonVeg(160, 180, ['Mushroom', 'Chicken']), {
+        image: photo('mushroom-soup'),
+      }),
+      dish('cream-of-tomato', 'Cream of Tomato Soup with Croutons', 'veg', 160, { image: photo('tomato-soup') }),
+    ],
+  },
+  {
+    id: 'salads',
+    label: 'Salads',
+    eyebrow: "Cocoon's Favourites",
+    title: 'Salads & Condiments',
+    note: 'Garden Fresh',
+    items: [
+      dish('green-salad', 'Green Salad', 'veg', 75, {
+        description: 'Garden-fresh green vegetable salad.',
+        image: photo('green-salad'),
+      }),
+      dish('kachumber-salad', 'Kachumber Salad', 'veg', 80, {
+        description: 'Cubes of salad vegetables tossed with Indian herbs & spices.',
+        image: photo('kachumber'),
+      }),
+      dish('chicken-hawaiian-salad', 'Chicken Hawaiian Salad', 'nonveg', 250, {
         description:
           'Fresh tropical salad with tender grilled chicken, juicy pineapple chunks, crisp lettuce, and tangy Hawaiian dressing.',
-        image: img('chicken-haiwan-salad.webp'),
-        badge: { label: 'Popular', tone: 'accent' },
-        tags: ['Grilled Chicken', 'Pineapple', 'Mixed Greens'],
-      },
-    ],
-  },
-  {
-    id: 'munching',
-    label: 'Munching',
-    eyebrow: 'Perfect Beginnings',
-    title: 'Munching',
-    note: 'Crisp Bites',
-    items: [
-      {
-        id: 'veg-tacos',
-        variant: 'compact',
-        diet: 'veg',
-        name: 'Veg Tacos',
-        price: 250,
-        description: 'Crispy taco shells filled with fresh vegetables, beans, and signature sauce.',
-        image: img('veg-tacos-with-chef-special-sauce.webp'),
-        highlight: { label: "Chef's Special", tone: 'gold' },
-      },
-      {
-        id: 'chicken-tacos',
-        variant: 'compact',
-        diet: 'nonveg',
-        name: 'Chicken Tacos',
-        price: 290,
-        description: 'Crispy shells loaded with seasoned chicken, beans, and chef special sauce.',
-        image: img('hero_culinary_spread.jpg'),
-        highlight: { label: "Chef's Special", tone: 'gold' },
-      },
-    ],
-  },
-  {
-    id: 'starters',
-    label: 'Starters',
-    eyebrow: 'Appetizing Delights',
-    title: 'Starters',
-    note: 'Skewers & Bites',
-    items: [
-      {
-        id: 'paneer-shashlik',
-        variant: 'featured',
-        size: 'md',
-        diet: 'veg',
-        name: 'Paneer Shashlik Stick',
-        price: 350,
-        description:
-          'Skewered and grilled cottage cheese cubes with bell peppers, onions, and marinated in aromatic herbs.',
-        image: img('paneer-shashlik.webp'),
-        badge: { label: 'Popular', tone: 'cream' },
-      },
-      {
-        id: 'cottage-cheese-popcorn',
-        variant: 'compact',
-        diet: 'veg',
-        name: 'Cottage Cheese Popcorn',
-        price: 350,
-        description: 'Bite-sized crispy cottage cheese tossed in savory Japanese-style teriyaki glaze.',
-        image: img('paneer-popcorn.webp'),
-        highlight: { label: 'Signature', tone: 'gold' },
-      },
-      {
-        id: 'chicken-shashlik',
-        variant: 'compact',
-        diet: 'nonveg',
-        name: 'Chicken Shashlik Stick',
-        price: 370,
-        description: 'Tender marinated chicken skewered with colorful bell peppers and char-grilled.',
-        image: img('chicken-shashlik.webp'),
+        image: photo('chicken-salad'),
         highlight: { label: 'Popular', tone: 'orange' },
-      },
-      {
-        id: 'chicken-roulade',
-        variant: 'compact',
-        diet: 'nonveg',
-        name: 'Chicken Roulade',
-        price: 380,
-        description: 'Rolled chicken breast stuffed with seasoned spinach and cheese, baked golden.',
-        image: img('chicken-raulade.jpeg'),
+      }),
+      dish('plain-curd', 'Plain Curd', 'veg', 70, { image: photo('curd') }),
+      choice('raita', 'Raita', 'veg', versions(['Plain', 80], ['Mixed', 90]), { image: photo('raita') }),
+      choice('roasted-papad', 'Roasted Papad', 'veg', versions(['Plain', 60], ['Masala', 90]), {
+        image: photo('papadum'),
+      }),
+    ],
+  },
+  {
+    id: 'continental',
+    label: 'Continental',
+    eyebrow: 'Munching & Starters',
+    title: 'Continental Starters',
+    note: 'Chef Specials',
+    items: [
+      choice('tacos', 'Tacos with Chef Special Sauce', null, vegNonVeg(270, 290), {
+        description: 'Crispy taco shells filled with fresh vegetables or seasoned chicken, beans and chef special sauce.',
+        image: photo('taco'),
+        highlight: { label: "Chef's Special", tone: 'gold' },
+      }),
+      dish('baked-veg-au-gratin', 'Baked Veg Au-Gratin', 'veg', 290, { image: photo('gratin') }),
+      dish('cheese-ball', 'Cheese Ball with Chef Special Dip', 'veg', 380, { image: photo('fried-cheese') }),
+      choice('sauteed-exotic', 'Sautéed Exotic Vegetable / Chicken', null, vegNonVeg(270, 310, ['Vegetable', 'Chicken'])),
+      choice(
+        'shashlik',
+        'Cottage Cheese / Chicken Shashlik with Teriyaki Sauce',
+        null,
+        vegNonVeg(370, 370, ['Cottage Cheese', 'Chicken']),
+        {
+          description: 'Skewered and char-grilled with bell peppers and onions, finished with teriyaki sauce.',
+          image: photo('shashlik'),
+          highlight: { label: 'Popular', tone: 'orange' },
+        },
+      ),
+      choice(
+        'popcorn',
+        'Cottage Cheese / Chicken Popcorn with Chef Special Sauce',
+        null,
+        vegNonVeg(370, 370, ['Cottage Cheese', 'Chicken']),
+        {
+          description: 'Bite-sized crispy fried bites tossed in chef special sauce.',
+          image: photo('popcorn-chicken'),
+          highlight: { label: 'Signature', tone: 'gold' },
+        },
+      ),
+      dish('chicken-roulade', 'Cheese Chicken Roulade with Cheese White Sauce', 'nonveg', 410, {
+        description: 'Rolled chicken breast filled with cheese, baked golden and served with cheese white sauce.',
         highlight: { label: 'Signature', tone: 'gold' },
-      },
-      {
-        id: 'fried-calamari',
-        variant: 'compact',
-        diet: 'nonveg',
-        name: 'Fried Calamari & Aioli',
-        price: 430,
-        description: 'Crispy golden squid rings served with spicy garlic aioli and lemon wedges.',
-        image: img('Fried Calamari with spicy garlic aioli.png'),
-        highlight: { label: 'Sea Food • New', tone: 'olive' },
-      },
+      }),
     ],
   },
   {
@@ -146,122 +217,415 @@ export const RESTAURANT_MENU = [
     label: 'Pasta',
     eyebrow: 'Italian Classics',
     title: 'Pasta on Choice',
-    note: 'Artisan Sauces',
+    note: 'Veg / Non-Veg',
     items: [
-      {
-        id: 'spaghetti-carbonara',
-        variant: 'compact',
-        diet: 'veg',
-        name: 'Spaghetti Carbonara',
-        price: 290,
-        description: 'Classic Italian pasta tossed in rich parmesan cream sauce with herbs and pepper.',
-        image: img('spaghetti-alla-carbonara.webp'),
+      choice('spaghetti-carbonara', 'Spaghetti alla Carbonara', null, vegNonVeg(290, 290), {
+        size: 'md',
+        description: 'Classic Italian pasta tossed in rich parmesan cream sauce with herbs and cracked black pepper.',
+        image: publicImage('spaghetti-carbonara.png'),
         highlight: { label: 'Popular', tone: 'orange' },
-      },
-      {
-        id: 'penne-al-fungi-veg',
-        variant: 'compact',
-        diet: 'veg',
-        name: 'Penne Al Fungi (Veg)',
-        price: 350,
-        description: 'Penne pasta tossed with wild mushrooms in creamy white sauce with herbs.',
+      }),
+      choice('penne-al-funghi', 'Penne al Funghi', null, vegNonVeg(350, 370), {
+        size: 'md',
+        description: 'Penne tossed with wild mushrooms in a creamy white sauce.',
         placeholder: { icon: 'restaurant', label: 'White Sauce', tone: 'gold' },
-        highlight: { label: 'Mushroom', tone: 'olive' },
-      },
-      {
-        id: 'penne-arrabbiata-veg',
-        variant: 'compact',
-        diet: 'veg',
-        name: 'Penne Arrabbiata (Veg)',
-        price: 350,
-        description: 'Spicy tomato sauce infused with garlic, red chili flakes, and extra virgin olive oil.',
-        placeholder: { icon: 'local_fire_department', label: 'Arrabbiata', tone: 'orange' },
+      }),
+      choice('penne-arrabbiata', 'Penne Arrabbiata', null, vegNonVeg(350, 370), {
+        size: 'md',
+        description: 'Spicy tomato sauce infused with garlic, red chilli flakes and olive oil.',
+        image: photo('arrabbiata'),
         highlight: { label: 'Spicy Red', tone: 'orange' },
-      },
-      {
-        id: 'mixed-sauce-pasta-veg',
-        variant: 'compact',
-        diet: 'veg',
-        name: 'Mixed Sauce Pasta (Veg)',
-        price: 350,
-        description: 'Combination of creamy béchamel and tangy tomato sauce with tender vegetables.',
-        image: img('mixed-sauce-pasta(veg).webp'),
+      }),
+      choice('mixed-sauce-pasta', 'Choice of Mixed Sauce Pasta', null, vegNonVeg(350, 370), {
+        size: 'md',
+        description: 'Creamy béchamel and tangy tomato sauce, with vegetables or chicken.',
+        placeholder: { icon: 'dinner_dining', label: 'Pink Sauce', tone: 'gold' },
         highlight: { label: "Chef's Choice", tone: 'gold' },
-      },
-      {
-        id: 'penne-al-fungi-chicken',
-        variant: 'compact',
-        diet: 'nonveg',
-        name: 'Penne Al Fungi (Chicken)',
-        price: 370,
-        description: 'Penne with wild mushrooms and tender sautéed chicken pieces in white sauce.',
-        placeholder: { icon: 'dinner_dining', label: 'Chicken Penne', tone: 'gold' },
-        highlight: { label: 'White Sauce', tone: 'olive' },
-      },
-      {
-        id: 'penne-arrabbiata-chicken',
-        variant: 'compact',
-        diet: 'nonveg',
-        name: 'Penne Arrabbiata (Chicken)',
-        price: 370,
-        description: 'Fiery tomato pomodoro with garlic, chili flakes, and grilled chicken slivers.',
-        placeholder: { icon: 'local_fire_department', label: 'Arrabbiata', tone: 'red' },
-        highlight: { label: 'Spicy Pomodoro', tone: 'orange' },
-      },
-      {
-        id: 'mixed-sauce-pasta-chicken',
-        variant: 'compact',
-        diet: 'nonveg',
-        name: 'Mixed Sauce Pasta (Chicken)',
-        price: 370,
-        description: 'Harmony of cream and tomato sauces tossed with tender chicken pieces.',
-        image: img('mixed-sauce-pasta(non-veg).webp'),
-        highlight: { label: "Chef's Special", tone: 'gold' },
-      },
+      }),
     ],
   },
   {
-    id: 'maincourse',
-    label: 'Main Course',
+    id: 'continental-mains',
+    label: 'Conti Mains',
     eyebrow: 'Signature Entrées',
     title: 'Pre-Plated Continental',
     note: 'Artisan Plating',
+    style: 'Pre-Plated',
     items: [
       {
         id: 'grilled-chicken-steak',
         variant: 'featured',
         diet: 'nonveg',
-        name: 'Grilled Chicken Steak & Espagnole',
-        price: 410,
+        name: 'Grilled Chicken Steak with Espagnole Sauce',
+        price: 450,
         description:
           'Succulent grilled chicken breast smothered in classic French Espagnole sauce, accompanied by buttery mashed potatoes and sautéed vegetables.',
-        image: img('grilled-chicken-steak.webp'),
+        image: publicImage('grilled-chicken-steak.png'),
         badge: { label: 'Popular', tone: 'accent' },
         tags: ['Chicken Breast', 'Mashed Potatoes', 'Sautéed Greens'],
-      },
-      {
-        id: 'grilled-fish-steak',
-        variant: 'featured',
-        diet: 'nonveg',
-        name: 'Grilled Fish Steak with Lemon Butter',
-        price: 470,
-        description:
-          'Delicate fresh fish fillet grilled with Mediterranean herbs, served with velvety lemon butter sauce and steamed seasonal vegetables.',
-        image: img('grilled-fish-with-lemon-butter.webp'),
-        badge: { label: 'Signature', tone: 'cream' },
-        tags: ['Fish Fillet', 'Lemon Butter', 'Steamed Veggies'],
       },
       {
         id: 'chicken-stroganoff',
         variant: 'compact',
         diet: 'nonveg',
-        name: 'Chicken Stroganoff',
-        price: 410,
-        description:
-          'Tender chicken sautéed with mushrooms in rich velvety sour cream sauce, served with aromatic rice.',
-        image: img('Chicken stroganoff.png'),
+        name: 'Chicken Stroganoff with Pilaf Rice',
+        price: 450,
+        description: 'Tender chicken sautéed with mushrooms in a rich, velvety sour cream sauce, served with pilaf rice.',
+        image: photo('stroganoff'),
         highlight: { label: 'Popular', tone: 'orange' },
       },
+      {
+        id: 'grilled-fish-steak',
+        variant: 'featured',
+        diet: 'nonveg',
+        name: 'Grilled Fish Steak with Lemon Butter Sauce',
+        price: 520,
+        description:
+          'Delicate fresh fish fillet grilled with Mediterranean herbs, served with velvety lemon butter sauce and steamed seasonal vegetables.',
+        image: publicImage('grilled-fish-steak.png'),
+        badge: { label: 'Signature', tone: 'cream' },
+        tags: ['Fish Fillet', 'Lemon Butter', 'Steamed Veggies'],
+      },
+    ],
+  },
+  {
+    id: 'tandoor',
+    label: 'Tandoor',
+    eyebrow: 'From the Clay Oven',
+    title: 'Tandoor Appetizers',
+    note: 'With mint chutney',
+    style: 'Clay Oven',
+    items: [
+      dish('paneer-achari-tikka', 'Paneer Achari Tikka', 'veg', 310, {
+        description: 'Cottage cheese marinated in Indian spices, cooked in tandoor.',
+        image: photo('paneer-tikka'),
+      }),
+      dish('lasooni-paneer-tikka', 'Lasooni Paneer Tikka', 'veg', 320),
+      dish('cheese-chilli-paneer-tikka', 'Cheese Chilli Paneer Tikka', 'veg', 350, {
+        description: 'Paneer marinated with chilli and cottage cheese, cooked in tandoor.',
+      }),
+      dish('hara-bhara-kebab', 'Hara Bhara Kebab', 'veg', 230, { description: 'Smashed green veggies with Indian spices.' }),
+      dish('atishi-kebab', 'Atishi Kebab', 'veg', 210, {
+        description: 'Baby potatoes seasoned and spiced tangy, cooked in tandoor, served hot with mint chutney & salad.',
+      }),
+      dish('irani-fish-kebab', 'Irani Fish Kebab', 'nonveg', 390, {
+        description:
+          'Fish chunks marinated in a mouthwatering combination of yogurt & cheese, cooked to perfection in tandoor.',
+      }),
+      dish('fish-tikka', 'Amritsari / Ajwaini / Banjara Fish Tikka', 'nonveg', 390, {
+        description:
+          "Boneless fish marinated with yogurt and chef's special spices, cooked in tandoor, served with mint chutney & salad.",
+      }),
+      dish('murgh-tikka', 'Murgh Tikka', 'nonveg', 310, {
+        description:
+          'Boneless chicken marinated overnight in hung curd with cashewnut paste and spices, cooked in tandoor.',
+        image: photo('chicken-tikka'),
+      }),
+      dish('murgh-malai-kebab', 'Murgh Reshmi / Malai Kebab', 'nonveg', 330, {
+        description:
+          "Boneless chicken marinated overnight with yogurt, cheese (malai) or cream (reshmi), cashewnut paste and chef's special spices.",
+        image: photo('malai-kebab'),
+      }),
+      dish('tangri-kebab', 'Tangri Kebab', 'nonveg', 350, {
+        description:
+          'Chicken drumsticks marinated overnight in hung curd, ginger & garlic paste and tandoori spices, finished in clay oven.',
+      }),
+      dish('lasooni-murgh-tikka', 'Lasooni Murgh Tikka', 'nonveg', 330, {
+        description: 'Chunks of chicken marinated in cashewnut paste and garlic with aromatic yogurt.',
+      }),
+      {
+        id: 'tandoori-murgh',
+        variant: 'featured',
+        size: 'md',
+        diet: 'nonveg',
+        name: 'Tandoori Murgh',
+        price: 550,
+        description: 'The king of kebabs.',
+        image: photo('tandoori-chicken'),
+        badge: { label: "Chef's Special", tone: 'accent' },
+      },
+      dish('mutton-seekh-kebab', 'Mutton Seekh Kebab', 'nonveg', 410, {
+        description:
+          "A Mughlai delicacy: mildly spiced minced mutton blended with chef's special spices & onion, skewered and cooked till succulent.",
+        image: photo('seekh-kebab'),
+      }),
+      dish('mutton-boti-kebab', 'Mutton Boti Kebab', 'nonveg', 410, {
+        description: 'Marinated in spiced yogurt and Indian spices, cooked in tandoor.',
+      }),
+      choice('kebab-platter', 'Silk Inn Special Kebab Platter', null, vegNonVeg(650, 799), {
+        highlight: { label: 'House Special', tone: 'gold' },
+      }),
+      dish('tandoori-pomfret', 'Tandoori Pomfret', 'nonveg', 470),
+      dish('tandoori-jhinga', 'Tandoori Jhinga', 'nonveg', 490),
+    ],
+  },
+  {
+    id: 'chinese',
+    label: 'Chinese',
+    eyebrow: 'From the Wok',
+    title: 'Chinese Starters',
+    note: 'Wok Tossed',
+    style: 'Wok Tossed',
+    items: [
+      dish('paneer-65', 'Paneer 65', 'veg', 310, {
+        description: "Batter-fried cottage cheese tossed with curry leaves, red chilli and chef's special spices.",
+      }),
+      dish('chilli-paneer-dry', 'Chilli Paneer Dry', 'veg', 310, {
+        description: 'Stir-fried cottage cheese and capsicum in chilli soya sauce and oriental spices.',
+      }),
+      dish('crispy-chilli-baby-corn', 'Crispy Chilli Baby Corn', 'veg', 270, {
+        description: 'Crispy fried baby corn tossed in Schezwan chilli sauce, served hot.',
+      }),
+      dish('mushroom-corn-salt-pepper', 'Mushroom & Corn Salt & Pepper', 'veg', 310, {
+        description: 'American corn & mushroom fried crispy, tossed with onion & chilli flakes.',
+      }),
+      dish('veg-dumplings', 'Veg Dumplings', 'veg', 210, {
+        description: 'Stuffed with different veggies, wrapped in a thin layer of dough.',
+        image: photo('momo'),
+      }),
+      dish('french-fry', 'Basket of French Fry', 'veg', 190, { image: photo('french-fries') }),
+      dish('nonveg-dumplings', 'Non-Veg Dumplings', 'nonveg', 270, {
+        description: 'Stuffed with chicken and different veggies, wrapped in a thin layer of dough.',
+      }),
+      dish('chilli-fish', 'Chilli Fish / Pan Fried Chilli Fish Dry', 'nonveg', 370, {
+        description: 'Stir-fried fish with onion and capsicum tossed in chilli soya sauce.',
+      }),
+      dish('fish-finger', 'Fish Finger', 'nonveg', 350, { image: photo('fish-finger') }),
+      dish('chilli-chicken-dry', 'Chilli Chicken Dry', 'nonveg', 295, { image: photo('chilli-chicken') }),
+      dish('chicken-salt-pepper', 'Chicken Salt & Pepper', 'nonveg', 295, { description: 'An all-time favourite.' }),
+      dish('crispy-honey-chicken', 'Crispy Fried Honey Chicken', 'nonveg', 310, {
+        description: 'Juliennes of chicken, fried crispy, tossed in Chinese sauce and drizzled with honey.',
+      }),
+      dish('chicken-lollipop', 'Chicken Lollipop / Drums of Heaven', 'nonveg', 295, {
+        image: photo('chicken-lollipop'),
+      }),
+      dish('korean-chicken-wings', 'Korean Chicken Wings', 'nonveg', 295, { image: photo('korean-fried-chicken') }),
+      dish('kung-pao-chicken', 'Kung Pao Chicken', 'nonveg', 295, {
+        description: 'A combination of savoury & sweet with a mild spicy kick of nuts.',
+        image: photo('kung-pao-chicken'),
+      }),
+      dish('chicken-65', 'Chicken 65', 'nonveg', 295, { image: photo('chicken-65') }),
+      dish('chilli-prawn-dry', 'Pan Fried Chilli Prawn Dry', 'nonveg', 470),
+      dish('golden-fried-prawn', 'Golden Fried Prawn', 'nonveg', 470, {
+        description: 'Prawns seasoned and coated in batter, fried crispy.',
+        image: photo('fried-shrimp'),
+      }),
+      dish('double-cooked-lamb', 'Double Cooked Lamb', 'nonveg', 410),
+    ],
+  },
+  {
+    id: 'noodles-rice',
+    label: 'Noodles & Rice',
+    eyebrow: 'From the Wok',
+    title: 'Noodles & Fried Rice',
+    note: 'Wok Tossed',
+    style: 'Wok Tossed',
+    items: [
+      choice('hakka-noodles', 'Hakka Noodles', null, wok(200, 230, 270, 300), { image: photo('hakka-noodles') }),
+      choice('schezwan-noodles', 'Schezwan Style Noodles', null, wok(200, 230, 270, 300)),
+      choice('chilli-garlic-noodles', 'Chilli Garlic Noodles', null, wok(200, 230, 270, 300)),
+      choice('gravy-noodles', 'Gravy Noodles', null, wok(210, 240, 280, 310), { image: photo('noodle-soup') }),
+      choice('fried-rice', 'Selection of Fried Rice', null, wok(210, 240, 280, 310), { image: photo('fried-rice') }),
+      choice('chilli-garlic-fried-rice', 'Chilli Garlic Fried Rice', null, wok(220, 240, 280, 330)),
+    ],
+  },
+  {
+    id: 'pan-asian',
+    label: 'Pan Asian',
+    eyebrow: 'Choices from Pan Asian',
+    title: 'Pan Asian',
+    note: 'Your Choice of Sauce',
+    style: 'Wok Tossed',
+    items: [
+      dish('paneer-in-sauce', 'Paneer in Choice of Sauce', 'veg', 310, {
+        description: 'Hot garlic, chilli, schezwan or manchurian.',
+        image: photo('manchurian'),
+      }),
+      dish('fish-in-sauce', 'Fish in Choice of Sauce', 'nonveg', 370, {
+        description: 'Hot garlic, chilli, schezwan or manchurian.',
+      }),
+      dish('prawn-in-sauce', 'Prawn in Choice of Sauce', 'nonveg', 470, {
+        description: 'Hot garlic, chilli, schezwan or manchurian.',
+      }),
+      dish('chicken-in-sauce', 'Chicken in Choice of Sauce', 'nonveg', 330, {
+        description: 'Hot garlic, chilli, schezwan or manchurian.',
+      }),
+    ],
+  },
+  {
+    id: 'indian-veg',
+    label: 'Indian Veg',
+    eyebrow: 'Indian Main Course',
+    title: 'Vegetarian',
+    note: 'Rich Gravies',
+    items: [
+      dish('paneer-butter-masala', 'Paneer Butter Masala', 'veg', 320, {
+        description: 'Cubes of paneer cooked in rich, creamy cashewnut & tomato gravy.',
+        image: photo('paneer-butter-masala'),
+      }),
+      dish('kadhai-paneer', 'Kadhai Paneer / Do-Payaza', 'veg', 320, {
+        description:
+          'Paneer fingers with julienned capsicum cooked in onion tomato masala, aromatic with crushed coriander & chilli flakes.',
+        image: photo('kadai-paneer'),
+      }),
+      dish('shahi-paneer', 'Shahi Paneer', 'veg', 330, {
+        description: 'Paneer cubes cooked in a buttery almond & cashewnut base.',
+        image: photo('shahi-paneer'),
+      }),
+      dish('paneer-tikka-lababdar', 'Paneer Tikka Lababdar', 'veg', 320, {
+        description: 'Chunks of paneer cooked in tandoor and simmered in creamy tomato and onion gravy.',
+      }),
+      dish('palak-paneer', 'Palak Paneer', 'veg', 320, {
+        description: 'Cubes of paneer cooked in creamy spinach gravy.',
+        image: photo('palak-paneer'),
+      }),
+      dish('malai-kofta', 'Malai Kofta / Navaratan Korma', 'veg', 340, {
+        description:
+          "Paneer dumplings seasoned with chef's special spices, fried and simmered in rich, creamy almond & cashewnut gravy.",
+        highlight: pcs(4),
+      }),
+      dish('mushroom-babycorn-masala', 'Mushroom Babycorn Masala', 'veg', 340, {
+        description: 'Baby corn and mushroom cooked in tangy onion & tomato masala.',
+      }),
+      dish('veg-jhal-frezi', 'Veg Jhal Frezi / Jaipuri', 'veg', 220, {
+        description:
+          'Baton-shaped vegetables with capsicum & onion tossed in spicy onion tomato masala, with roasted cumin & vinegar.',
+        image: photo('jalfrezi'),
+      }),
+      dish('aloo-jeera', 'Aloo Jeera', 'veg', 200, {
+        description: 'Roasted potatoes cooked with ground and roasted cumin.',
+        image: photo('jeera-aloo'),
+      }),
+      dish('dum-aloo', 'Dum Aloo Kashmiri / Punjabi', 'veg', 240, {
+        description: 'Golden fried potatoes simmered in a gravy of yogurt & brown onion.',
+        image: photo('dum-aloo'),
+      }),
+      dish('dal-tadkewali', 'Dal Tadkewali', 'veg', 210, {
+        description: 'Yellow dal tempered with cumin, garlic & red chilli, finished with coriander leaf.',
+      }),
+      dish('yellow-dal-fry', 'Yellow Dal Fry', 'veg', 210),
+      dish('dal-makhani', 'Dal Makhani', 'veg', 270, {
+        description: 'Slow-cooked black lentils with cream, butter and spices.',
+        image: photo('dal-makhani'),
+      }),
+    ],
+  },
+  {
+    id: 'indian-nonveg',
+    label: 'Indian Non-Veg',
+    eyebrow: 'Indian Main Course',
+    title: 'Non-Vegetarian',
+    note: 'Curries & Masalas',
+    items: [
+      dish('fish-tikka-masala', 'Fish Tikka Masala', 'nonveg', 390, {
+        description: 'Boneless fish fried & cooked in tomato & onion gravy.',
+      }),
+      dish('home-style-chicken-curry', 'Home Style Chicken Curry', 'nonveg', 300, {
+        description: 'Chicken on the bone cooked in a thin onion tomato gravy with potato, Bengali style.',
+      }),
+      dish('chicken-chettinad', 'Chicken Chettinad', 'nonveg', 330, { image: photo('chicken-chettinad') }),
+      dish('hyderabadi-chicken-masala', 'Hyderabadi Chicken Masala', 'nonveg', 370, {
+        description: "Marinated with yogurt and chef's special spices.",
+      }),
+      dish('kadhai-chicken', 'Kadhai Chicken', 'nonveg', 310, {
+        description:
+          'Chicken on the bone cooked in spicy onion tomato masala with capsicum, crushed coriander & red chilli.',
+        image: photo('kadai-chicken'),
+      }),
+      dish('chicken-do-pyaza', 'Chicken Do Pyaza', 'nonveg', 310, {
+        description:
+          'Curry-cut chicken tempered with whole cumin, tossed with onion & peppers and cooked in tangy brown gravy.',
+        image: photo('do-piaza'),
+      }),
+      dish('chicken-tikka-lababdar', 'Chicken Tikka Lababdar', 'nonveg', 330, {
+        description: 'Chicken tikka cooked in creamy butter masala gravy.',
+      }),
+      dish('chicken-butter-masala', 'Chicken Butter Masala', 'nonveg', 340, {
+        description: 'Chicken cooked in rich cashewnut, almond & tangy tomato gravy.',
+        image: photo('butter-chicken'),
+      }),
+      dish('chicken-bharta', 'Chicken Bharta', 'nonveg', 330),
+      dish('murgh-tikka-masala', 'Murgh Tikka Masala', 'nonveg', 330, {
+        description: 'Chicken tikka cooked in spicy onion tomato masala.',
+        image: photo('chicken-tikka-masala'),
+      }),
+      dish('home-style-mutton-curry', 'Home Style Mutton Curry', 'nonveg', 410, {
+        description: 'Mutton pieces cooked in a thin onion tomato gravy with potato, Bengali style.',
+        image: photo('mutton-curry'),
+      }),
+      dish('mutton-roganjosh', 'Mutton Roganjosh', 'nonveg', 410, {
+        description: 'A unique Kashmiri delicacy.',
+        image: photo('rogan-josh'),
+      }),
+      dish('mutton-keema-masala', 'Mutton Keema Masala', 'nonveg', 440, { image: photo('keema') }),
+      dish('mutton-kasha', 'Mutton Kasha / Mutton Bhuna', 'nonveg', 410),
+      dish('rahra-mutton', 'Rahra Mutton', 'nonveg', 450),
+      dish('kadai-prawn', 'Kadai Prawn', 'nonveg', 490, { image: photo('prawn-curry') }),
+      dish('egg-curry', 'Egg Curry / Masala', 'other', 180),
+    ],
+  },
+  {
+    id: 'rice',
+    label: 'Rice',
+    eyebrow: 'Main Course',
+    title: 'Rice & Biryani',
+    note: 'Aap ki Pasand',
+    items: [
+      {
+        id: 'biryani',
+        variant: 'featured',
+        size: 'md',
+        diet: 'nonveg',
+        name: 'Biryani Aap ki Pasand',
+        options: versions(['Chicken', 270], ['Mutton', 350]),
+        description: 'Chicken or mutton biryani, accompanied with raita & salad.',
+        image: photo('biryani'),
+      },
+      dish('steamed-rice', 'Steamed Rice', 'veg', 140, { image: photo('steamed-rice') }),
+      dish('jeera-rice', 'Jeera Rice', 'veg', 170, { image: photo('jeera-rice') }),
+      dish('pulao', 'Pulao Aap ki Pasand', 'veg', 180, { description: 'Veg or green peas.', image: photo('pilaf') }),
+      dish('kashmiri-pulao', 'Kashmiri Pulao', 'veg', 240),
+    ],
+  },
+  {
+    id: 'breads',
+    label: 'Breads',
+    eyebrow: 'From the Tandoor',
+    title: 'Breads',
+    note: 'Freshly Baked',
+    style: 'Clay Oven',
+    items: [
+      choice('roti', 'Roti', 'veg', versions(['Plain', 35], ['Butter', 40]), { image: photo('chapati') }),
+      choice('naan', 'Naan', 'veg', versions(['Plain', 60], ['Butter', 65], ['Garlic', 75]), { image: photo('naan') }),
+      dish('cheese-naan', 'Cheese Naan', 'veg', 190),
+      dish('masala-kulcha', 'Masala Kulcha', 'veg', 85, { image: photo('kulcha') }),
+      choice('lachha-paratha', 'Lachha Paratha', 'veg', versions(['Butter', 60], ['Methi', 65], ['Pudina', 70]), {
+        image: photo('lachha-paratha'),
+      }),
+    ],
+  },
+  {
+    id: 'bengali',
+    label: 'Bengali',
+    eyebrow: 'Bengali Traditional',
+    title: 'Bengali Specials',
+    note: 'Home Style',
+    style: 'Bengali Home Style',
+    items: [
+      dish('basanti-pulao', 'Basanti Pulao', 'veg', 210),
+      dish('sona-moong-dal', 'Sona Moong Dal', 'veg', 200),
+      dish('aloo-bhaja', 'Jhur Jhure Aloo Bhaja', 'veg', 130),
+      dish('chanar-dalna', 'Chanar Dalna', 'veg', 270),
+      dish('elish', 'Bhapa / Sorse Elish', 'nonveg', 370, { image: photo('shorshe-ilish') }),
+      dish('pomfret-jhal', 'Pomfret Jhal / Sorse', 'nonveg', 450),
+      dish('katla', 'Gondhoraj Fish / Doi Katla / Katla Kalia', 'nonveg', 270, { image: photo('machher-jhol') }),
+      choice('chicken-dak-bunglow', 'Chicken Dak Bunglow', 'nonveg', versions(['Full', 370], ['Half', 220]), {
+        description: 'An old-style chicken curry served with egg and potato.',
+      }),
+      choice('mutton-dak-bunglow', 'Mutton Dak Bunglow', 'nonveg', versions(['Full', 470], ['Half', 270]), {
+        description: 'An old-style mutton curry served with egg and potato.',
+      }),
+      dish('chingri-malai-curry', 'Chingri Malai Curry', 'nonveg', 490, { image: photo('chingri-malai-curry') }),
     ],
   },
   {
@@ -269,32 +633,53 @@ export const RESTAURANT_MENU = [
     label: 'Desserts',
     eyebrow: 'Sweet Endings',
     title: 'Desserts',
-    note: 'Dolce & Mousses',
+    note: 'Dolce & Mithai',
     items: [
-      {
-        id: 'tiramisu',
-        variant: 'featured',
-        size: 'sm',
-        diet: 'veg',
-        name: 'McVities & Honey Italian Tiramisu',
-        price: 200,
-        description:
-          'Italian classic dessert with biscuit crust, luscious honey mascarpone cream, and rich espresso dusting.',
-        image: img('dessert-tiramisu.webp'),
-        badge: { label: 'Signature', tone: 'cream' },
-      },
-      {
-        id: 'mango-mousse',
-        variant: 'featured',
-        size: 'sm',
-        diet: 'veg',
-        name: 'Fresh Mango Mousse',
-        price: 200,
-        description:
-          "Light and airy mousse celebrating Malda's famous mangoes, whipped with fresh dairy cream.",
-        image: img('Mango Mousse.png'),
-        badge: { label: 'Malda Special', tone: 'olive' },
-      },
+      dish('tiramisu', 'McVities & Honey Italian Tiramisu', 'veg', 200, {
+        description: 'Biscuit crust, luscious honey mascarpone cream and a rich espresso dusting.',
+        image: photo('tiramisu'),
+        highlight: { label: 'Signature', tone: 'gold' },
+      }),
+      dish('orange-mango-mousse', 'Orange / Mango Mousse', 'veg', 200, {
+        description: "Light and airy mousse of fresh orange or Malda's famous mangoes, whipped with dairy cream.",
+        highlight: { label: 'Malda Special', tone: 'olive' },
+      }),
+      dish('gulab-jamun-ice-cream', 'Hot Gulab Jamun with Ice Cream & Chocolate Sauce', 'veg', 170, {
+        image: photo('gulab-jamun'),
+      }),
+      dish('gulab-jamun', 'Hot Gulab Jamun', 'veg', 80),
+      dish('brownie-ice-cream', 'Chocolate Brownie with Ice Cream', 'veg', 160, { image: photo('brownie') }),
+      dish('ice-cream', 'Choice of Ice Cream', 'veg', 150, {
+        description: 'Vanilla, butterscotch, strawberry or chocolate.',
+        image: photo('ice-cream'),
+      }),
+      dish('kesar-phirni', 'Kesar Phirni', 'veg', 130, { image: photo('phirni') }),
+      dish('darshan-ice-cream', 'Darshan with Ice Cream', 'veg', 220),
+      dish('fried-ice-cream', 'Fried Ice Cream', 'veg', 170, { image: photo('fried-ice-cream') }),
+    ],
+  },
+  {
+    id: 'beverages',
+    label: 'Beverages',
+    eyebrow: 'Thirst Quenchers',
+    title: 'Beverages',
+    note: '12:30 – 22:30 hrs',
+    items: [
+      drink('tea', 'Selection of Tea', 55, { description: 'Regular, Darjeeling or green.' }),
+      drinkChoice('coffee', 'Selection of Coffee', versions(['Regular', 70], ['Black', 60])),
+      drinkChoice('cold-coffee', 'Cold Coffee', versions(['With Ice Cream', 190], ['Without Ice Cream', 160])),
+      drink('coolants', 'Coolants', 75, { description: 'Coca-Cola, Sprite, Limka.' }),
+      drink('fresh-lime-soda', 'Fresh Lime Soda / Masala Cold Drinks', 75),
+      drink('lassi', 'Lassi', 90, { description: 'Yogurt-based drink — plain, sweet, salted or flavoured.' }),
+      drink('blossom', 'Blossom', 170, { description: 'Orange, pineapple or mango.' }),
+      drink('virgin-mojito', 'Virgin Mojito', 150, { description: 'Regular mint, watermelon or cucumber.' }),
+      drink('blue-lagoon', 'Deep Blue Sea / Blue Lagoon', 150),
+      drink('ice-spice', 'Ice-Spice', 150),
+      drink('tropical-delight', 'Tropical Delight', 150),
+      drink('virgin-pina-colada', 'Virgin Pina Colada', 150, {
+        description: 'Ice cream blended with juice and coconut.',
+      }),
+      drink('drinking-water', 'Packaged Drinking Water', 30, { description: '1 litre.', note: 'MRP + EC' }),
     ],
   },
 ]

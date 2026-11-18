@@ -11,6 +11,7 @@
  */
 
 import { publicImage as img } from '../lib/assets.js'
+import { photo } from '../lib/photos.js'
 
 export const BAR = {
   pageTitle: 'SILK INN Malda — Bar & Spirits Menu',
@@ -140,19 +141,18 @@ export const BAR_MENU = [
     items: [
       {
         id: 'bar-cottage-cheese-popcorn',
-        ref: 'cottage-cheese-popcorn',
+        ref: 'popcorn',
         variant: 'compact',
         size: 'sm',
         diet: 'veg',
         name: 'Cottage Cheese Popcorn',
         price: 350,
         description: 'Crispy bite-sized paneer glazed in sweet teriyaki sauce.',
-        image: img('paneer-popcorn.webp'),
+        image: photo('fried-cheese'),
         highlight: { label: 'Tapas Veg', tone: 'ink' },
       },
       {
         id: 'bar-fried-calamari',
-        ref: 'fried-calamari',
         variant: 'compact',
         size: 'sm',
         diet: 'nonveg',

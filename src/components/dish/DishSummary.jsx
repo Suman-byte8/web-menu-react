@@ -1,7 +1,10 @@
 import { formatPrice } from '../../lib/menu.js'
+import PriceOptions from '../menu/PriceOptions.jsx'
 
-/** Eyebrow, dish name, prominent price box and description. */
+/** Eyebrow, dish name, prominent price box, description and versions. */
 function DishSummary({ dish }) {
+  const { min, max } = dish.price
+
   return (
     <section className="flex flex-col gap-3 rounded-3xl border border-line bg-white p-5 shadow-xs">
       <div className="flex items-start justify-between gap-3">
@@ -13,14 +16,27 @@ function DishSummary({ dish }) {
         </div>
 
         <div className="shrink-0 rounded-2xl border border-line bg-cream px-3.5 py-1.5 text-right">
-          <span className="block font-body text-label-sm font-medium text-muted-olive">Price</span>
+          <span className="block font-body text-label-sm font-medium text-muted-olive">
+            {min === max ? 'Price' : 'From'}
+          </span>
           <span className="font-headline text-headline-lg-mobile font-bold tabular-nums lg:text-headline-lg">
-            {formatPrice(dish.price)}
+            {formatPrice(min)}
           </span>
         </div>
       </div>
 
-      <p className="border-t border-cream pt-2 font-body text-body-md leading-relaxed text-pretty">{dish.description}</p>
+      {dish.description && (
+        <p className="border-t border-cream pt-2 font-body text-body-md leading-relaxed text-pretty">
+          {dish.description}
+        </p>
+      )}
+
+      {dish.options.length > 1 && (
+        <div className="flex flex-col gap-2 border-t border-cream pt-3">
+          <span className="text-eyebrow font-semibold text-muted-olive">Available as</span>
+          <PriceOptions options={dish.options} size="md" />
+        </div>
+      )}
     </section>
   )
 }
