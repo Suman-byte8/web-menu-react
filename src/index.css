@@ -1,0 +1,187 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   DESIGN TOKENS
+   Every token below becomes a Tailwind class automatically, e.g.
+   --color-cream        → bg-cream, text-cream, border-cream
+   --text-label-sm      → text-label-sm  (size + line-height + tracking + weight)
+   --font-headline      → font-headline
+   ========================================================================== */
+@theme {
+  /* Brand palette */
+  --color-warm-ivory: #fff9ec;
+  --color-cream: #f5ebd8;
+  --color-vibrant-orange: #b25200;
+  --color-deep-charcoal: #24211d;
+  --color-muted-olive: #434720;
+  --color-soft-gold: #876426;
+  --color-white: #ffffff;
+
+  /* Semantic aliases */
+  --color-line: #dacfba;          /* hairline borders */
+  --color-ink-soft: #38342e;      /* secondary text */
+
+  /* Dietary markers */
+  --color-veg-green: #15803d;
+  --color-nonveg-red: #b91c1c;
+  --color-other-amber: #b45309;
+
+  /* Typefaces */
+  --font-headline: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-body: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+
+  /* Type scale */
+  --text-display-lg: 44px;
+  --text-display-lg--line-height: 52px;
+  --text-display-lg--letter-spacing: -0.5px;
+  --text-display-lg--font-weight: 600;
+  --text-display-lg-mobile: 32px;
+  --text-display-lg-mobile--line-height: 40px;
+  --text-display-lg-mobile--letter-spacing: -0.5px;
+  --text-display-lg-mobile--font-weight: 600;
+
+  --text-headline-lg: 28px;
+  --text-headline-lg--line-height: 34px;
+  --text-headline-lg--font-weight: 600;
+  --text-headline-lg-mobile: 24px;
+  --text-headline-lg-mobile--line-height: 30px;
+  --text-headline-lg-mobile--font-weight: 600;
+  --text-headline-md: 22px;
+  --text-headline-md--line-height: 28px;
+  --text-headline-md--font-weight: 600;
+  --text-headline-md-mobile: 20px;
+  --text-headline-md-mobile--line-height: 26px;
+  --text-headline-md-mobile--font-weight: 600;
+
+  --text-title-lg: 18px;
+  --text-title-lg--line-height: 24px;
+  --text-title-lg--letter-spacing: 0.2px;
+  --text-title-lg--font-weight: 600;
+  --text-title-md: 15px;
+  --text-title-md--line-height: 22px;
+  --text-title-md--letter-spacing: 0.1px;
+  --text-title-md--font-weight: 600;
+
+  --text-body-lg: 16px;
+  --text-body-lg--line-height: 24px;
+  --text-body-md: 14px;
+  --text-body-md--line-height: 20px;
+  --text-body-sm: 12px;
+  --text-body-sm--line-height: 16px;
+
+  --text-label-md: 13px;
+  --text-label-md--line-height: 18px;
+  --text-label-md--letter-spacing: 0.5px;
+  --text-label-md--font-weight: 600;
+  --text-label-sm: 10px;
+  --text-label-sm--line-height: 14px;
+  --text-label-sm--letter-spacing: 0.5px;
+  --text-label-sm--font-weight: 600;
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  /* Motion */
+  --ease-swift: cubic-bezier(0.2, 0, 0, 1);
+  --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-relaxed: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+@layer base {
+  html {
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+    background-color: var(--color-warm-ivory);
+    color: var(--color-deep-charcoal);
+  }
+}
+
+/* ==========================================================================
+   GLOBAL UTILITY CLASSES
+   Reusable class names you can use anywhere and combine with variants,
+   e.g. <div className="surface-card hover:border-vibrant-orange">.
+   ========================================================================== */
+
+/* Layout */
+@utility app-container {
+  @apply mx-auto w-full max-w-md px-4;
+}
+
+/* Backgrounds */
+@utility paper-texture {
+  background-image: radial-gradient(rgb(135 100 38 / 0.08) 1px, transparent 0);
+  background-size: 16px 16px;
+}
+
+@utility frosted {
+  @apply backdrop-blur-md;
+}
+
+@utility image-scrim {
+  @apply bg-linear-to-t from-deep-charcoal/90 via-deep-charcoal/30 to-transparent;
+}
+
+@utility image-scrim-strong {
+  @apply bg-linear-to-t from-deep-charcoal via-deep-charcoal/40 to-transparent;
+}
+
+/* Surfaces */
+@utility surface-card {
+  @apply rounded-2xl border border-line bg-white;
+}
+
+@utility surface-cream {
+  @apply rounded-2xl border border-line bg-cream;
+}
+
+/* Typography */
+@utility text-eyebrow {
+  @apply font-body text-label-sm uppercase tracking-widest;
+}
+
+@utility heading-section {
+  @apply font-headline text-headline-lg-mobile text-deep-charcoal;
+}
+
+@utility heading-card {
+  @apply font-headline text-headline-md-mobile font-bold;
+}
+
+/* Pills & chips */
+@utility pill {
+  @apply inline-flex w-max items-center gap-1.5 rounded-full border border-line px-3 py-1 font-body text-label-sm;
+}
+
+/* Material Symbols icon font.
+   Deliberately NOT named `material-symbols-outlined`: Google's stylesheet
+   ships an un-layered rule for that class (font-size: 24px) which would beat
+   every layered Tailwind utility, so text-* sizes on icons would be ignored.
+   Size an icon with any text-* class, e.g. <Icon className="text-body-sm" />. */
+@utility material-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  font-family: "Material Symbols Outlined";
+  font-style: normal;
+  line-height: 1 !important;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
