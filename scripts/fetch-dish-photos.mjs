@@ -106,6 +106,9 @@ const PHOTO_SOURCES = {
   'machher-jhol': ['Machher jhol', 'Bengali fish curry'],
   'chingri-malai-curry': ['Chingri malai curry', 'Malai curry'],
 
+  // Bar
+  'old-fashioned': ['Old fashioned (cocktail)', 'Whisky sour'],
+
   // Desserts
   'gulab-jamun': ['Gulab jamun'],
   brownie: ['Chocolate brownie'],

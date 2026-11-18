@@ -76,12 +76,6 @@ export const DISH_DETAILS = {
     badge: "Chef's Special",
     related: ['murgh-malai-kebab', 'mutton-seekh-kebab', 'biryani'],
   },
-  // Bar-only dish (not on the restaurant menu)
-  'bar-fried-calamari': {
-    ingredients: ['Calamari Rings', 'Spicy Garlic Aioli', 'Lemon'],
-    style: 'Crispy Fried',
-    related: ['golden-fried-prawn', 'fish-finger', 'chilli-chicken-dry'],
-  },
   tiramisu: {
     badge: 'Signature',
     ingredients: ['McVities Biscuit', 'Mascarpone Cream', 'Espresso', 'Honey'],

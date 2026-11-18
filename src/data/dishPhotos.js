@@ -543,6 +543,13 @@ export const DISH_PHOTOS = {
     "license": "CC BY-SA 2.0",
     "page": "https://commons.wikimedia.org/wiki/File:Gr%C3%B8ntsager_og_tigerrejer_i_r%C3%B8d_karry_(4477230448).jpg"
   },
+  "old-fashioned": {
+    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6f/Whiskey_Old_Fashioned1.jpg/500px-Whiskey_Old_Fashioned1.jpg",
+    "article": "Old fashioned (cocktail)",
+    "author": "Erich Wagner (www.eventografie.de)",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Whiskey_Old_Fashioned1.jpg"
+  },
   "gulab-jamun": {
     "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Gulab-jamun-wallpaper-1.jpg/500px-Gulab-jamun-wallpaper-1.jpg",
     "article": "Gulab jamun",

@@ -1,6 +1,7 @@
 import { cn } from '../../lib/cn.js'
 import { categoryAnchor } from '../../lib/menu.js'
 import DishCard from './DishCard.jsx'
+import PriceList from './PriceList.jsx'
 import { MENU_THEMES } from './themes.js'
 
 /** Large photo cards get a little more breathing room between them. */
@@ -8,6 +9,10 @@ function hasLargeCards(items) {
   return items.some((item) => item.variant === 'featured' && item.size !== 'sm')
 }
 
+/**
+ * One menu category. `category.layout: 'list'` renders a compact price list
+ * (drinks) with optional `category.columns` such as ['60 ml', '30 ml'].
+ */
 function MenuSection({ category, theme = MENU_THEMES.warm }) {
   const { id, eyebrow, title, note, items } = category
   const anchor = categoryAnchor(id)
@@ -24,11 +29,15 @@ function MenuSection({ category, theme = MENU_THEMES.warm }) {
         {note && <span className={cn('font-headline text-body-sm italic', theme.note)}>{note}</span>}
       </div>
 
-      <div className={cn('flex flex-col', hasLargeCards(items) ? 'gap-4' : 'gap-3')}>
-        {items.map((dish) => (
-          <DishCard key={dish.id} dish={dish} />
-        ))}
-      </div>
+      {category.layout === 'list' ? (
+        <PriceList items={items} columns={category.columns} />
+      ) : (
+        <div className={cn('flex flex-col', hasLargeCards(items) ? 'gap-4' : 'gap-3')}>
+          {items.map((dish) => (
+            <DishCard key={dish.id} dish={dish} />
+          ))}
+        </div>
+      )}
     </section>
   )
 }
