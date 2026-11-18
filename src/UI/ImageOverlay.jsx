@@ -9,16 +9,18 @@ const SCRIMS = {
 
 /**
  * Image with an optional dark gradient scrim and overlaid content.
- * If the image fails to load, it is hidden and the cream backdrop + scrim
- * remain, so the card never shows a broken-image icon or stray alt text.
+ * If there is no image, or it fails to load, the image is dropped and
+ * `fallback` (if any) shows on the cream backdrop instead, so the card never
+ * shows a broken-image icon or stray alt text.
  * `scrim`: "soft" | "strong" | "none"
  */
-function ImageOverlay({ src, alt, scrim = 'soft', className, imgClassName, children }) {
+function ImageOverlay({ src, alt, scrim = 'soft', fallback, className, imgClassName, children }) {
   const [failed, setFailed] = useState(false)
+  const showImage = Boolean(src) && !failed
 
   return (
     <div className={cn('relative overflow-hidden bg-cream', className)}>
-      {!failed && (
+      {showImage ? (
         <img
           src={src}
           alt={alt}
@@ -26,8 +28,10 @@ function ImageOverlay({ src, alt, scrim = 'soft', className, imgClassName, child
           onError={() => setFailed(true)}
           className={cn('size-full object-cover', imgClassName)}
         />
+      ) : (
+        fallback
       )}
-      {SCRIMS[scrim] && <div className={cn('absolute inset-0', SCRIMS[scrim])} />}
+      {SCRIMS[scrim] && <div className={cn('pointer-events-none absolute inset-0', SCRIMS[scrim])} />}
       {children}
     </div>
   )

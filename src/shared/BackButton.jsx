@@ -1,16 +1,37 @@
-import { Link } from 'react-router'
+import { Link, useLocation, useNavigate } from 'react-router'
 import { ROUTES } from '../data/site.js'
 import { Icon } from '../UI/index.js'
 
-function BackButton({ to = ROUTES.home, label = 'Back to home' }) {
+/**
+ * Round back button.
+ *   default        links to `to`
+ *   history=true   goes back one step, or to `to` when the page was opened
+ *                  directly (e.g. from a shared link or QR code)
+ */
+function BackButton({ to = ROUTES.home, history = false, label = 'Back to home' }) {
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  if (!history) {
+    return (
+      <Link to={to} aria-label={label} className="icon-button">
+        <Icon name="arrow_back" className="text-body-lg" />
+      </Link>
+    )
+  }
+
+  // React Router gives the first page of a session the key "default".
+  const canGoBack = location.key !== 'default'
+
   return (
-    <Link
-      to={to}
+    <button
+      type="button"
       aria-label={label}
-      className="flex size-9 items-center justify-center rounded-full border border-line bg-cream text-deep-charcoal transition-transform duration-200 ease-swift hover:bg-cream/80 active:scale-90"
+      onClick={() => (canGoBack ? navigate(-1) : navigate(to))}
+      className="icon-button"
     >
       <Icon name="arrow_back" className="text-body-lg" />
-    </Link>
+    </button>
   )
 }
 

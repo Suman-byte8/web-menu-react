@@ -3,6 +3,7 @@ export const ROUTES = {
   restaurant: '/restaurant',
   bar: '/bar',
   rooms: '/rooms',
+  dish: '/dish/:dishId',
 }
 
 export const BRAND = {

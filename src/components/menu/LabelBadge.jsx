@@ -6,9 +6,14 @@ const TONES = {
   olive: 'bg-muted-olive text-white',
 }
 
-/** Highlight badge on photo cards: "Popular", "Signature", "Malda Special". */
-function LabelBadge({ tone = 'cream', children }) {
-  return <span className={cn('badge font-semibold', TONES[tone])}>{children}</span>
+const SIZES = {
+  sm: null,
+  lg: 'px-2.5 py-1 shadow-xs',
+}
+
+/** Highlight badge on photos: "Popular", "Signature", "Malda Special". */
+function LabelBadge({ tone = 'cream', size = 'sm', children }) {
+  return <span className={cn('badge font-semibold', TONES[tone], SIZES[size])}>{children}</span>
 }
 
 export default LabelBadge

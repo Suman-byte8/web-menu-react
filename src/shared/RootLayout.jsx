@@ -1,12 +1,10 @@
 import { Outlet, ScrollRestoration } from 'react-router'
-import BottomNav from './BottomNav.jsx'
 
-/** Wraps every route: page content, the persistent bottom dock, scroll handling. */
+/** Wraps every route: page content plus scroll position handling. */
 function RootLayout() {
   return (
     <>
       <Outlet />
-      <BottomNav />
       <ScrollRestoration />
     </>
   )

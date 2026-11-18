@@ -140,6 +140,7 @@ export const BAR_MENU = [
     items: [
       {
         id: 'bar-cottage-cheese-popcorn',
+        ref: 'cottage-cheese-popcorn',
         variant: 'compact',
         size: 'sm',
         diet: 'veg',
@@ -151,6 +152,7 @@ export const BAR_MENU = [
       },
       {
         id: 'bar-fried-calamari',
+        ref: 'fried-calamari',
         variant: 'compact',
         size: 'sm',
         diet: 'nonveg',

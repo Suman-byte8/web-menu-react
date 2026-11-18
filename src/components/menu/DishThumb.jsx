@@ -3,6 +3,7 @@ import { cn } from '../../lib/cn.js'
 import { Icon } from '../../UI/index.js'
 
 const SIZES = {
+  xs: 'size-16',
   sm: 'size-20',
   md: 'size-24',
 }
@@ -14,10 +15,10 @@ const ICON_TONES = {
 }
 
 /**
- * Square dish thumbnail (96px, or 80px with size="sm"). Falls back to an
+ * Square dish thumbnail: 96px (md), 80px (sm) or 64px (xs). Falls back to an
  * icon tile when the dish has no photo, or when the photo fails to load.
  */
-function DishThumb({ image, alt, placeholder, size = 'md' }) {
+function DishThumb({ image, alt, placeholder, size = 'md', className }) {
   const [failed, setFailed] = useState(false)
 
   if (image && !failed) {
@@ -27,22 +28,24 @@ function DishThumb({ image, alt, placeholder, size = 'md' }) {
         alt={alt}
         loading="lazy"
         onError={() => setFailed(true)}
-        className={cn('shrink-0 rounded-xl bg-cream object-cover', SIZES[size])}
+        className={cn('shrink-0 rounded-xl bg-cream object-cover', SIZES[size], className)}
       />
     )
   }
 
   const { icon = 'restaurant', label, tone = 'gold' } = placeholder ?? {}
+  const showLabel = label && size !== 'xs'
 
   return (
     <div
       className={cn(
         'flex shrink-0 flex-col items-center justify-center rounded-xl border border-line bg-cream p-2 text-center',
         SIZES[size],
+        className,
       )}
     >
-      <Icon name={icon} className={cn('text-headline-lg-mobile', ICON_TONES[tone], label && 'mb-1')} />
-      {label && <span className="font-body text-label-sm uppercase text-muted-olive">{label}</span>}
+      <Icon name={icon} className={cn('text-headline-lg-mobile', ICON_TONES[tone], showLabel && 'mb-1')} />
+      {showLabel && <span className="font-body text-label-sm uppercase text-muted-olive">{label}</span>}
     </div>
   )
 }

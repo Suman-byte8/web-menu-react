@@ -37,6 +37,7 @@ export const ROOMS_MENU = [
     items: [
       {
         id: 'room-grilled-chicken-steak',
+        ref: 'grilled-chicken-steak',
         variant: 'featured',
         size: 'md',
         diet: 'nonveg',
@@ -49,6 +50,7 @@ export const ROOMS_MENU = [
       },
       {
         id: 'room-chicken-stroganoff',
+        ref: 'chicken-stroganoff',
         variant: 'compact',
         diet: 'nonveg',
         name: 'Chicken Stroganoff',
@@ -60,6 +62,7 @@ export const ROOMS_MENU = [
       },
       {
         id: 'room-grilled-fish-steak',
+        ref: 'grilled-fish-steak',
         variant: 'compact',
         diet: 'nonveg',
         name: 'Grilled Fish Steak',
@@ -79,6 +82,7 @@ export const ROOMS_MENU = [
     items: [
       {
         id: 'room-spaghetti-carbonara',
+        ref: 'spaghetti-carbonara',
         variant: 'compact',
         diet: 'veg',
         name: 'Spaghetti Carbonara',
@@ -89,6 +93,7 @@ export const ROOMS_MENU = [
       },
       {
         id: 'room-mixed-sauce-pasta-veg',
+        ref: 'mixed-sauce-pasta-veg',
         variant: 'compact',
         diet: 'veg',
         name: 'Mixed Sauce Pasta (Veg)',
@@ -99,6 +104,7 @@ export const ROOMS_MENU = [
       },
       {
         id: 'room-mixed-sauce-pasta-chicken',
+        ref: 'mixed-sauce-pasta-chicken',
         variant: 'compact',
         diet: 'nonveg',
         name: 'Mixed Sauce Pasta (Chicken)',
@@ -118,6 +124,7 @@ export const ROOMS_MENU = [
     items: [
       {
         id: 'room-paneer-shashlik',
+        ref: 'paneer-shashlik',
         variant: 'compact',
         diet: 'veg',
         name: 'Paneer Shashlik Stick',
@@ -128,6 +135,7 @@ export const ROOMS_MENU = [
       },
       {
         id: 'room-chicken-shashlik',
+        ref: 'chicken-shashlik',
         variant: 'compact',
         diet: 'nonveg',
         name: 'Chicken Shashlik Stick',
@@ -147,6 +155,7 @@ export const ROOMS_MENU = [
     items: [
       {
         id: 'room-tiramisu',
+        ref: 'tiramisu',
         variant: 'compact',
         size: 'sm',
         diet: 'veg',
@@ -158,6 +167,7 @@ export const ROOMS_MENU = [
       },
       {
         id: 'room-mango-mousse',
+        ref: 'mango-mousse',
         variant: 'compact',
         size: 'sm',
         diet: 'veg',
