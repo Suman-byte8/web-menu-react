@@ -6,6 +6,7 @@ import { Icon } from '../UI/index.js'
 const ACCENTS = {
   orange: 'text-vibrant-orange',
   olive: 'text-muted-olive',
+  gold: 'text-soft-gold',
 }
 
 function NavItem({ href, icon, label, accent = 'orange' }) {

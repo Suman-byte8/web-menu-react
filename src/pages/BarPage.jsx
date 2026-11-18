@@ -1,16 +1,13 @@
 import { MenuIntro, MenuPage } from '../components/menu/index.js'
 import { BAR, BAR_MENU } from '../data/barMenu.js'
-import { Dot, Pill } from '../UI/index.js'
+import { StatusPill } from '../UI/index.js'
 
-function OpeningHours() {
+function renderOpeningHours() {
   return (
-    <Pill variant="cream" className="gap-1 px-2.5">
-      <Dot size="sm" className="bg-muted-olive" />
-      <span>
-        <span className="sr-only">Open </span>
-        {BAR.hours}
-      </span>
-    </Pill>
+    <StatusPill dotClassName="bg-muted-olive">
+      <span className="sr-only">Open </span>
+      {BAR.hours}
+    </StatusPill>
   )
 }
 
@@ -21,7 +18,7 @@ function BarPage() {
       categories={BAR_MENU}
       theme="lounge"
       mainClassName="gap-7"
-      renderTrailing={() => <OpeningHours />}
+      renderTrailing={renderOpeningHours}
       intro={<MenuIntro {...BAR.intro} />}
     />
   )

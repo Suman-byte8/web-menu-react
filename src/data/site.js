@@ -34,5 +34,5 @@ export const NAV_ITEMS = [
   { label: 'Home', icon: 'home', href: ROUTES.home, accent: 'orange' },
   { label: 'Restaurant', icon: 'restaurant', href: ROUTES.restaurant, accent: 'orange' },
   { label: 'Bar', icon: 'local_bar', href: ROUTES.bar, accent: 'olive' },
-  { label: 'Rooms', icon: 'room_service', href: ROUTES.rooms, accent: 'orange' },
+  { label: 'Rooms', icon: 'room_service', href: ROUTES.rooms, accent: 'gold' },
 ]

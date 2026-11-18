@@ -1,0 +1,172 @@
+/**
+ * In-room dining menu. Same dish shape as restaurantMenu.js / barMenu.js.
+ */
+
+import { publicImage as img } from '../lib/assets.js'
+
+export const ROOMS = {
+  pageTitle: 'SILK INN Malda — In-Room Dining',
+  badge: 'In-Room',
+  tagline: 'Suite Service • Dial 9',
+  availability: '24/7 Available',
+  intro: {
+    eyebrow: 'Hospitality Suite',
+    title: 'In-Room Dining',
+    description: 'Freshly plated and brought directly to your suite with silver service.',
+    image: img('rooms_dining_comfort.jpg'),
+    alt: 'In-Room Dining Service',
+  },
+  service: {
+    howToOrder: 'Press 9 on phone',
+    delivery: 'Delivery: ~25 mins',
+  },
+  empty: {
+    icon: 'room_service',
+    title: 'No items found',
+    message: 'No in-room dining dishes match this filter.',
+  },
+}
+
+export const ROOMS_MENU = [
+  {
+    id: 'comfort-mains',
+    label: 'Comfort Entrées',
+    eyebrow: 'Hearty Plated Meals',
+    title: 'Comfort Entrées',
+    note: 'Pre-Plated',
+    items: [
+      {
+        id: 'room-grilled-chicken-steak',
+        variant: 'featured',
+        size: 'md',
+        diet: 'nonveg',
+        name: 'Grilled Chicken Steak',
+        price: 410,
+        description:
+          'Tender chicken steak served hot with rich French sauce, creamy mashed potatoes, and sautéed greens.',
+        image: img('grilled-chicken-steak.png'),
+        badge: { label: 'Guest Favorite', tone: 'cream' },
+      },
+      {
+        id: 'room-chicken-stroganoff',
+        variant: 'compact',
+        diet: 'nonveg',
+        name: 'Chicken Stroganoff',
+        price: 410,
+        description:
+          'Tender chicken sautéed with fresh mushrooms in creamy sour sauce, served with buttered rice.',
+        image: img('Chicken stroganoff.png'),
+        highlight: { label: 'Comfort Bowl', tone: 'gold' },
+      },
+      {
+        id: 'room-grilled-fish-steak',
+        variant: 'compact',
+        diet: 'nonveg',
+        name: 'Grilled Fish Steak',
+        price: 470,
+        description: 'Fresh herb-crusted fish fillet with lemon butter emulsion and steamed vegetables.',
+        image: img('grilled-fish-steak.png'),
+        highlight: { label: 'Signature', tone: 'gold' },
+      },
+    ],
+  },
+  {
+    id: 'suite-pastas',
+    label: 'Warm Pastas',
+    eyebrow: 'Comfort in a Bowl',
+    title: 'Warm Pastas',
+    note: 'Steaming Hot',
+    items: [
+      {
+        id: 'room-spaghetti-carbonara',
+        variant: 'compact',
+        diet: 'veg',
+        name: 'Spaghetti Carbonara',
+        price: 290,
+        description: 'Tossed in creamy parmesan and cracked black pepper with garden herbs.',
+        image: img('spaghetti-carbonara.png'),
+        highlight: { label: 'Room Favorite', tone: 'orange' },
+      },
+      {
+        id: 'room-mixed-sauce-pasta-veg',
+        variant: 'compact',
+        diet: 'veg',
+        name: 'Mixed Sauce Pasta (Veg)',
+        price: 350,
+        description: 'Rich blend of béchamel and pomodoro with garden veggies and cheese.',
+        image: img('mixed-sauce-pasta(veg).webp'),
+        highlight: { label: 'Chef Special', tone: 'gold' },
+      },
+      {
+        id: 'room-mixed-sauce-pasta-chicken',
+        variant: 'compact',
+        diet: 'nonveg',
+        name: 'Mixed Sauce Pasta (Chicken)',
+        price: 370,
+        description: 'Cream and tomato fusion sauce loaded with juicy chicken cubes.',
+        image: img('mixed-sauce-pasta(non-veg).webp'),
+        highlight: { label: 'Chef Special', tone: 'orange' },
+      },
+    ],
+  },
+  {
+    id: 'room-bites',
+    label: 'Starters & Bites',
+    eyebrow: 'Finger Food',
+    title: 'Starters & Bites',
+    note: 'Suite Snacking',
+    items: [
+      {
+        id: 'room-paneer-shashlik',
+        variant: 'compact',
+        diet: 'veg',
+        name: 'Paneer Shashlik Stick',
+        price: 350,
+        description: 'Char-grilled spiced cottage cheese with peppers and onions.',
+        image: img('paneer-shashlik.webp'),
+        highlight: { label: 'Popular Veg', tone: 'gold' },
+      },
+      {
+        id: 'room-chicken-shashlik',
+        variant: 'compact',
+        diet: 'nonveg',
+        name: 'Chicken Shashlik Stick',
+        price: 370,
+        description: 'Herb-marinated grilled chicken skewers with bell peppers.',
+        image: img('chicken-shashlik.webp'),
+        highlight: { label: 'Popular Non-Veg', tone: 'orange' },
+      },
+    ],
+  },
+  {
+    id: 'night-desserts',
+    label: 'Desserts',
+    eyebrow: 'Sweet Treats',
+    title: 'Desserts',
+    note: 'Chilled in Room',
+    items: [
+      {
+        id: 'room-tiramisu',
+        variant: 'compact',
+        size: 'sm',
+        diet: 'veg',
+        name: 'Italian Tiramisu',
+        price: 200,
+        description: 'Honey mascarpone cream with espresso dust.',
+        image: img('dessert-tiramisu.webp'),
+        highlight: { label: 'Veg', tone: 'ink' },
+      },
+      {
+        id: 'room-mango-mousse',
+        variant: 'compact',
+        size: 'sm',
+        diet: 'veg',
+        name: 'Malda Mango Mousse',
+        price: 200,
+        description: 'Fluffy local mango purée whipped with cream.',
+        image: img('Mango Mousse.png'),
+        highlight: { label: 'Malda Treat', tone: 'ink' },
+      },
+    ],
+  },
+]

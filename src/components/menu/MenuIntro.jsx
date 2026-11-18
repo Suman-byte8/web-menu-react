@@ -1,7 +1,10 @@
 import { ImageOverlay } from '../../UI/index.js'
 
-/** Cream banner at the top of a menu: small photo, eyebrow, title, blurb. */
-function MenuIntro({ eyebrow, title, description, image, alt }) {
+/**
+ * Cream banner at the top of a menu: small photo, eyebrow, title, blurb.
+ * `children` render as an optional footer row (contact details, timings).
+ */
+function MenuIntro({ eyebrow, title, description, image, alt, children }) {
   return (
     <section className="rounded-3xl border border-line bg-cream p-5">
       <div className="flex items-center gap-4">
@@ -12,6 +15,12 @@ function MenuIntro({ eyebrow, title, description, image, alt }) {
           {description && <p className="mt-1 font-body text-body-sm">{description}</p>}
         </div>
       </div>
+
+      {children && (
+        <div className="mt-4 flex items-center justify-between border-t border-line pt-3 font-body text-body-sm">
+          {children}
+        </div>
+      )}
     </section>
   )
 }
