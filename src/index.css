@@ -39,6 +39,14 @@
   --text-display-lg-mobile--line-height: 40px;
   --text-display-lg-mobile--letter-spacing: -0.5px;
   --text-display-lg-mobile--font-weight: 600;
+  --text-display-md: 36px;
+  --text-display-md--line-height: 44px;
+  --text-display-md--letter-spacing: -0.25px;
+  --text-display-md--font-weight: 600;
+  --text-display-md-mobile: 28px;
+  --text-display-md-mobile--line-height: 36px;
+  --text-display-md-mobile--letter-spacing: -0.25px;
+  --text-display-md-mobile--font-weight: 600;
 
   --text-headline-lg: 28px;
   --text-headline-lg--line-height: 34px;
@@ -160,9 +168,33 @@
   @apply font-headline text-headline-md-mobile font-bold;
 }
 
+@utility text-price {
+  @apply font-headline text-title-lg font-bold text-deep-charcoal tabular-nums;
+}
+
 /* Pills & chips */
 @utility pill {
   @apply inline-flex w-max items-center gap-1.5 rounded-full border border-line px-3 py-1 font-body text-label-sm;
+}
+
+/* Small uppercase status badge (diet, "Popular", "Signature", ...) */
+@utility badge {
+  @apply inline-flex items-center gap-1 rounded-full px-2 py-0.5 font-body text-label-sm uppercase tracking-wider;
+}
+
+/* Square-cornered ingredient tag */
+@utility tag {
+  @apply rounded bg-cream px-2 py-0.5;
+}
+
+/* Horizontal scrollers without a visible scrollbar */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* Material Symbols icon font.

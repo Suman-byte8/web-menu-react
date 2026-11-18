@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 import { cn } from '../../lib/cn.js'
 import { Dot, Icon, ImageOverlay, Pill } from '../../UI/index.js'
 
@@ -27,8 +28,8 @@ function VenueCard({ href, accent = 'orange', badge, title, description, mood, c
   const theme = ACCENTS[accent]
 
   return (
-    <a
-      href={href}
+    <Link
+      to={href}
       className={cn(
         'surface-card group relative block overflow-hidden shadow-xs transition-all duration-300 ease-smooth',
         theme.border,
@@ -68,7 +69,7 @@ function VenueCard({ href, accent = 'orange', badge, title, description, mood, c
           />
         </span>
       </div>
-    </a>
+    </Link>
   )
 }
 

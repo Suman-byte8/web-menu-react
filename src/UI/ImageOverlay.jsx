@@ -1,11 +1,17 @@
 import { useState } from 'react'
 import { cn } from '../lib/cn.js'
 
+const SCRIMS = {
+  soft: 'image-scrim',
+  strong: 'image-scrim-strong',
+  none: null,
+}
+
 /**
- * Image with a dark gradient scrim and optional overlaid content.
+ * Image with an optional dark gradient scrim and overlaid content.
  * If the image fails to load, it is hidden and the cream backdrop + scrim
  * remain, so the card never shows a broken-image icon or stray alt text.
- * `scrim`: "soft" | "strong"
+ * `scrim`: "soft" | "strong" | "none"
  */
 function ImageOverlay({ src, alt, scrim = 'soft', className, imgClassName, children }) {
   const [failed, setFailed] = useState(false)
@@ -21,7 +27,7 @@ function ImageOverlay({ src, alt, scrim = 'soft', className, imgClassName, child
           className={cn('size-full object-cover', imgClassName)}
         />
       )}
-      <div className={cn('absolute inset-0', scrim === 'strong' ? 'image-scrim-strong' : 'image-scrim')} />
+      {SCRIMS[scrim] && <div className={cn('absolute inset-0', SCRIMS[scrim])} />}
       {children}
     </div>
   )

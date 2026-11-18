@@ -7,10 +7,10 @@ const VARIANTS = {
   dark: 'bg-deep-charcoal text-white',
 }
 
-/** Rounded chip with an optional leading icon. */
-function Pill({ variant = 'white', icon, iconClassName, className, children }) {
+/** Rounded chip with an optional leading icon. Extra props go to the <span>. */
+function Pill({ variant = 'white', icon, iconClassName, className, children, ...props }) {
   return (
-    <span className={cn('pill', VARIANTS[variant], className)}>
+    <span className={cn('pill', VARIANTS[variant], className)} {...props}>
       {icon && <Icon name={icon} className={cn('text-body-sm', iconClassName)} />}
       {children}
     </span>

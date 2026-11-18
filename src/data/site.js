@@ -15,6 +15,7 @@ export const BRAND = {
 }
 
 export const HERO = {
+  pageTitle: 'SILK INN Malda — Discover Our Menu',
   eyebrow: 'Digital Menu Experience',
   title: 'Discover Our',
   titleAccent: 'Culinary World',
