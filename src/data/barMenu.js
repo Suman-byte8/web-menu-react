@@ -1,18 +1,20 @@
 /**
- * Bottoms Up bar menu (source: Bar_compressed.pdf).
+ * Bottoms Up bar menu (source: the hotel's bar menu list, rough/.txt).
+ *
+ * Only the items and prices on that list, in its order and sections.
  *
  * Drinks use the compact price-list layout (`layout: 'list'`); `columns`
  * are matched to option labels, so a spirit is
  *   spirit('id', 'Name', 650, 360)  →  60 ml ₹650 · 30 ml ₹360
- * Brand misspellings in the PDF are corrected (e.g. "Glenmorange" →
+ * Misspellings on the list are corrected (e.g. "Glenmorange" →
  * "Glenmorangie", "Budwiser" → "Budweiser").
  *
- * Food: the bar serves the Cocoon kitchen menu (PDF pages 4–11 match the
- * restaurant menu exactly), so those sections are taken from
- * restaurantMenu.js rather than copied — one price change updates both.
+ * Food: every dish on the list is also on the Cocoon restaurant menu at the
+ * same price, so the bar takes each dish from restaurantMenu.js by id (one
+ * price change updates both) and groups them the way the bar list does.
  */
 
-import { copySections } from '../lib/menu.js'
+import { copyItems } from '../lib/menu.js'
 import { photo } from '../lib/photos.js'
 import { RESTAURANT_MENU } from './restaurantMenu.js'
 
@@ -31,6 +33,9 @@ const wine = (id, name, size, price) => withOptions(id, name, [{ label: size, pr
 
 const BEER_COLUMNS = ['650 ml', '330 ml']
 const beer = (id, name, size, price) => withOptions(id, name, [{ label: size, price }])
+
+/** Restaurant dishes by id, given bar ids (`bar-…`). */
+const kitchen = (...ids) => copyItems(RESTAURANT_MENU, { prefix: 'bar', ids })
 
 export const BAR = {
   pageTitle: 'SILK INN Malda — Bottoms Up Bar Menu',
@@ -54,9 +59,7 @@ const DRINKS = [
   {
     id: 'single-malt',
     label: 'Single Malt',
-    eyebrow: 'Whisky',
     title: 'Single Malt Whisky',
-    note: 'Per peg',
     layout: 'list',
     columns: SHOT_COLUMNS,
     items: [
@@ -77,9 +80,7 @@ const DRINKS = [
   {
     id: 'scotch',
     label: 'Scotch',
-    eyebrow: 'Whisky',
     title: 'Scotch Whisky',
-    note: 'Per peg',
     layout: 'list',
     columns: SHOT_COLUMNS,
     items: [
@@ -113,9 +114,7 @@ const DRINKS = [
   {
     id: 'vodka',
     label: 'Vodka',
-    eyebrow: 'Spirits',
     title: 'Vodka',
-    note: 'Per peg',
     layout: 'list',
     columns: SHOT_COLUMNS,
     items: [
@@ -131,9 +130,7 @@ const DRINKS = [
   {
     id: 'rum',
     label: 'Rum',
-    eyebrow: 'Spirits',
     title: 'Rum',
-    note: 'Per peg',
     layout: 'list',
     columns: SHOT_COLUMNS,
     items: [
@@ -145,37 +142,9 @@ const DRINKS = [
     ],
   },
   {
-    id: 'gin',
-    label: 'Gin',
-    eyebrow: 'Spirits',
-    title: 'Gin',
-    note: 'Per peg',
-    layout: 'list',
-    columns: SHOT_COLUMNS,
-    items: [
-      spirit('bombay-sapphire', 'Bombay Sapphire', 370, 210),
-      spirit('pink-mystique', 'Pink Mystique', 200, 120),
-    ],
-  },
-  {
-    id: 'tequila',
-    label: 'Tequila',
-    eyebrow: 'Spirits',
-    title: 'Tequila',
-    note: 'Per peg',
-    layout: 'list',
-    columns: SHOT_COLUMNS,
-    items: [
-      spirit('la-chica-blanco', 'La Chica Tequila Blanco', 480, 250),
-      spirit('la-chica-gold', 'La Chica Tequila Gold', 480, 250),
-    ],
-  },
-  {
     id: 'liqueur',
     label: 'Liqueur',
-    eyebrow: 'Spirits',
     title: 'Liqueur',
-    note: 'Per peg',
     layout: 'list',
     columns: SHOT_COLUMNS,
     items: [
@@ -186,9 +155,108 @@ const DRINKS = [
     ],
   },
   {
+    id: 'gin',
+    label: 'Gin',
+    title: 'Gin',
+    layout: 'list',
+    columns: SHOT_COLUMNS,
+    items: [
+      spirit('bombay-sapphire', 'Bombay Sapphire', 370, 210),
+      spirit('pink-mystique', 'Pink Mystique', 200, 120),
+    ],
+  },
+  {
+    id: 'red-wine',
+    label: 'Red Wine',
+    title: 'Red Wine',
+    layout: 'list',
+    columns: BOTTLE_COLUMNS,
+    items: [
+      wine('jacobs-creek-shiraz', "Jacob's Creek Shiraz Cabernet", '750 ml', 1900),
+      wine('antares-cabernet', 'Antares Cabernet Sauvignon', '375 ml', 1250),
+      wine('sula-cabernet', 'Sula Cabernet Sauvignon', '375 ml', 1050),
+    ],
+  },
+  {
+    id: 'white-wine',
+    label: 'White Wine',
+    title: 'White Wine',
+    layout: 'list',
+    columns: BOTTLE_COLUMNS,
+    items: [
+      wine('jacobs-creek-chardonnay', "Jacob's Creek Chardonnay", '750 ml', 1900),
+      wine('antares-sauvignon-blanc', 'Antares Sauvignon Blanc', '375 ml', 1250),
+      wine('sula-sauvignon-blanc', 'Sula Sauvignon Blanc', '375 ml', 890),
+    ],
+  },
+  {
+    id: 'beer',
+    label: 'Beer',
+    title: 'Beer',
+    layout: 'list',
+    columns: BEER_COLUMNS,
+    items: [
+      beer('corona-extra', 'Corona Extra', '330 ml', 380),
+      beer('hoegaarden', 'Hoegaarden', '330 ml', 380),
+      beer('bira-91-gold', 'Bira 91 Gold', '650 ml', 450),
+      beer('budweiser-magnum', 'Budweiser Magnum', '650 ml', 370),
+      beer('budweiser-premium', 'Budweiser Premium', '650 ml', 310),
+      beer('carlsberg-elephant', 'Carlsberg Elephant', '650 ml', 360),
+      beer('kingfisher-ultra-max', 'Kingfisher Ultra Max', '650 ml', 360),
+      beer('tuborg-classic', 'Tuborg 1880 Classic', '650 ml', 310),
+    ],
+  },
+  {
+    id: 'beer-tower',
+    label: 'Beer Tower',
+    title: 'Beer Tower',
+    note: '1950 ml (3 bottles)',
+    layout: 'list',
+    items: [
+      drink('tower-budweiser-magnum', 'Budweiser Magnum', 1000),
+      drink('tower-budweiser-premium', 'Budweiser Premium', 800),
+      drink('tower-carlsberg-elephant', 'Carlsberg Elephant', 1000),
+      drink('tower-kingfisher-ultra-max', 'Kingfisher Ultra Max', 1000),
+      drink('tower-tuborg-classic', 'Tuborg 1880 Classic', 800),
+    ],
+  },
+  {
+    id: 'breezer',
+    label: 'Breezer',
+    title: 'Breezer',
+    note: '275 ml',
+    layout: 'list',
+    items: [
+      drink('breezer-blackberry', 'Blackberry', 210),
+      drink('breezer-cranberry', 'Cranberry', 210),
+      drink('breezer-jamaican-passion', 'Jamaican Passion', 210),
+    ],
+  },
+  {
+    id: 'tequila',
+    label: 'Tequila',
+    title: 'Tequila',
+    layout: 'list',
+    columns: SHOT_COLUMNS,
+    items: [
+      spirit('la-chica-blanco', 'La Chica Tequila Blanco', 480, 250),
+      spirit('la-chica-gold', 'La Chica Tequila Gold', 480, 250),
+    ],
+  },
+  {
+    id: 'shots',
+    label: 'Shots',
+    title: 'Shots',
+    layout: 'list',
+    items: [
+      drink('blue-kamikaze', 'Blue Kamikaze', 200, { description: 'Vodka base' }),
+      drink('lemon-drop', 'Lemon Drop', 250, { description: 'Gin base' }),
+      drink('b52', 'B52', 510, { description: 'Kahlua coffee & Irish cream' }),
+    ],
+  },
+  {
     id: 'cocktails',
     label: 'Cocktails',
-    eyebrow: 'Mixology',
     title: 'Cocktails',
     layout: 'list',
     items: [
@@ -207,102 +275,13 @@ const DRINKS = [
       drink('espresso-martini', 'Espresso Martini', 450),
       drink('classic-negroni', 'Classic Negroni', 550),
       drink('tequila-sunrise', 'Tequila Sunrise', 550),
-      drink('liit', 'LIIT', 550, { description: 'Long Island Iced Tea' }),
-    ],
-  },
-  {
-    id: 'shots',
-    label: 'Shots',
-    eyebrow: 'Mixology',
-    title: 'Shots',
-    layout: 'list',
-    items: [
-      drink('blue-kamikaze', 'Blue Kamikaze', 200, { description: 'Vodka base' }),
-      drink('lemon-drop', 'Lemon Drop', 250, { description: 'Gin base' }),
-      drink('b52', 'B52', 510, { description: 'Kahlua coffee & Irish cream' }),
-    ],
-  },
-  {
-    id: 'red-wine',
-    label: 'Red Wine',
-    eyebrow: 'Cellar Selection',
-    title: 'Red Wine',
-    note: 'Per bottle',
-    layout: 'list',
-    columns: BOTTLE_COLUMNS,
-    items: [
-      wine('jacobs-creek-shiraz', "Jacob's Creek Shiraz Cabernet", '750 ml', 1900),
-      wine('antares-cabernet', 'Antares Cabernet Sauvignon', '375 ml', 1250),
-      wine('sula-cabernet', 'Sula Cabernet Sauvignon', '375 ml', 1050),
-    ],
-  },
-  {
-    id: 'white-wine',
-    label: 'White Wine',
-    eyebrow: 'Cellar Selection',
-    title: 'White Wine',
-    note: 'Per bottle',
-    layout: 'list',
-    columns: BOTTLE_COLUMNS,
-    items: [
-      wine('jacobs-creek-chardonnay', "Jacob's Creek Chardonnay", '750 ml', 1900),
-      wine('antares-sauvignon-blanc', 'Antares Sauvignon Blanc', '375 ml', 1250),
-      wine('sula-sauvignon-blanc', 'Sula Sauvignon Blanc', '375 ml', 890),
-    ],
-  },
-  {
-    id: 'beer',
-    label: 'Beer',
-    eyebrow: 'Chilled',
-    title: 'Beer',
-    note: 'Per bottle',
-    layout: 'list',
-    columns: BEER_COLUMNS,
-    items: [
-      beer('corona-extra', 'Corona Extra', '330 ml', 380),
-      beer('hoegaarden', 'Hoegaarden', '330 ml', 380),
-      beer('bira-91-gold', 'Bira 91 Gold', '650 ml', 450),
-      beer('budweiser-magnum', 'Budweiser Magnum', '650 ml', 370),
-      beer('budweiser-premium', 'Budweiser Premium', '650 ml', 310),
-      beer('carlsberg-elephant', 'Carlsberg Elephant', '650 ml', 360),
-      beer('kingfisher-ultra-max', 'Kingfisher Ultra Max', '650 ml', 360),
-      beer('tuborg-classic', 'Tuborg 1880 Classic', '650 ml', 310),
-    ],
-  },
-  {
-    id: 'beer-tower',
-    label: 'Beer Tower',
-    eyebrow: 'Chilled',
-    title: 'Beer Tower',
-    note: '1950 ml · 3 bottles',
-    layout: 'list',
-    items: [
-      drink('tower-budweiser-magnum', 'Budweiser Magnum', 1000),
-      drink('tower-budweiser-premium', 'Budweiser Premium', 800),
-      drink('tower-carlsberg-elephant', 'Carlsberg Elephant', 1000),
-      drink('tower-kingfisher-ultra-max', 'Kingfisher Ultra Max', 1000),
-      drink('tower-tuborg-classic', 'Tuborg 1880 Classic', 800),
-    ],
-  },
-  {
-    id: 'breezer',
-    label: 'Breezer',
-    eyebrow: 'Chilled',
-    title: 'Breezer',
-    note: '275 ml',
-    layout: 'list',
-    items: [
-      drink('breezer-blackberry', 'Blackberry', 210),
-      drink('breezer-cranberry', 'Cranberry', 210),
-      drink('breezer-jamaican-passion', 'Jamaican Passion', 210),
+      drink('liit', 'LIIT', 550),
     ],
   },
   {
     id: 'soft-drinks',
-    label: 'Mocktails & Mixers',
-    eyebrow: 'Zero Proof',
-    title: 'Mocktails & Mixers',
-    note: 'Non-Alcoholic',
+    label: 'Mocktails',
+    title: 'Mocktails & Soft Drinks',
     layout: 'list',
     items: [
       drink('all-mocktails', 'All Mocktails', 150),
@@ -314,29 +293,253 @@ const DRINKS = [
   },
 ]
 
-/**
- * Food served at the bar: every restaurant section except breakfast and the
- * restaurant's own beverages. Items get bar ids and point back at the
- * restaurant dish with `ref` (shared details, "Dine-In & Bar" availability).
- */
-const BAR_FOOD_SECTIONS = [
-  'soups',
-  'salads',
-  'continental',
-  'pasta',
-  'continental-mains',
-  'tandoor',
-  'chinese',
-  'noodles-rice',
-  'pan-asian',
-  'indian-veg',
-  'indian-nonveg',
-  'rice',
-  'breads',
-  'bengali',
-  'desserts',
-]
+const FOOD = [
+  // Cocoon's Favourites
+  {
+    id: 'salads',
+    label: 'Salads',
+    eyebrow: "Cocoon's Favourites",
+    title: 'Salads & Condiments',
+    note: '12:30 – 22:30 hrs',
+    items: kitchen('green-salad', 'kachumber-salad', 'plain-curd', 'raita', 'roasted-papad'),
+  },
+  {
+    id: 'soups',
+    label: 'Soups',
+    eyebrow: "Cocoon's Favourites",
+    title: 'Soups',
+    items: kitchen('hot-sour-soup', 'manchow-soup', 'sweet-corn-soup', 'lemon-coriander-soup', 'clear-soup'),
+  },
 
-const FOOD = copySections(RESTAURANT_MENU, { prefix: 'bar', sections: BAR_FOOD_SECTIONS })
+  // Continental Menu
+  {
+    id: 'conti-soup',
+    label: 'Conti Soup',
+    eyebrow: 'Continental Menu',
+    title: 'Soup',
+    items: kitchen('cream-of-mushroom', 'cream-of-tomato'),
+  },
+  {
+    id: 'conti-salad',
+    label: 'Conti Salad',
+    eyebrow: 'Continental Menu',
+    title: 'Salad',
+    items: kitchen('chicken-hawaiian-salad'),
+  },
+  {
+    id: 'munching',
+    label: 'Munching',
+    eyebrow: 'Continental Menu',
+    title: 'Munching',
+    items: kitchen('tacos'),
+  },
+  {
+    id: 'starter',
+    label: 'Starter',
+    eyebrow: 'Continental Menu',
+    title: 'Starter',
+    items: kitchen('baked-veg-au-gratin', 'cheese-ball', 'sauteed-exotic', 'shashlik', 'popcorn', 'chicken-roulade'),
+  },
+  {
+    id: 'pasta',
+    label: 'Pasta',
+    eyebrow: 'Continental Menu',
+    title: 'Pasta on Choice',
+    note: 'Veg / Non-Veg',
+    items: kitchen('spaghetti-carbonara', 'penne-al-funghi', 'penne-arrabbiata', 'mixed-sauce-pasta'),
+  },
+  {
+    id: 'conti-mains',
+    label: 'Conti Mains',
+    eyebrow: 'Continental Menu',
+    title: 'Pre-Plated Conti Main-Course',
+    style: 'Pre-Plated',
+    items: kitchen('grilled-chicken-steak', 'chicken-stroganoff', 'grilled-fish-steak'),
+  },
+  {
+    id: 'conti-dessert',
+    label: 'Conti Dessert',
+    eyebrow: 'Continental Menu',
+    title: 'Dessert',
+    items: kitchen('tiramisu', 'orange-mango-mousse'),
+  },
+
+  // Appetizers, from the clay oven: vegetable, then non-veg
+  {
+    id: 'appetizers',
+    label: 'Appetizers',
+    eyebrow: 'From Clay Oven',
+    title: 'Appetizers',
+    style: 'Clay Oven',
+    items: kitchen(
+      'paneer-achari-tikka',
+      'lasooni-paneer-tikka',
+      'cheese-chilli-paneer-tikka',
+      'hara-bhara-kebab',
+      'atishi-kebab',
+      'irani-fish-kebab',
+      'fish-tikka',
+      'murgh-tikka',
+      'murgh-malai-kebab',
+      'tangri-kebab',
+      'lasooni-murgh-tikka',
+      'tandoori-murgh',
+      'mutton-seekh-kebab',
+      'mutton-boti-kebab',
+      'kebab-platter',
+      'tandoori-pomfret',
+      'tandoori-jhinga',
+    ),
+  },
+
+  // From the Wok (Chinese): vegetable, then non-veg
+  {
+    id: 'chinese',
+    label: 'Chinese',
+    eyebrow: 'From the Wok',
+    title: 'Chinese',
+    style: 'Wok Tossed',
+    items: kitchen(
+      'paneer-65',
+      'chilli-paneer-dry',
+      'crispy-chilli-baby-corn',
+      'mushroom-corn-salt-pepper',
+      'veg-dumplings',
+      'french-fry',
+      'nonveg-dumplings',
+      'chilli-fish',
+      'fish-finger',
+      'chilli-chicken-dry',
+      'chicken-salt-pepper',
+      'crispy-honey-chicken',
+      'chicken-lollipop',
+      'korean-chicken-wings',
+      'kung-pao-chicken',
+      'chicken-65',
+      'chilli-prawn-dry',
+      'golden-fried-prawn',
+      'double-cooked-lamb',
+    ),
+  },
+
+  // Indian Main-Course
+  {
+    id: 'indian-veg',
+    label: 'Indian Veg',
+    eyebrow: 'Indian Main-Course',
+    title: 'Vegetable',
+    items: kitchen(
+      'paneer-butter-masala',
+      'kadhai-paneer',
+      'shahi-paneer',
+      'paneer-tikka-lababdar',
+      'palak-paneer',
+      'malai-kofta',
+      'mushroom-babycorn-masala',
+      'veg-jhal-frezi',
+      'aloo-jeera',
+      'dum-aloo',
+      'dal-tadkewali',
+      'yellow-dal-fry',
+      'dal-makhani',
+    ),
+  },
+  {
+    id: 'indian-nonveg',
+    label: 'Indian Non-Veg',
+    eyebrow: 'Indian Main-Course',
+    title: 'Non-Veg',
+    items: kitchen(
+      'fish-tikka-masala',
+      'home-style-chicken-curry',
+      'chicken-chettinad',
+      'hyderabadi-chicken-masala',
+      'kadhai-chicken',
+      'chicken-do-pyaza',
+      'chicken-tikka-lababdar',
+      'chicken-butter-masala',
+      'chicken-bharta',
+      'murgh-tikka-masala',
+      'home-style-mutton-curry',
+      'mutton-roganjosh',
+      'mutton-keema-masala',
+      'mutton-kasha',
+      'rahra-mutton',
+      'kadai-prawn',
+      'egg-curry',
+    ),
+  },
+
+  // Rice, Bread & Bengali Traditional Menu
+  {
+    id: 'rice',
+    label: 'Rice',
+    title: 'Rice',
+    items: kitchen('steamed-rice', 'jeera-rice', 'pulao', 'kashmiri-pulao', 'biryani'),
+  },
+  {
+    id: 'bread',
+    label: 'Bread',
+    title: 'Bread',
+    items: kitchen('roti', 'naan', 'cheese-naan', 'masala-kulcha', 'lachha-paratha'),
+  },
+  {
+    id: 'bengali',
+    label: 'Bengali',
+    title: 'Bengali Traditional Menu',
+    style: 'Bengali Traditional',
+    items: kitchen(
+      'basanti-pulao',
+      'sona-moong-dal',
+      'aloo-bhaja',
+      'chanar-dalna',
+      'elish',
+      'pomfret-jhal',
+      'katla',
+      'chicken-dak-bunglow',
+      'mutton-dak-bunglow',
+      'chingri-malai-curry',
+    ),
+  },
+
+  // From the Wok
+  {
+    id: 'noodles-rice',
+    label: 'Noodles & Rice',
+    eyebrow: 'From the Wok',
+    title: 'Noodles & Fried Rice',
+    note: 'Veg / Egg / Chicken / Mixed',
+    style: 'Wok Tossed',
+    items: kitchen(
+      'hakka-noodles',
+      'schezwan-noodles',
+      'chilli-garlic-noodles',
+      'gravy-noodles',
+      'fried-rice',
+      'chilli-garlic-fried-rice',
+    ),
+  },
+  {
+    id: 'pan-asian',
+    label: 'Pan Asian',
+    title: 'Choices from Pan Asian',
+    style: 'Wok Tossed',
+    items: kitchen('paneer-in-sauce', 'fish-in-sauce', 'prawn-in-sauce', 'chicken-in-sauce'),
+  },
+  {
+    id: 'desserts',
+    label: 'Desserts',
+    title: 'Dessert',
+    items: kitchen(
+      'gulab-jamun-ice-cream',
+      'gulab-jamun',
+      'brownie-ice-cream',
+      'ice-cream',
+      'kesar-phirni',
+      'darshan-ice-cream',
+      'fried-ice-cream',
+    ),
+  },
+]
 
 export const BAR_MENU = [...DRINKS, ...FOOD]

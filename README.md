@@ -24,7 +24,7 @@ All menu content lives in `src/data/` — no component changes needed.
 | File | What it holds |
 | --- | --- |
 | `restaurantMenu.js` | The Cocoon restaurant menu: sections, dishes, prices. **The source for food on every menu.** |
-| `barMenu.js` | Bar drinks. Bar food is copied from the restaurant sections. |
+| `barMenu.js` | The Bottoms Up bar list: drinks, plus the bar's food sections, which pick restaurant dishes by id (`kitchen('green-salad', …)`). Add a dish to the bar by adding its id there. |
 | `roomsMenu.js` | In-room dining: copies the restaurant sections and lists only what differs (Full / Half portions, items not served in rooms). |
 | `site.js`, `venues.js` | Hotel name, routes, home page text and venue cards, bottom navigation. |
 

@@ -90,3 +90,18 @@ export function copySections(categories, { prefix, sections, exclude = [], overr
 
   return copied
 }
+
+/**
+ * Re-use single dishes of another menu, in the order given — for a menu that
+ * groups the same dishes into different sections. Ids and `ref` work as in
+ * copySections.
+ */
+export function copyItems(categories, { prefix, ids }) {
+  const byId = new Map(categories.flatMap((category) => category.items.map((item) => [item.id, item])))
+
+  return ids.map((id) => {
+    const item = byId.get(id)
+    if (!item) throw new Error(`copyItems: unknown item "${id}"`)
+    return { ...item, id: `${prefix}-${item.id}`, ref: item.ref ?? item.id }
+  })
+}
