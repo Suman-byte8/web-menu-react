@@ -1,0 +1,5 @@
+# SILK INN Malda — digital menu
+# The menu is for guests (QR codes and shared links), not for search engines.
+# Pages also send "noindex" (X-Robots-Tag header + meta tag).
+User-agent: *
+Disallow: /

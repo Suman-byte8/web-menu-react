@@ -3,9 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#fff9ec" />
     <title>SILK INN Malda — Discover Our Menu</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta
+      name="description"
+      content="Digital menu for SILK INN, Malda: Cocoon restaurant, Bottoms Up bar and in-room dining."
+    />
+
+    <!-- Private menu: keep out of search engines (also sent as an X-Robots-Tag header). -->
+    <meta name="robots" content="noindex, nofollow" />
+
+    <!-- Icons & install -->
+    <meta name="theme-color" content="#fff9ec" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Link previews (WhatsApp, Facebook, X) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="SILK INN Malda" />
+    <meta property="og:title" content="SILK INN Malda — Digital Menu" />
+    <meta property="og:description" content="Cocoon restaurant, Bottoms Up bar and in-room dining at SILK INN, Malda." />
+    <meta property="og:url" content="%VITE_SITE_URL%/" />
+    <meta property="og:image" content="%VITE_SITE_URL%/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="SILK INN Malda digital menu" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -18,6 +44,7 @@
     />
   </head>
   <body>
+    <noscript>Please turn on JavaScript to view the SILK INN menu.</noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
