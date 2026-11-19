@@ -55,6 +55,14 @@ export function formatPriceRange({ min, max }) {
   return min === max ? formatPrice(min) : `${formatPrice(min)} – ${max.toLocaleString('en-IN')}`
 }
 
+/** Icon for a menu note: a clock for serving times, a glass for sizes. */
+export function noteIcon(note) {
+  if (/\d{1,2}:\d{2}/.test(note)) return 'schedule'
+  if (/\d\s*ml\b|bottle|litre/i.test(note)) return 'local_drink'
+  if (/\bpcs\b/i.test(note)) return 'restaurant'
+  return 'info'
+}
+
 export function categoryAnchor(id) {
   return `cat-${id}`
 }

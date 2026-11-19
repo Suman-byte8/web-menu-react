@@ -13,8 +13,7 @@
  *   image        photo('key') for Wikimedia Commons photos (see
  *                scripts/fetch-dish-photos.mjs) or publicImage('file') for
  *                the hotel's own photos in /public/images
- *   highlight    { label, tone: 'gold' | 'orange' | 'olive' | 'ink' }
- *                footer label on compact cards (portion size, "Popular", ...)
+ *   highlight    { label } — highlighted chip on compact cards (portion size)
  *   featured:    size 'lg' | 'md' | 'sm', badge { label, tone }, tags []
  *   text:        note (italic footer), tag (footer chip), altPrice
  *
@@ -76,5 +75,5 @@ export const versions = (...pairs) => pairs.map(([label, price]) => ({ label, pr
 /** Full / half portions: fullHalf(320, 190). */
 export const fullHalf = (full, half) => versions(['Full', full], ['Half', half])
 
-/** "2 pcs" footer label. */
-export const pcs = (count) => ({ label: `${count} pcs`, tone: 'ink' })
+/** "2 pcs" portion chip. */
+export const pcs = (count) => ({ label: `${count} pcs` })

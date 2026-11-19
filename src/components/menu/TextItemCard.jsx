@@ -1,4 +1,5 @@
-import { dietLabels, formatPrice, itemDiets, priceRange } from '../../lib/menu.js'
+import { dietLabels, formatPrice, itemDiets, noteIcon, priceRange } from '../../lib/menu.js'
+import { NoteChip } from '../../UI/index.js'
 import DietDots from './DietDots.jsx'
 import PriceOptions from './PriceOptions.jsx'
 import PriceTag from './PriceTag.jsx'
@@ -6,7 +7,7 @@ import PriceTag from './PriceTag.jsx'
 /**
  * Image-free card for drinks and wines: name + description with the price on
  * the right (optionally a second price such as per bottle, or version chips),
- * and an optional footer with an italic serving note and a tag chip.
+ * and an optional footer with a highlighted serving note and a tag chip.
  */
 function TextItemCard({ dish }) {
   const { name, description, altPrice, note, tag, options } = dish
@@ -41,7 +42,11 @@ function TextItemCard({ dish }) {
 
       {hasFooter && (
         <div className="mt-1.5 flex items-center justify-between gap-2 border-t border-cream pt-2 font-body text-body-sm">
-          {note && <span className="font-headline italic">{note}</span>}
+          {note && (
+            <NoteChip icon={noteIcon(note)} size="sm">
+              {note}
+            </NoteChip>
+          )}
           {tag && <span className="tag ml-auto shrink-0 border border-line text-label-sm">{tag}</span>}
         </div>
       )}

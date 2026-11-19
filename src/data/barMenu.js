@@ -276,7 +276,6 @@ const DRINKS = [
     title: 'Mocktails & Soft Drinks',
     layout: 'list',
     items: [
-      drink('all-mocktails', 'All Mocktails', 150),
       drink('tonic-water', 'Tonic Water', 90),
       drink('ginger-ale', 'Ginger Ale', 90),
       drink('red-bull', 'Red Bull Energy Drink', 200),

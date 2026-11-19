@@ -1,20 +1,15 @@
 import { cn } from '../../lib/cn.js'
-import { dietLabels, itemDiets, priceRange } from '../../lib/menu.js'
+import { dietLabels, itemDiets, noteIcon, priceRange } from '../../lib/menu.js'
+import { NoteChip } from '../../UI/index.js'
 import DietDots from './DietDots.jsx'
 import DishThumb from './DishThumb.jsx'
 import PriceOptions from './PriceOptions.jsx'
 import PriceTag from './PriceTag.jsx'
 
-const HIGHLIGHT_TONES = {
-  gold: 'text-soft-gold',
-  orange: 'text-vibrant-orange',
-  olive: 'text-muted-olive',
-  ink: 'text-deep-charcoal',
-}
-
 /**
  * Row card: thumbnail on the left, name / description / price on the right.
- * size "sm" uses an 80px thumbnail and a tighter footer.
+ * size "sm" uses an 80px thumbnail and a tighter footer. `highlight.label`
+ * (portion size, e.g. "4 pcs") shows as a chip beside the price.
  */
 function CompactDishCard({ dish }) {
   const { name, description, image, placeholder, highlight, options, size = 'md' } = dish
@@ -46,14 +41,13 @@ function CompactDishCard({ dish }) {
             size === 'sm' ? 'mt-1.5' : 'mt-2',
           )}
         >
-          <span
-            className={cn(
-              'font-body text-label-sm uppercase tracking-wider',
-              highlight && HIGHLIGHT_TONES[highlight.tone],
-            )}
-          >
-            {highlight?.label}
-          </span>
+          {highlight ? (
+            <NoteChip icon={noteIcon(highlight.label)} size="sm">
+              {highlight.label}
+            </NoteChip>
+          ) : (
+            <span />
+          )}
           <PriceTag amount={min} max={max} />
         </div>
       </div>

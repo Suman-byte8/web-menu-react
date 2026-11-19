@@ -1,5 +1,6 @@
 import { cn } from '../../lib/cn.js'
-import { categoryAnchor } from '../../lib/menu.js'
+import { categoryAnchor, noteIcon } from '../../lib/menu.js'
+import { NoteChip } from '../../UI/index.js'
 import DishCard from './DishCard.jsx'
 import PriceList from './PriceList.jsx'
 import { MENU_THEMES } from './themes.js'
@@ -12,6 +13,7 @@ function hasLargeCards(items) {
 /**
  * One menu category. `category.layout: 'list'` renders a compact price list
  * (drinks) with optional `category.columns` such as ['60 ml', '30 ml'].
+ * `category.note` (serving times, sizes) shows as a chip under the title.
  */
 function MenuSection({ category, theme = MENU_THEMES.warm }) {
   const { id, eyebrow, title, note, items } = category
@@ -19,14 +21,16 @@ function MenuSection({ category, theme = MENU_THEMES.warm }) {
 
   return (
     <section id={anchor} aria-labelledby={`${anchor}-title`} className="flex scroll-mt-44 flex-col gap-4">
-      <div className="flex items-end justify-between border-b border-line pb-2">
-        <div>
-          {eyebrow && <span className={cn('text-eyebrow font-semibold', theme.eyebrow)}>{eyebrow}</span>}
-          <h2 id={`${anchor}-title`} className="heading-section font-bold">
-            {title}
-          </h2>
-        </div>
-        {note && <span className={cn('font-headline text-body-sm italic', theme.note)}>{note}</span>}
+      <div className="border-b border-line pb-2.5">
+        {eyebrow && <span className={cn('text-eyebrow font-semibold', theme.eyebrow)}>{eyebrow}</span>}
+        <h2 id={`${anchor}-title`} className="heading-section font-bold">
+          {title}
+        </h2>
+        {note && (
+          <NoteChip icon={noteIcon(note)} className="mt-2">
+            {note}
+          </NoteChip>
+        )}
       </div>
 
       {category.layout === 'list' ? (

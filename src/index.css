@@ -27,8 +27,8 @@
   --color-other-amber: #b45309;
 
   /* Typefaces */
-  --font-headline: "Cormorant Garamond", ui-serif, Georgia, serif;
-  --font-body: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-headline: "Fraunces", ui-serif, Georgia, serif;
+  --font-body: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 
   /* Type scale */
   --text-display-lg: 44px;
@@ -148,6 +148,8 @@
 @layer base {
   html {
     font-family: var(--font-body);
+    /* Fraunces is loaded up to semibold (600); never fake a heavier bold. */
+    font-synthesis-weight: none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

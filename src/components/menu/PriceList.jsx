@@ -1,4 +1,5 @@
 import { formatPrice, formatPriceRange, priceRange } from '../../lib/menu.js'
+import { Icon } from '../../UI/index.js'
 
 /** Price for one column ("60 ml"), or a dash when the item isn't sold that way. */
 function ColumnPrice({ item, column }) {
@@ -28,9 +29,13 @@ function PriceList({ items, columns }) {
   return (
     <div className="surface-card px-4 py-1 shadow-xs">
       {columns && (
-        <div aria-hidden="true" className="flex justify-end gap-2 border-b border-cream py-2">
+        <div aria-hidden="true" className="flex items-center justify-end gap-2 border-b border-cream py-2.5">
+          <Icon name="local_drink" filled className="mr-auto text-body-lg text-vibrant-orange" />
           {columns.map((column) => (
-            <span key={column} className="text-eyebrow w-16 text-right font-semibold text-muted-olive">
+            <span
+              key={column}
+              className="w-16 rounded-full border border-vibrant-orange/30 bg-vibrant-orange/10 py-0.5 text-center font-body text-label-md font-bold whitespace-nowrap text-deep-charcoal"
+            >
               {column}
             </span>
           ))}
