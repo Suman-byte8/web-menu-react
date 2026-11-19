@@ -23,13 +23,15 @@ All menu content lives in `src/data/` — no component changes needed.
 
 | File | What it holds |
 | --- | --- |
-| `restaurantMenu.js` | The Cocoon restaurant menu: sections, dishes, prices. **The source for food on every menu.** |
-| `barMenu.js` | The Bottoms Up bar list: drinks, plus the bar's food sections, which pick restaurant dishes by id (`kitchen('green-salad', …)`). Add a dish to the bar by adding its id there. |
-| `roomsMenu.js` | In-room dining: copies the restaurant sections and lists only what differs (Full / Half portions, items not served in rooms). |
+| `restaurantMenu.js` | The Cocoon restaurant menu: sections, dishes, prices. |
+| `barMenu.js` | The Bottoms Up bar menu: drinks and the bar's food. |
+| `roomsMenu.js` | The in-room dining menu, including its Full / Half portions. |
+| `menuBuilders.js` | Shorthand used to write items (`dish`, `choice`, `drink`, `fullHalf`, …). |
 | `site.js`, `venues.js` | Hotel name, routes, home page text and venue cards, bottom navigation. |
 
-- **Change a food price:** edit it in `restaurantMenu.js`. Bar and Rooms pick it up
-  automatically, unless Rooms overrides that dish in `ROOM_OVERRIDES`.
+- **Each menu is independent.** Restaurant, Bar and Rooms list their own items, in the
+  order of their printed menus. Changing a price on one menu doesn't change the others,
+  so update every menu that lists the dish.
 - **Several versions of a dish:** use `options`, e.g.
   `[{ label: 'Full', price: 320 }, { label: 'Half', price: 190 }]`.
   An option can carry its own `diet` (`veg`, `nonveg`, or `other` for egg).

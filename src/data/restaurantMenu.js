@@ -1,62 +1,12 @@
 /**
- * Cocoon Restaurant menu (source: Restaurant_compressed.pdf).
- *
- * Dish shape
- *   variant      'compact' (thumbnail row) | 'featured' (large photo card)
- *                | 'text' (no image, no detail page — used for drinks)
- *   diet         key of DIETS: 'veg' | 'nonveg' | 'other' (egg dishes)
- *   price        number, in rupees — or `options` for several versions:
- *   options      [{ label, price, diet? }]  e.g. Plain ₹130 / Grilled ₹165,
- *                or Veg ₹160 / Non-Veg ₹180 (option diet overrides the dish's)
- *   description  optional
- *   image        photo('key') for Wikimedia Commons photos (see
- *                scripts/fetch-dish-photos.mjs) or publicImage('file') for
- *                the hotel's own photos in /public/images
- *   highlight    { label, tone: 'gold' | 'orange' | 'olive' | 'ink' }
- *                footer label on compact cards (portion size, "Popular", ...)
- *   featured:    size 'lg' | 'md' | 'sm', badge { label, tone }, tags []
- *   text:        note (italic footer), tag (footer chip), altPrice
+ * Cocoon Restaurant menu — the restaurant's own items, prices and order,
+ * taken from the hotel's restaurant menu list (misspellings corrected).
+ * Item and section shapes: see menuBuilders.js.
  */
 
 import { publicImage } from '../lib/assets.js'
 import { photo } from '../lib/photos.js'
-
-/** Food on a compact card with an 80px thumbnail. */
-const dish = (id, name, diet, price, more = {}) => ({ id, variant: 'compact', size: 'sm', name, diet, price, ...more })
-
-/** Same, but in several versions: options [{ label, price, diet? }]. */
-const choice = (id, name, diet, options, more = {}) => ({
-  id,
-  variant: 'compact',
-  size: 'sm',
-  name,
-  diet,
-  options,
-  ...more,
-})
-
-/** Drinks: text-only card (no photo, no detail page). */
-const drink = (id, name, price, more = {}) => ({ id, variant: 'text', name, diet: 'veg', price, ...more })
-const drinkChoice = (id, name, options, more = {}) => ({ id, variant: 'text', name, diet: 'veg', options, ...more })
-
-/** Veg / non-veg pair of versions, e.g. vegNonVeg(160, 180). */
-const vegNonVeg = (veg, nonveg, [vegLabel, nonvegLabel] = ['Veg', 'Non-Veg']) => [
-  { label: vegLabel, price: veg, diet: 'veg' },
-  { label: nonvegLabel, price: nonveg, diet: 'nonveg' },
-]
-
-/** Wok dishes: Veg / Egg / Chicken / Mixed. */
-const wok = (veg, egg, chicken, mixed) => [
-  { label: 'Veg', price: veg, diet: 'veg' },
-  { label: 'Egg', price: egg, diet: 'other' },
-  { label: 'Chicken', price: chicken, diet: 'nonveg' },
-  { label: 'Mixed', price: mixed, diet: 'nonveg' },
-]
-
-/** Same-diet versions: versions(['Plain', 130], ['Grilled', 165]). */
-const versions = (...pairs) => pairs.map(([label, price]) => ({ label, price }))
-
-const pcs = (count) => ({ label: `${count} pcs`, tone: 'ink' })
+import { choice, dish, drink, drinkChoice, fullHalf, pcs, vegNonVeg, versions, wok } from './menuBuilders.js'
 
 export const RESTAURANT = {
   pageTitle: 'SILK INN Malda — Cocoon Restaurant Menu',
@@ -70,11 +20,11 @@ export const RESTAURANT = {
 }
 
 export const RESTAURANT_MENU = [
+  // Page 1 — Breakfast Favourites
   {
     id: 'breakfast',
     label: 'Breakfast',
-    eyebrow: 'Morning Favourites',
-    title: 'Breakfast',
+    title: 'Breakfast Favourites',
     note: '07:30 – 10:30 hrs',
     items: [
       dish('farm-fresh-eggs', 'Farm Fresh Eggs', 'other', 90, {
@@ -123,29 +73,14 @@ export const RESTAURANT_MENU = [
       drinkChoice('breakfast-coffee', 'Coffee', versions(['Regular', 70], ['Black', 60])),
     ],
   },
-  {
-    id: 'soups',
-    label: 'Soups',
-    eyebrow: "Cocoon's Favourites",
-    title: 'Soups',
-    note: '12:30 – 22:30 hrs',
-    items: [
-      choice('hot-sour-soup', 'Hot & Sour Soup', null, vegNonVeg(160, 180), { image: photo('hot-and-sour-soup') }),
-      choice('manchow-soup', 'Manchow Soup', null, vegNonVeg(160, 180), { image: photo('manchow-soup') }),
-      choice('sweet-corn-soup', 'Sweet Corn Soup', null, vegNonVeg(160, 180), { image: photo('corn-soup') }),
-      choice('lemon-coriander-soup', 'Lemon Coriander Soup', null, vegNonVeg(160, 180)),
-      choice('clear-soup', 'Clear Soup', null, vegNonVeg(160, 180)),
-      choice('cream-of-mushroom', 'Cream of Mushroom / Chicken', null, vegNonVeg(160, 180, ['Mushroom', 'Chicken']), {
-        image: photo('mushroom-soup'),
-      }),
-      dish('cream-of-tomato', 'Cream of Tomato Soup with Croutons', 'veg', 160, { image: photo('tomato-soup') }),
-    ],
-  },
+
+  // Page 2 — Cocoon's Favourites
   {
     id: 'salads',
     label: 'Salads',
     eyebrow: "Cocoon's Favourites",
     title: 'Salads & Condiments',
+    note: '12:30 – 22:30 hrs',
     items: [
       dish('green-salad', 'Green Salad', 'veg', 75, {
         description: 'Garden-fresh green vegetable salad.',
@@ -155,7 +90,6 @@ export const RESTAURANT_MENU = [
         description: 'Cubes of salad vegetables tossed with Indian herbs & spices.',
         image: photo('kachumber'),
       }),
-      dish('chicken-hawaiian-salad', 'Chicken Hawaiian Salad', 'nonveg', 250, { image: photo('chicken-salad') }),
       dish('plain-curd', 'Plain Curd', 'veg', 70, { image: photo('curd') }),
       choice('raita', 'Raita', 'veg', versions(['Plain', 80], ['Mixed', 90]), { image: photo('raita') }),
       choice('roasted-papad', 'Roasted Papad', 'veg', versions(['Plain', 60], ['Masala', 90]), {
@@ -164,14 +98,79 @@ export const RESTAURANT_MENU = [
     ],
   },
   {
-    id: 'continental',
-    label: 'Continental',
+    id: 'soups',
+    label: 'Soups',
+    eyebrow: "Cocoon's Favourites",
+    title: 'Soups',
+    items: [
+      choice('hot-sour-soup', 'Hot & Sour Soup', null, vegNonVeg(160, 180), { image: photo('hot-and-sour-soup') }),
+      choice('manchow-soup', 'Manchow Soup', null, vegNonVeg(160, 180), { image: photo('manchow-soup') }),
+      choice('sweet-corn-soup', 'Sweet Corn Soup', null, vegNonVeg(160, 180), { image: photo('corn-soup') }),
+      choice('lemon-coriander-soup', 'Lemon Coriander Soup', null, vegNonVeg(160, 180)),
+      choice('clear-soup', 'Clear Soup', null, vegNonVeg(160, 180)),
+    ],
+  },
+  {
+    id: 'beverages',
+    label: 'Beverages',
+    eyebrow: "Cocoon's Favourites",
+    title: 'Thirst Quenchers',
+    items: [
+      drink('tea', 'Selection of Tea', 55, { description: 'Regular, Darjeeling or green.' }),
+      drinkChoice('coffee', 'Selection of Coffee', versions(['Regular', 70], ['Black', 60])),
+      drinkChoice('cold-coffee', 'Cold Coffee', versions(['With Ice Cream', 190], ['Without Ice Cream', 160])),
+      drink('coolants', 'Coolants', 75, { description: 'Coca-Cola, Sprite, Limka.' }),
+      drink('fresh-lime-soda', 'Fresh Lime Soda / Masala Cold Drinks', 75),
+      drink('lassi', 'Lassi', 90, { description: 'Yogurt-based drink — plain, sweet, salted or flavoured.' }),
+      drink('blossom', 'Blossom', 170, { description: 'Orange, pineapple or mango.' }),
+      drink('virgin-mojito', 'Virgin Mojito', 150, { description: 'Regular mint, watermelon or cucumber.' }),
+      drink('blue-lagoon', 'Deep Blue Sea / Blue Lagoon', 150),
+      drink('ice-spice', 'Ice-Spice', 150),
+      drink('tropical-delight', 'Tropical Delight', 150),
+      drink('virgin-pina-colada', 'Virgin Pina Colada', 150, {
+        description: 'Ice cream blended with juice and coconut.',
+      }),
+      drink('drinking-water', 'Packaged Drinking Water', 30, { description: '1 litre.', note: 'MRP + EC' }),
+    ],
+  },
+
+  // Page 3 — Continental Menu
+  {
+    id: 'conti-soup',
+    label: 'Conti Soup',
     eyebrow: 'Continental Menu',
-    title: 'Munching & Starters',
+    title: 'Soup',
+    items: [
+      choice('cream-of-mushroom', 'Cream of Mushroom / Chicken', null, vegNonVeg(160, 180, ['Mushroom', 'Chicken']), {
+        image: photo('mushroom-soup'),
+      }),
+      dish('cream-of-tomato', 'Cream of Tomato Soup with Croutons', 'veg', 160, { image: photo('tomato-soup') }),
+    ],
+  },
+  {
+    id: 'conti-salad',
+    label: 'Conti Salad',
+    eyebrow: 'Continental Menu',
+    title: 'Salad',
+    items: [dish('chicken-hawaiian-salad', 'Chicken Hawaiian Salad', 'nonveg', 250, { image: photo('chicken-salad') })],
+  },
+  {
+    id: 'munching',
+    label: 'Munching',
+    eyebrow: 'Continental Menu',
+    title: 'Munching',
     items: [
       choice('tacos', 'Tacos with Chef Special Sauce', null, vegNonVeg(270, 290), {
         image: photo('taco'),
       }),
+    ],
+  },
+  {
+    id: 'starter',
+    label: 'Starter',
+    eyebrow: 'Continental Menu',
+    title: 'Starter',
+    items: [
       dish('baked-veg-au-gratin', 'Baked Veg Au-Gratin', 'veg', 290, { image: photo('gratin') }),
       dish('cheese-ball', 'Cheese Ball with Chef Special Dip', 'veg', 380, { image: photo('fried-cheese') }),
       choice('sauteed-exotic', 'Sautéed Exotic Vegetable / Chicken', null, vegNonVeg(270, 310, ['Vegetable', 'Chicken'])),
@@ -219,7 +218,7 @@ export const RESTAURANT_MENU = [
     id: 'continental-mains',
     label: 'Conti Mains',
     eyebrow: 'Continental Menu',
-    title: 'Pre-Plated Main Course',
+    title: 'Pre-Plated Conti Main-Course',
     style: 'Pre-Plated',
     items: [
       {
@@ -249,11 +248,22 @@ export const RESTAURANT_MENU = [
     ],
   },
   {
-    id: 'tandoor',
-    label: 'Tandoor',
-    eyebrow: 'From the Clay Oven',
-    title: 'Tandoor Appetizers',
-    note: 'With mint chutney',
+    id: 'conti-dessert',
+    label: 'Conti Dessert',
+    eyebrow: 'Continental Menu',
+    title: 'Dessert',
+    items: [
+      dish('tiramisu', 'McVities & Honey Italian Tiramisu', 'veg', 200, { image: photo('tiramisu') }),
+      dish('orange-mango-mousse', 'Orange / Mango Mousse', 'veg', 200),
+    ],
+  },
+
+  // Page 4 — Appetizers from the clay oven: vegetable, then non-veg
+  {
+    id: 'appetizers',
+    label: 'Appetizers',
+    eyebrow: 'From Clay Oven',
+    title: 'Appetizers',
     style: 'Clay Oven',
     items: [
       dish('paneer-achari-tikka', 'Paneer Achari Tikka', 'veg', 310, {
@@ -317,12 +327,13 @@ export const RESTAURANT_MENU = [
       dish('tandoori-jhinga', 'Tandoori Jhinga', 'nonveg', 490),
     ],
   },
+
+  // Page 5 — From the Wok (Chinese): vegetable, then non-veg
   {
     id: 'chinese',
     label: 'Chinese',
     eyebrow: 'From the Wok',
-    title: 'Chinese Starters',
-    note: 'Wok Tossed',
+    title: 'Chinese',
     style: 'Wok Tossed',
     items: [
       dish('paneer-65', 'Paneer 65', 'veg', 310, {
@@ -371,50 +382,13 @@ export const RESTAURANT_MENU = [
       dish('double-cooked-lamb', 'Double Cooked Lamb', 'nonveg', 410),
     ],
   },
-  {
-    id: 'noodles-rice',
-    label: 'Noodles & Rice',
-    eyebrow: 'From the Wok',
-    title: 'Noodles & Fried Rice',
-    note: 'Wok Tossed',
-    style: 'Wok Tossed',
-    items: [
-      choice('hakka-noodles', 'Hakka Noodles', null, wok(200, 230, 270, 300), { image: photo('hakka-noodles') }),
-      choice('schezwan-noodles', 'Schezwan Style Noodles', null, wok(200, 230, 270, 300)),
-      choice('chilli-garlic-noodles', 'Chilli Garlic Noodles', null, wok(200, 230, 270, 300)),
-      choice('gravy-noodles', 'Gravy Noodles', null, wok(210, 240, 280, 310), { image: photo('noodle-soup') }),
-      choice('fried-rice', 'Selection of Fried Rice', null, wok(210, 240, 280, 310), { image: photo('fried-rice') }),
-      choice('chilli-garlic-fried-rice', 'Chilli Garlic Fried Rice', null, wok(220, 240, 280, 330)),
-    ],
-  },
-  {
-    id: 'pan-asian',
-    label: 'Pan Asian',
-    eyebrow: 'Choices from Pan Asian',
-    title: 'Pan Asian',
-    note: 'Your Choice of Sauce',
-    style: 'Wok Tossed',
-    items: [
-      dish('paneer-in-sauce', 'Paneer in Choice of Sauce', 'veg', 310, {
-        description: 'Hot garlic, chilli, schezwan or manchurian.',
-        image: photo('manchurian'),
-      }),
-      dish('fish-in-sauce', 'Fish in Choice of Sauce', 'nonveg', 370, {
-        description: 'Hot garlic, chilli, schezwan or manchurian.',
-      }),
-      dish('prawn-in-sauce', 'Prawn in Choice of Sauce', 'nonveg', 470, {
-        description: 'Hot garlic, chilli, schezwan or manchurian.',
-      }),
-      dish('chicken-in-sauce', 'Chicken in Choice of Sauce', 'nonveg', 330, {
-        description: 'Hot garlic, chilli, schezwan or manchurian.',
-      }),
-    ],
-  },
+
+  // Page 6 — Indian Main-Course: Vegetable
   {
     id: 'indian-veg',
     label: 'Indian Veg',
-    eyebrow: 'Indian Main Course',
-    title: 'Vegetarian',
+    eyebrow: 'Indian Main-Course',
+    title: 'Vegetable',
     items: [
       dish('paneer-butter-masala', 'Paneer Butter Masala', 'veg', 320, {
         description: 'Cubes of paneer cooked in rich, creamy cashewnut & tomato gravy.',
@@ -467,11 +441,13 @@ export const RESTAURANT_MENU = [
       }),
     ],
   },
+
+  // Page 7 — Indian Non-Veg
   {
     id: 'indian-nonveg',
     label: 'Indian Non-Veg',
-    eyebrow: 'Indian Main Course',
-    title: 'Non-Vegetarian',
+    eyebrow: 'Indian Main-Course',
+    title: 'Non-Veg',
     items: [
       dish('fish-tikka-masala', 'Fish Tikka Masala', 'nonveg', 390, {
         description: 'Boneless fish fried & cooked in tomato & onion gravy.',
@@ -520,13 +496,17 @@ export const RESTAURANT_MENU = [
       dish('egg-curry', 'Egg Curry / Masala', 'other', 180),
     ],
   },
+
+  // Page 8 — Rice, Bread & Bengali Traditional Menu
   {
     id: 'rice',
     label: 'Rice',
-    eyebrow: 'Main Course',
-    title: 'Rice & Biryani',
-    note: 'Aap ki Pasand',
+    title: 'Rice',
     items: [
+      dish('steamed-rice', 'Steamed Rice', 'veg', 140, { image: photo('steamed-rice') }),
+      dish('jeera-rice', 'Jeera Rice', 'veg', 170, { image: photo('jeera-rice') }),
+      dish('pulao', 'Pulao Aap ki Pasand', 'veg', 180, { description: 'Veg or green peas.', image: photo('pilaf') }),
+      dish('kashmiri-pulao', 'Kashmiri Pulao', 'veg', 240),
       {
         id: 'biryani',
         variant: 'featured',
@@ -537,17 +517,12 @@ export const RESTAURANT_MENU = [
         description: 'Chicken or mutton biryani, accompanied with raita & salad.',
         image: photo('biryani'),
       },
-      dish('steamed-rice', 'Steamed Rice', 'veg', 140, { image: photo('steamed-rice') }),
-      dish('jeera-rice', 'Jeera Rice', 'veg', 170, { image: photo('jeera-rice') }),
-      dish('pulao', 'Pulao Aap ki Pasand', 'veg', 180, { description: 'Veg or green peas.', image: photo('pilaf') }),
-      dish('kashmiri-pulao', 'Kashmiri Pulao', 'veg', 240),
     ],
   },
   {
-    id: 'breads',
-    label: 'Breads',
-    eyebrow: 'Main Course',
-    title: 'Breads',
+    id: 'bread',
+    label: 'Bread',
+    title: 'Bread',
     items: [
       choice('roti', 'Roti', 'veg', versions(['Plain', 35], ['Butter', 40]), { image: photo('chapati') }),
       choice('naan', 'Naan', 'veg', versions(['Plain', 60], ['Butter', 65], ['Garlic', 75]), { image: photo('naan') }),
@@ -561,8 +536,7 @@ export const RESTAURANT_MENU = [
   {
     id: 'bengali',
     label: 'Bengali',
-    eyebrow: 'Bengali Traditional Menu',
-    title: 'Bengali Specials',
+    title: 'Bengali Traditional Menu',
     style: 'Bengali Traditional',
     items: [
       dish('basanti-pulao', 'Basanti Pulao', 'veg', 210),
@@ -572,23 +546,59 @@ export const RESTAURANT_MENU = [
       dish('elish', 'Bhapa / Sorse Elish', 'nonveg', 370, { image: photo('shorshe-ilish') }),
       dish('pomfret-jhal', 'Pomfret Jhal / Sorse', 'nonveg', 450),
       dish('katla', 'Gondhoraj Fish / Doi Katla / Katla Kalia', 'nonveg', 270, { image: photo('machher-jhol') }),
-      choice('chicken-dak-bunglow', 'Chicken Dak Bunglow', 'nonveg', versions(['Full', 370], ['Half', 220]), {
+      choice('chicken-dak-bunglow', 'Chicken Dak Bunglow', 'nonveg', fullHalf(370, 220), {
         description: 'An old-style chicken curry served with egg and potato.',
       }),
-      choice('mutton-dak-bunglow', 'Mutton Dak Bunglow', 'nonveg', versions(['Full', 470], ['Half', 270]), {
+      choice('mutton-dak-bunglow', 'Mutton Dak Bunglow', 'nonveg', fullHalf(470, 270), {
         description: 'An old-style mutton curry served with egg and potato.',
       }),
       dish('chingri-malai-curry', 'Chingri Malai Curry', 'nonveg', 490, { image: photo('chingri-malai-curry') }),
     ],
   },
+
+  // Page 9 — From the Wok, Choices from Pan Asian, Dessert
+  {
+    id: 'noodles-rice',
+    label: 'Noodles & Rice',
+    eyebrow: 'From the Wok',
+    title: 'Noodles & Fried Rice',
+    note: 'Veg / Egg / Chicken / Mixed',
+    style: 'Wok Tossed',
+    items: [
+      choice('hakka-noodles', 'Hakka Noodles', null, wok(200, 230, 270, 300), { image: photo('hakka-noodles') }),
+      choice('schezwan-noodles', 'Schezwan Style Noodles', null, wok(200, 230, 270, 300)),
+      choice('chilli-garlic-noodles', 'Chilli Garlic Noodles', null, wok(200, 230, 270, 300)),
+      choice('gravy-noodles', 'Gravy Noodles', null, wok(210, 240, 280, 310), { image: photo('noodle-soup') }),
+      choice('fried-rice', 'Selection of Fried Rice', null, wok(210, 240, 280, 310), { image: photo('fried-rice') }),
+      choice('chilli-garlic-fried-rice', 'Chilli Garlic Fried Rice', null, wok(220, 240, 280, 330)),
+    ],
+  },
+  {
+    id: 'pan-asian',
+    label: 'Pan Asian',
+    title: 'Choices from Pan Asian',
+    style: 'Wok Tossed',
+    items: [
+      dish('paneer-in-sauce', 'Paneer in Choice of Sauce', 'veg', 310, {
+        description: 'Hot garlic, chilli, schezwan or manchurian.',
+        image: photo('manchurian'),
+      }),
+      dish('fish-in-sauce', 'Fish in Choice of Sauce', 'nonveg', 370, {
+        description: 'Hot garlic, chilli, schezwan or manchurian.',
+      }),
+      dish('prawn-in-sauce', 'Prawn in Choice of Sauce', 'nonveg', 470, {
+        description: 'Hot garlic, chilli, schezwan or manchurian.',
+      }),
+      dish('chicken-in-sauce', 'Chicken in Choice of Sauce', 'nonveg', 330, {
+        description: 'Hot garlic, chilli, schezwan or manchurian.',
+      }),
+    ],
+  },
   {
     id: 'desserts',
     label: 'Desserts',
-    eyebrow: "Cocoon's Favourites",
-    title: 'Desserts',
+    title: 'Dessert',
     items: [
-      dish('tiramisu', 'McVities & Honey Italian Tiramisu', 'veg', 200, { image: photo('tiramisu') }),
-      dish('orange-mango-mousse', 'Orange / Mango Mousse', 'veg', 200),
       dish('gulab-jamun-ice-cream', 'Hot Gulab Jamun with Ice Cream & Chocolate Sauce', 'veg', 170, {
         image: photo('gulab-jamun'),
       }),
@@ -601,30 +611,6 @@ export const RESTAURANT_MENU = [
       dish('kesar-phirni', 'Kesar Phirni', 'veg', 130, { image: photo('phirni') }),
       dish('darshan-ice-cream', 'Darshan with Ice Cream', 'veg', 220),
       dish('fried-ice-cream', 'Fried Ice Cream', 'veg', 170, { image: photo('fried-ice-cream') }),
-    ],
-  },
-  {
-    id: 'beverages',
-    label: 'Beverages',
-    eyebrow: 'Thirst Quenchers',
-    title: 'Beverages',
-    note: '12:30 – 22:30 hrs',
-    items: [
-      drink('tea', 'Selection of Tea', 55, { description: 'Regular, Darjeeling or green.' }),
-      drinkChoice('coffee', 'Selection of Coffee', versions(['Regular', 70], ['Black', 60])),
-      drinkChoice('cold-coffee', 'Cold Coffee', versions(['With Ice Cream', 190], ['Without Ice Cream', 160])),
-      drink('coolants', 'Coolants', 75, { description: 'Coca-Cola, Sprite, Limka.' }),
-      drink('fresh-lime-soda', 'Fresh Lime Soda / Masala Cold Drinks', 75),
-      drink('lassi', 'Lassi', 90, { description: 'Yogurt-based drink — plain, sweet, salted or flavoured.' }),
-      drink('blossom', 'Blossom', 170, { description: 'Orange, pineapple or mango.' }),
-      drink('virgin-mojito', 'Virgin Mojito', 150, { description: 'Regular mint, watermelon or cucumber.' }),
-      drink('blue-lagoon', 'Deep Blue Sea / Blue Lagoon', 150),
-      drink('ice-spice', 'Ice-Spice', 150),
-      drink('tropical-delight', 'Tropical Delight', 150),
-      drink('virgin-pina-colada', 'Virgin Pina Colada', 150, {
-        description: 'Ice cream blended with juice and coconut.',
-      }),
-      drink('drinking-water', 'Packaged Drinking Water', 30, { description: '1 litre.', note: 'MRP + EC' }),
     ],
   },
 ]

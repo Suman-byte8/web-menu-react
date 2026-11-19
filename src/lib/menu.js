@@ -60,48 +60,12 @@ export function categoryAnchor(id) {
 }
 
 /**
- * Re-use sections of another menu (e.g. the restaurant's) on a second menu.
- * Items get `${prefix}-${id}` ids and a `ref` back to the source dish, so
- * dish details are shared and availability lists both menus.
- *
- *   sections   source category ids, in display order
- *   exclude    source item ids this menu doesn't serve
- *   overrides  { [sourceItemId]: patch } — e.g. different prices
+ * Prefix every item id of a menu (`bar-green-salad`), so dish page URLs stay
+ * unique when two menus list a dish with the same name.
  */
-export function copySections(categories, { prefix, sections, exclude = [], overrides = {} }) {
-  const copied = sections.map((sectionId) => {
-    const category = categories.find((c) => c.id === sectionId)
-    if (!category) throw new Error(`copySections: unknown section "${sectionId}"`)
-
-    return {
-      ...category,
-      id: `${prefix}-${category.id}`,
-      items: category.items
-        .filter((item) => !exclude.includes(item.id))
-        .map((item) => ({ ...item, ...overrides[item.id], id: `${prefix}-${item.id}`, ref: item.ref ?? item.id })),
-    }
-  })
-
-  const sourceIds = new Set(
-    categories.filter((c) => sections.includes(c.id)).flatMap((c) => c.items.map((item) => item.id)),
-  )
-  const unknown = [...exclude, ...Object.keys(overrides)].filter((id) => !sourceIds.has(id))
-  if (unknown.length) console.warn(`copySections(${prefix}): unknown item ids`, unknown)
-
-  return copied
-}
-
-/**
- * Re-use single dishes of another menu, in the order given — for a menu that
- * groups the same dishes into different sections. Ids and `ref` work as in
- * copySections.
- */
-export function copyItems(categories, { prefix, ids }) {
-  const byId = new Map(categories.flatMap((category) => category.items.map((item) => [item.id, item])))
-
-  return ids.map((id) => {
-    const item = byId.get(id)
-    if (!item) throw new Error(`copyItems: unknown item "${id}"`)
-    return { ...item, id: `${prefix}-${item.id}`, ref: item.ref ?? item.id }
-  })
+export function prefixIds(prefix, categories) {
+  return categories.map((category) => ({
+    ...category,
+    items: category.items.map((item) => ({ ...item, id: `${prefix}-${item.id}` })),
+  }))
 }
