@@ -1,3 +1,5 @@
+import { photo } from '../lib/photos.js'
+
 export const ROUTES = {
   home: '/',
   restaurant: '/restaurant',
@@ -17,16 +19,18 @@ export const BRAND = {
 
 export const HERO = {
   pageTitle: 'SILK INN Malda — Discover Our Menu',
-  eyebrow: 'Digital Menu Experience',
+  eyebrow: 'Digital Menu',
   title: 'Discover Our',
   titleAccent: 'Culinary World',
   intro:
-    'Welcome to SILK INN, Malda. Explore artisanal Continental cuisine, Italian pastas, gourmet entrées, and curated spirits crafted for hotel guests.',
+    'Welcome to SILK INN, Malda. Browse the Cocoon restaurant, the Bottoms Up bar and in-room dining — every dish and price in one place.',
+  // "Chef's Special - The king of kebabs" is how the menu describes it.
   feature: {
-    label: "Chef's Feature",
-    title: 'Continental Plated Delights & Italian Classics',
-    image: '/images/hero_culinary_spread.jpg',
-    alt: 'SILK INN Gastronomic Spread',
+    label: "Chef's Special",
+    title: 'Tandoori Murgh — The King of Kebabs',
+    image: photo('tandoori-chicken'),
+    alt: 'Tandoori Murgh',
+    href: '/dish/tandoori-murgh',
   },
 }
 

@@ -17,8 +17,7 @@ import { RESTAURANT_MENU } from './restaurantMenu.js'
 export const ROOMS = {
   pageTitle: 'SILK INN Malda — In-Room Dining',
   badge: 'In-Room',
-  tagline: 'Suite Service • Dial 9',
-  availability: '24/7 Available',
+  tagline: 'Served to Your Room',
   intro: {
     eyebrow: 'In-Room Dining',
     title: 'Dine in Your Room',
@@ -26,10 +25,6 @@ export const ROOMS = {
       'Whichever meal you choose, our executive chef has created unique culinary offerings for every guest of the Silk Inn.',
     image: photo('room-service'),
     alt: 'Room service tray',
-  },
-  service: {
-    howToOrder: 'Press 9 on phone',
-    delivery: 'Delivery: ~25 mins',
   },
   notice: '5% GST applicable · Leftover food parcels are charged extra · Ordered items cannot be cancelled.',
   empty: {

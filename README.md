@@ -26,8 +26,7 @@ All menu content lives in `src/data/` — no component changes needed.
 | `restaurantMenu.js` | The Cocoon restaurant menu: sections, dishes, prices. **The source for food on every menu.** |
 | `barMenu.js` | Bar drinks. Bar food is copied from the restaurant sections. |
 | `roomsMenu.js` | In-room dining: copies the restaurant sections and lists only what differs (Full / Half portions, items not served in rooms). |
-| `dishDetails.js` | Extra dish-page content: ingredients, cooking style, "You May Also Like" pairings. |
-| `site.js` | Hotel name, routes, home page text, bottom navigation. |
+| `site.js`, `venues.js` | Hotel name, routes, home page text and venue cards, bottom navigation. |
 
 - **Change a food price:** edit it in `restaurantMenu.js`. Bar and Rooms pick it up
   automatically, unless Rooms overrides that dish in `ROOM_OVERRIDES`.
@@ -35,6 +34,14 @@ All menu content lives in `src/data/` — no component changes needed.
   `[{ label: 'Full', price: 320 }, { label: 'Half', price: 190 }]`.
   An option can carry its own `diet` (`veg`, `nonveg`, or `other` for egg).
 - **Drinks** use `layout: 'list'` sections with price `columns` such as `['60 ml', '30 ml']`.
+
+## Logo & page transitions
+
+- The logo comes from `public/silk-inn-logo.png`, split into two layers in
+  `src/assets/brand/` (the orange butterfly and the "ilk Inn" lettering) so they
+  can animate separately. `shared/Logo.jsx` draws it; animations live in `src/index.css`.
+- `shared/PageTransition.jsx` shows the logo full-screen between pages. Timings are in
+  `src/lib/transition.js`. Visitors with "reduce motion" turned on skip it.
 
 ## Dish photos
 
@@ -71,5 +78,5 @@ src/
   UI/           small reusable primitives (Icon, Pill, Dot, InfoNote, ...)
   data/         menu content (see above)
   lib/          helpers (menu filtering, dish lookup, photos)
-public/         icons, robots.txt, manifest, share image, .htaccess
+public/         logo, icons, robots.txt, manifest, share image, .htaccess
 ```

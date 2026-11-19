@@ -18,7 +18,7 @@ function MenuSection({ category, theme = MENU_THEMES.warm }) {
   const anchor = categoryAnchor(id)
 
   return (
-    <section id={anchor} aria-labelledby={`${anchor}-title`} className="flex scroll-mt-40 flex-col gap-4">
+    <section id={anchor} aria-labelledby={`${anchor}-title`} className="flex scroll-mt-44 flex-col gap-4">
       <div className="flex items-end justify-between border-b border-line pb-2">
         <div>
           {eyebrow && <span className={cn('text-eyebrow font-semibold', theme.eyebrow)}>{eyebrow}</span>}

@@ -67,8 +67,8 @@ function DishDetails({ dish }) {
           </section>
 
           <InfoNote>
-            Freshly prepared to order by the SILK INN culinary team. Please inform your server or dial 9 for room
-            service regarding any dietary notes.
+            Freshly prepared to order by the SILK INN culinary team. Please tell our staff about any allergies or
+            dietary needs.
           </InfoNote>
         </div>
       </div>

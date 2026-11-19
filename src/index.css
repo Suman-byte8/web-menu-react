@@ -96,6 +96,50 @@
   --ease-swift: cubic-bezier(0.2, 0, 0, 1);
   --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --ease-relaxed: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Logo animations (see shared/Logo.jsx) → animate-logo-mark, ... */
+  --animate-logo-mark: logo-mark-in 900ms var(--ease-relaxed) both;
+  --animate-logo-word: logo-word-in 700ms var(--ease-smooth) 250ms both;
+  --animate-logo-flap: logo-flap 1400ms ease-in-out 900ms infinite;
+
+  /* Butterfly flutters in from below-left */
+  @keyframes logo-mark-in {
+    0% {
+      opacity: 0;
+      transform: translate(-8%, 10%) rotate(-16deg) scale(0.7);
+    }
+    60% {
+      opacity: 1;
+      transform: translate(1%, -2%) rotate(4deg) scale(1.03);
+    }
+    100% {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* "ilk Inn" is written in from left to right */
+  @keyframes logo-word-in {
+    from {
+      opacity: 0;
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      opacity: 1;
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  /* Gentle wing beat while the transition screen is up */
+  @keyframes logo-flap {
+    0%,
+    100% {
+      transform: perspective(600px) rotateY(0deg);
+    }
+    50% {
+      transform: perspective(600px) rotateY(24deg);
+    }
+  }
 }
 
 /* ==========================================================================

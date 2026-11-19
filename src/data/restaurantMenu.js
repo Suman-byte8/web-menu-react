@@ -146,7 +146,6 @@ export const RESTAURANT_MENU = [
     label: 'Salads',
     eyebrow: "Cocoon's Favourites",
     title: 'Salads & Condiments',
-    note: 'Garden Fresh',
     items: [
       dish('green-salad', 'Green Salad', 'veg', 75, {
         description: 'Garden-fresh green vegetable salad.',
@@ -156,12 +155,7 @@ export const RESTAURANT_MENU = [
         description: 'Cubes of salad vegetables tossed with Indian herbs & spices.',
         image: photo('kachumber'),
       }),
-      dish('chicken-hawaiian-salad', 'Chicken Hawaiian Salad', 'nonveg', 250, {
-        description:
-          'Fresh tropical salad with tender grilled chicken, juicy pineapple chunks, crisp lettuce, and tangy Hawaiian dressing.',
-        image: photo('chicken-salad'),
-        highlight: { label: 'Popular', tone: 'orange' },
-      }),
+      dish('chicken-hawaiian-salad', 'Chicken Hawaiian Salad', 'nonveg', 250, { image: photo('chicken-salad') }),
       dish('plain-curd', 'Plain Curd', 'veg', 70, { image: photo('curd') }),
       choice('raita', 'Raita', 'veg', versions(['Plain', 80], ['Mixed', 90]), { image: photo('raita') }),
       choice('roasted-papad', 'Roasted Papad', 'veg', versions(['Plain', 60], ['Masala', 90]), {
@@ -172,14 +166,11 @@ export const RESTAURANT_MENU = [
   {
     id: 'continental',
     label: 'Continental',
-    eyebrow: 'Munching & Starters',
-    title: 'Continental Starters',
-    note: 'Chef Specials',
+    eyebrow: 'Continental Menu',
+    title: 'Munching & Starters',
     items: [
       choice('tacos', 'Tacos with Chef Special Sauce', null, vegNonVeg(270, 290), {
-        description: 'Crispy taco shells filled with fresh vegetables or seasoned chicken, beans and chef special sauce.',
         image: photo('taco'),
-        highlight: { label: "Chef's Special", tone: 'gold' },
       }),
       dish('baked-veg-au-gratin', 'Baked Veg Au-Gratin', 'veg', 290, { image: photo('gratin') }),
       dish('cheese-ball', 'Cheese Ball with Chef Special Dip', 'veg', 380, { image: photo('fried-cheese') }),
@@ -190,9 +181,7 @@ export const RESTAURANT_MENU = [
         null,
         vegNonVeg(370, 370, ['Cottage Cheese', 'Chicken']),
         {
-          description: 'Skewered and char-grilled with bell peppers and onions, finished with teriyaki sauce.',
           image: photo('shashlik'),
-          highlight: { label: 'Popular', tone: 'orange' },
         },
       ),
       choice(
@@ -201,55 +190,36 @@ export const RESTAURANT_MENU = [
         null,
         vegNonVeg(370, 370, ['Cottage Cheese', 'Chicken']),
         {
-          description: 'Bite-sized crispy fried bites tossed in chef special sauce.',
           image: photo('popcorn-chicken'),
-          highlight: { label: 'Signature', tone: 'gold' },
         },
       ),
-      dish('chicken-roulade', 'Cheese Chicken Roulade with Cheese White Sauce', 'nonveg', 410, {
-        description: 'Rolled chicken breast filled with cheese, baked golden and served with cheese white sauce.',
-        highlight: { label: 'Signature', tone: 'gold' },
-      }),
+      dish('chicken-roulade', 'Cheese Chicken Roulade with Cheese White Sauce', 'nonveg', 410),
     ],
   },
   {
     id: 'pasta',
     label: 'Pasta',
-    eyebrow: 'Italian Classics',
+    eyebrow: 'Continental Menu',
     title: 'Pasta on Choice',
     note: 'Veg / Non-Veg',
     items: [
       choice('spaghetti-carbonara', 'Spaghetti alla Carbonara', null, vegNonVeg(290, 290), {
         size: 'md',
-        description: 'Classic Italian pasta tossed in rich parmesan cream sauce with herbs and cracked black pepper.',
         image: publicImage('spaghetti-carbonara.png'),
-        highlight: { label: 'Popular', tone: 'orange' },
       }),
-      choice('penne-al-funghi', 'Penne al Funghi', null, vegNonVeg(350, 370), {
-        size: 'md',
-        description: 'Penne tossed with wild mushrooms in a creamy white sauce.',
-        placeholder: { icon: 'restaurant', label: 'White Sauce', tone: 'gold' },
-      }),
+      choice('penne-al-funghi', 'Penne al Funghi', null, vegNonVeg(350, 370), { size: 'md' }),
       choice('penne-arrabbiata', 'Penne Arrabbiata', null, vegNonVeg(350, 370), {
         size: 'md',
-        description: 'Spicy tomato sauce infused with garlic, red chilli flakes and olive oil.',
         image: photo('arrabbiata'),
-        highlight: { label: 'Spicy Red', tone: 'orange' },
       }),
-      choice('mixed-sauce-pasta', 'Choice of Mixed Sauce Pasta', null, vegNonVeg(350, 370), {
-        size: 'md',
-        description: 'Creamy béchamel and tangy tomato sauce, with vegetables or chicken.',
-        placeholder: { icon: 'dinner_dining', label: 'Pink Sauce', tone: 'gold' },
-        highlight: { label: "Chef's Choice", tone: 'gold' },
-      }),
+      choice('mixed-sauce-pasta', 'Choice of Mixed Sauce Pasta', null, vegNonVeg(350, 370), { size: 'md' }),
     ],
   },
   {
     id: 'continental-mains',
     label: 'Conti Mains',
-    eyebrow: 'Signature Entrées',
-    title: 'Pre-Plated Continental',
-    note: 'Artisan Plating',
+    eyebrow: 'Continental Menu',
+    title: 'Pre-Plated Main Course',
     style: 'Pre-Plated',
     items: [
       {
@@ -258,11 +228,7 @@ export const RESTAURANT_MENU = [
         diet: 'nonveg',
         name: 'Grilled Chicken Steak with Espagnole Sauce',
         price: 450,
-        description:
-          'Succulent grilled chicken breast smothered in classic French Espagnole sauce, accompanied by buttery mashed potatoes and sautéed vegetables.',
         image: publicImage('grilled-chicken-steak.png'),
-        badge: { label: 'Popular', tone: 'accent' },
-        tags: ['Chicken Breast', 'Mashed Potatoes', 'Sautéed Greens'],
       },
       {
         id: 'chicken-stroganoff',
@@ -270,9 +236,7 @@ export const RESTAURANT_MENU = [
         diet: 'nonveg',
         name: 'Chicken Stroganoff with Pilaf Rice',
         price: 450,
-        description: 'Tender chicken sautéed with mushrooms in a rich, velvety sour cream sauce, served with pilaf rice.',
         image: photo('stroganoff'),
-        highlight: { label: 'Popular', tone: 'orange' },
       },
       {
         id: 'grilled-fish-steak',
@@ -280,11 +244,7 @@ export const RESTAURANT_MENU = [
         diet: 'nonveg',
         name: 'Grilled Fish Steak with Lemon Butter Sauce',
         price: 520,
-        description:
-          'Delicate fresh fish fillet grilled with Mediterranean herbs, served with velvety lemon butter sauce and steamed seasonal vegetables.',
         image: publicImage('grilled-fish-steak.png'),
-        badge: { label: 'Signature', tone: 'cream' },
-        tags: ['Fish Fillet', 'Lemon Butter', 'Steamed Veggies'],
       },
     ],
   },
@@ -352,9 +312,7 @@ export const RESTAURANT_MENU = [
       dish('mutton-boti-kebab', 'Mutton Boti Kebab', 'nonveg', 410, {
         description: 'Marinated in spiced yogurt and Indian spices, cooked in tandoor.',
       }),
-      choice('kebab-platter', 'Silk Inn Special Kebab Platter', null, vegNonVeg(650, 799), {
-        highlight: { label: 'House Special', tone: 'gold' },
-      }),
+      choice('kebab-platter', 'Silk Inn Special Kebab Platter', null, vegNonVeg(650, 799)),
       dish('tandoori-pomfret', 'Tandoori Pomfret', 'nonveg', 470),
       dish('tandoori-jhinga', 'Tandoori Jhinga', 'nonveg', 490),
     ],
@@ -457,7 +415,6 @@ export const RESTAURANT_MENU = [
     label: 'Indian Veg',
     eyebrow: 'Indian Main Course',
     title: 'Vegetarian',
-    note: 'Rich Gravies',
     items: [
       dish('paneer-butter-masala', 'Paneer Butter Masala', 'veg', 320, {
         description: 'Cubes of paneer cooked in rich, creamy cashewnut & tomato gravy.',
@@ -515,7 +472,6 @@ export const RESTAURANT_MENU = [
     label: 'Indian Non-Veg',
     eyebrow: 'Indian Main Course',
     title: 'Non-Vegetarian',
-    note: 'Curries & Masalas',
     items: [
       dish('fish-tikka-masala', 'Fish Tikka Masala', 'nonveg', 390, {
         description: 'Boneless fish fried & cooked in tomato & onion gravy.',
@@ -590,10 +546,8 @@ export const RESTAURANT_MENU = [
   {
     id: 'breads',
     label: 'Breads',
-    eyebrow: 'From the Tandoor',
+    eyebrow: 'Main Course',
     title: 'Breads',
-    note: 'Freshly Baked',
-    style: 'Clay Oven',
     items: [
       choice('roti', 'Roti', 'veg', versions(['Plain', 35], ['Butter', 40]), { image: photo('chapati') }),
       choice('naan', 'Naan', 'veg', versions(['Plain', 60], ['Butter', 65], ['Garlic', 75]), { image: photo('naan') }),
@@ -607,10 +561,9 @@ export const RESTAURANT_MENU = [
   {
     id: 'bengali',
     label: 'Bengali',
-    eyebrow: 'Bengali Traditional',
+    eyebrow: 'Bengali Traditional Menu',
     title: 'Bengali Specials',
-    note: 'Home Style',
-    style: 'Bengali Home Style',
+    style: 'Bengali Traditional',
     items: [
       dish('basanti-pulao', 'Basanti Pulao', 'veg', 210),
       dish('sona-moong-dal', 'Sona Moong Dal', 'veg', 200),
@@ -631,19 +584,11 @@ export const RESTAURANT_MENU = [
   {
     id: 'desserts',
     label: 'Desserts',
-    eyebrow: 'Sweet Endings',
+    eyebrow: "Cocoon's Favourites",
     title: 'Desserts',
-    note: 'Dolce & Mithai',
     items: [
-      dish('tiramisu', 'McVities & Honey Italian Tiramisu', 'veg', 200, {
-        description: 'Biscuit crust, luscious honey mascarpone cream and a rich espresso dusting.',
-        image: photo('tiramisu'),
-        highlight: { label: 'Signature', tone: 'gold' },
-      }),
-      dish('orange-mango-mousse', 'Orange / Mango Mousse', 'veg', 200, {
-        description: "Light and airy mousse of fresh orange or Malda's famous mangoes, whipped with dairy cream.",
-        highlight: { label: 'Malda Special', tone: 'olive' },
-      }),
+      dish('tiramisu', 'McVities & Honey Italian Tiramisu', 'veg', 200, { image: photo('tiramisu') }),
+      dish('orange-mango-mousse', 'Orange / Mango Mousse', 'veg', 200),
       dish('gulab-jamun-ice-cream', 'Hot Gulab Jamun with Ice Cream & Chocolate Sauce', 'veg', 170, {
         image: photo('gulab-jamun'),
       }),

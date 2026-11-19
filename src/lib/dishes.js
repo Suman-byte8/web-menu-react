@@ -1,5 +1,4 @@
 import { BAR_MENU } from '../data/barMenu.js'
-import { DISH_DETAILS } from '../data/dishDetails.js'
 import { RESTAURANT_MENU } from '../data/restaurantMenu.js'
 import { ROOMS_MENU } from '../data/roomsMenu.js'
 import { ROUTES } from '../data/site.js'
@@ -44,8 +43,8 @@ function availabilityOf(canonical) {
 }
 
 /**
- * Everything the detail page needs for one dish: the menu entry merged with
- * its DISH_DETAILS extras. Returns null for unknown ids and for drinks.
+ * Everything the detail page needs for one dish, taken from its menu entry.
+ * Returns null for unknown ids and for drinks.
  */
 export function getDish(id) {
   const entry = BY_ID.get(id)
@@ -53,45 +52,35 @@ export function getDish(id) {
 
   const { item, category, menu } = entry
   const canonical = canonicalId(item)
-  const details = DISH_DETAILS[canonical] ?? {}
 
   return {
     id: item.id,
     canonicalId: canonical,
-    name: details.fullName ?? item.name,
+    name: item.name,
     diets: itemDiets(item),
     price: priceRange(item),
     options: item.options ?? [],
     image: item.image,
     imageCredit: item.image ? photoCredit(item.image) : null,
     placeholder: item.placeholder,
-    description: details.description ?? item.description,
-    badge: details.badge ?? item.badge?.label ?? item.highlight?.label,
-    ingredients: details.ingredients ?? item.tags ?? [],
-    style: details.style ?? category.style ?? 'Chef Prepared',
+    description: item.description,
+    badge: item.badge?.label,
+    ingredients: item.tags ?? [],
+    style: category.style ?? 'Chef Prepared',
     availability: availabilityOf(canonical),
     category: category.title,
     eyebrow: category.eyebrow,
     menu: { label: menu.label, route: menu.route },
-    relatedIds: details.related ?? [],
   }
 }
 
-/** Prefer the copy of a dish on `menu` (e.g. the Rooms version) when it exists. */
-function onMenu(id, menu) {
-  const local = ENTRIES.find((entry) => entry.menu === menu && canonicalId(entry.item) === id)
-  return local ? local.item.id : id
-}
-
 /**
- * Up to `limit` dishes for "You May Also Like": the curated pairings first,
- * then other dishes from the same category, then from the same menu.
- * Pairings stay on the guest's current menu where possible.
+ * Up to `limit` dishes for "You May Also Like": other dishes from the same
+ * section first, then from the rest of the same menu.
  */
 export function getRelatedDishes(dish, limit = 3) {
   const { category, menu } = BY_ID.get(dish.id)
   const candidates = [
-    ...dish.relatedIds.map((id) => onMenu(id, menu)),
     ...category.items.map((item) => item.id),
     ...menu.categories.flatMap((c) => c.items.map((item) => item.id)),
   ]

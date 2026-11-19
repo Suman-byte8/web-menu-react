@@ -35,8 +35,7 @@ const beer = (id, name, size, price) => withOptions(id, name, [{ label: size, pr
 export const BAR = {
   pageTitle: 'SILK INN Malda — Bottoms Up Bar Menu',
   badge: 'Bar Lounge',
-  tagline: 'Bottoms Up • Bar & Restaurant',
-  hours: '4 PM - 11 PM',
+  tagline: 'Bottoms Up',
   intro: {
     eyebrow: 'Hard & Soft Beverages',
     title: 'Bottoms Up',
@@ -191,7 +190,6 @@ const DRINKS = [
     label: 'Cocktails',
     eyebrow: 'Mixology',
     title: 'Cocktails',
-    note: 'Shaken & Stirred',
     layout: 'list',
     items: [
       drink('whisky-sour', 'Whisky Sour', 310),
@@ -217,7 +215,6 @@ const DRINKS = [
     label: 'Shots',
     eyebrow: 'Mixology',
     title: 'Shots',
-    note: 'Bottoms Up!',
     layout: 'list',
     items: [
       drink('blue-kamikaze', 'Blue Kamikaze', 200, { description: 'Vodka base' }),

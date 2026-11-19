@@ -8,8 +8,11 @@ import PageLayout from '../../shared/PageLayout.jsx'
 import { EmptyState } from '../../UI/index.js'
 import CategoryTabs from './CategoryTabs.jsx'
 import DietFilter from './DietFilter.jsx'
+import ItemCount from './ItemCount.jsx'
 import MenuSection from './MenuSection.jsx'
 import { MENU_THEMES } from './themes.js'
+
+const renderItemCount = (count) => <ItemCount count={count} />
 
 /**
  * Template shared by every menu page (restaurant, bar, ...).
@@ -17,7 +20,8 @@ import { MENU_THEMES } from './themes.js'
  *   config          { pageTitle, badge, tagline, empty: { icon, title, message } }
  *   categories      full, unfiltered category list
  *   theme           key of MENU_THEMES
- *   renderTrailing  (visibleCount) => element for the header's right side
+ *   renderTrailing  (visibleCount) => element for the header's right side;
+ *                   defaults to an item count
  *   intro           optional element shown above the sections
  *   mainClassName   gap between sections
  */
@@ -38,7 +42,7 @@ function MenuPage({ config, categories, theme = 'warm', renderTrailing, intro, m
           badge={config.badge}
           badgeClassName={t.badge}
           tagline={config.tagline}
-          trailing={renderTrailing?.(countDishes(visible))}
+          trailing={(renderTrailing ?? renderItemCount)(countDishes(visible))}
         >
           <DietFilter value={diet} onChange={setDiet} />
           <CategoryTabs categories={visible} hoverClassName={t.tabHover} />

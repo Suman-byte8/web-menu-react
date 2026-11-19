@@ -24,7 +24,7 @@ const ACCENTS = {
   },
 }
 
-function VenueCard({ href, accent = 'orange', badge, title, description, mood, cta, image, alt }) {
+function VenueCard({ href, accent = 'orange', badge, title, description, detail, cta, image, alt }) {
   const theme = ACCENTS[accent]
 
   return (
@@ -54,7 +54,7 @@ function VenueCard({ href, accent = 'orange', badge, title, description, mood, c
       <div className="flex items-center justify-between border-t border-cream bg-white p-4">
         <div className="flex items-center gap-2">
           <Dot className={theme.dot} />
-          <span className="font-body text-body-sm font-medium">{mood}</span>
+          <span className="font-body text-body-sm font-medium">{detail}</span>
         </div>
         <span
           className={cn(

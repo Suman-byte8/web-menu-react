@@ -1,5 +1,6 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router'
 import { ROUTES } from './data/site.js'
+import { transitionLoader } from './lib/transition.js'
 import BarPage from './pages/BarPage.jsx'
 import DishPage from './pages/DishPage.jsx'
 import HomePage from './pages/HomePage.jsx'
@@ -8,22 +9,27 @@ import RoomsPage from './pages/RoomsPage.jsx'
 import DockLayout from './shared/DockLayout.jsx'
 import RootLayout from './shared/RootLayout.jsx'
 
+// Every page gets transitionLoader so the logo screen can cover the page swap.
+const page = (path, element) => ({ path, element, loader: transitionLoader })
+
 const router = createBrowserRouter([
   {
     element: <RootLayout />,
+    // Shown for a moment before the first page is ready (same ivory as the logo screen).
+    hydrateFallbackElement: <div className="fixed inset-0 bg-warm-ivory" />,
     children: [
       {
         // Pages with the bottom navigation dock
         element: <DockLayout />,
         children: [
-          { path: ROUTES.home, element: <HomePage /> },
-          { path: ROUTES.restaurant, element: <RestaurantPage /> },
-          { path: ROUTES.bar, element: <BarPage /> },
-          { path: ROUTES.rooms, element: <RoomsPage /> },
+          page(ROUTES.home, <HomePage />),
+          page(ROUTES.restaurant, <RestaurantPage />),
+          page(ROUTES.bar, <BarPage />),
+          page(ROUTES.rooms, <RoomsPage />),
         ],
       },
       // Dish detail has its own minimal header and no dock
-      { path: ROUTES.dish, element: <DishPage /> },
+      page(ROUTES.dish, <DishPage />),
       // Unknown paths go back to the home page.
       { path: '*', element: <Navigate to={ROUTES.home} replace /> },
     ],
