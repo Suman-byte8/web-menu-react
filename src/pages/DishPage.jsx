@@ -6,7 +6,6 @@ import {
   FavouriteButton,
   InfoTile,
   RelatedDishes,
-  ServiceNote,
 } from '../components/dish/index.js'
 import { ROUTES } from '../data/site.js'
 import { useDocumentTitle } from '../hooks/useDocumentTitle.js'
@@ -14,7 +13,7 @@ import { getDish, getRelatedDishes } from '../lib/dishes.js'
 import BackButton from '../shared/BackButton.jsx'
 import MinimalHeader from '../shared/MinimalHeader.jsx'
 import PageLayout from '../shared/PageLayout.jsx'
-import { EmptyState } from '../UI/index.js'
+import { EmptyState, InfoNote } from '../UI/index.js'
 
 const WIDE = 'lg:max-w-4xl'
 
@@ -67,10 +66,10 @@ function DishDetails({ dish }) {
             />
           </section>
 
-          <ServiceNote>
+          <InfoNote>
             Freshly prepared to order by the SILK INN culinary team. Please inform your server or dial 9 for room
             service regarding any dietary notes.
-          </ServiceNote>
+          </InfoNote>
         </div>
       </div>
 

@@ -1,9 +1,18 @@
 /**
- * In-room dining menu. Same dish shape as restaurantMenu.js / barMenu.js.
+ * In-room dining menu (source: Room_compressed.pdf).
+ *
+ * The in-room menu is the Cocoon restaurant menu with a few differences, so
+ * the sections are taken from restaurantMenu.js (one price change updates
+ * both menus) and only the differences are listed here:
+ *   - many curries and Tandoori Murgh come in Full / Half portions
+ *   - Paneer Tikka Lababdar isn't served in rooms
+ *   - coffee is a flat ₹70, Blossom has no mango, Lachha Paratha is
+ *     Methi / Pudina only
  */
 
-import { publicImage as img } from '../lib/assets.js'
+import { copySections } from '../lib/menu.js'
 import { photo } from '../lib/photos.js'
+import { RESTAURANT_MENU } from './restaurantMenu.js'
 
 export const ROOMS = {
   pageTitle: 'SILK INN Malda — In-Room Dining',
@@ -11,16 +20,18 @@ export const ROOMS = {
   tagline: 'Suite Service • Dial 9',
   availability: '24/7 Available',
   intro: {
-    eyebrow: 'Hospitality Suite',
-    title: 'In-Room Dining',
-    description: 'Freshly plated and brought directly to your suite with silver service.',
-    image: img('rooms_dining_comfort.jpg'),
-    alt: 'In-Room Dining Service',
+    eyebrow: 'In-Room Dining',
+    title: 'Dine in Your Room',
+    description:
+      'Whichever meal you choose, our executive chef has created unique culinary offerings for every guest of the Silk Inn.',
+    image: photo('room-service'),
+    alt: 'Room service tray',
   },
   service: {
     howToOrder: 'Press 9 on phone',
     delivery: 'Delivery: ~25 mins',
   },
+  notice: '5% GST applicable · Leftover food parcels are charged extra · Ordered items cannot be cancelled.',
   empty: {
     icon: 'room_service',
     title: 'No items found',
@@ -28,155 +39,79 @@ export const ROOMS = {
   },
 }
 
-export const ROOMS_MENU = [
-  {
-    id: 'comfort-mains',
-    label: 'Comfort Entrées',
-    eyebrow: 'Hearty Plated Meals',
-    title: 'Comfort Entrées',
-    note: 'Pre-Plated',
-    items: [
-      {
-        id: 'room-grilled-chicken-steak',
-        ref: 'grilled-chicken-steak',
-        variant: 'featured',
-        size: 'md',
-        diet: 'nonveg',
-        name: 'Grilled Chicken Steak',
-        price: 410,
-        description:
-          'Tender chicken steak served hot with rich French sauce, creamy mashed potatoes, and sautéed greens.',
-        image: img('grilled-chicken-steak.png'),
-        badge: { label: 'Guest Favorite', tone: 'cream' },
-      },
-      {
-        id: 'room-chicken-stroganoff',
-        ref: 'chicken-stroganoff',
-        variant: 'compact',
-        diet: 'nonveg',
-        name: 'Chicken Stroganoff',
-        price: 410,
-        description:
-          'Tender chicken sautéed with fresh mushrooms in creamy sour sauce, served with buttered rice.',
-        image: photo('stroganoff'),
-        highlight: { label: 'Comfort Bowl', tone: 'gold' },
-      },
-      {
-        id: 'room-grilled-fish-steak',
-        ref: 'grilled-fish-steak',
-        variant: 'compact',
-        diet: 'nonveg',
-        name: 'Grilled Fish Steak',
-        price: 470,
-        description: 'Fresh herb-crusted fish fillet with lemon butter emulsion and steamed vegetables.',
-        image: img('grilled-fish-steak.png'),
-        highlight: { label: 'Signature', tone: 'gold' },
-      },
+const fullHalf = (full, half) => ({
+  options: [
+    { label: 'Full', price: full },
+    { label: 'Half', price: half },
+  ],
+})
+
+/** Prices and details that differ from the restaurant menu. */
+const ROOM_OVERRIDES = {
+  // Breakfast & beverages
+  'breakfast-coffee': { price: 70, options: undefined },
+  coffee: { price: 70, options: undefined, description: 'Regular or black.' },
+  blossom: { description: 'Orange or pineapple.' },
+  'lachha-paratha': {
+    options: [
+      { label: 'Methi', price: 65 },
+      { label: 'Pudina', price: 70 },
     ],
   },
-  {
-    id: 'suite-pastas',
-    label: 'Warm Pastas',
-    eyebrow: 'Comfort in a Bowl',
-    title: 'Warm Pastas',
-    note: 'Steaming Hot',
-    items: [
-      {
-        id: 'room-spaghetti-carbonara',
-        ref: 'spaghetti-carbonara',
-        variant: 'compact',
-        diet: 'veg',
-        name: 'Spaghetti Carbonara',
-        price: 290,
-        description: 'Tossed in creamy parmesan and cracked black pepper with garden herbs.',
-        image: img('spaghetti-carbonara.png'),
-        highlight: { label: 'Room Favorite', tone: 'orange' },
-      },
-      {
-        id: 'room-mixed-sauce-pasta-veg',
-        ref: 'mixed-sauce-pasta',
-        variant: 'compact',
-        diet: 'veg',
-        name: 'Mixed Sauce Pasta (Veg)',
-        price: 350,
-        description: 'Rich blend of béchamel and pomodoro with garden veggies and cheese.',
-        placeholder: { icon: 'dinner_dining', label: 'Pink Sauce', tone: 'gold' },
-        highlight: { label: 'Chef Special', tone: 'gold' },
-      },
-      {
-        id: 'room-mixed-sauce-pasta-chicken',
-        ref: 'mixed-sauce-pasta',
-        variant: 'compact',
-        diet: 'nonveg',
-        name: 'Mixed Sauce Pasta (Chicken)',
-        price: 370,
-        description: 'Cream and tomato fusion sauce loaded with juicy chicken cubes.',
-        placeholder: { icon: 'dinner_dining', label: 'Pink Sauce', tone: 'gold' },
-        highlight: { label: 'Chef Special', tone: 'orange' },
-      },
-    ],
-  },
-  {
-    id: 'room-bites',
-    label: 'Starters & Bites',
-    eyebrow: 'Finger Food',
-    title: 'Starters & Bites',
-    note: 'Suite Snacking',
-    items: [
-      {
-        id: 'room-paneer-shashlik',
-        ref: 'shashlik',
-        variant: 'compact',
-        diet: 'veg',
-        name: 'Paneer Shashlik Stick',
-        price: 350,
-        description: 'Char-grilled spiced cottage cheese with peppers and onions.',
-        image: photo('paneer-tikka'),
-        highlight: { label: 'Popular Veg', tone: 'gold' },
-      },
-      {
-        id: 'room-chicken-shashlik',
-        ref: 'shashlik',
-        variant: 'compact',
-        diet: 'nonveg',
-        name: 'Chicken Shashlik Stick',
-        price: 370,
-        description: 'Herb-marinated grilled chicken skewers with bell peppers.',
-        image: photo('shashlik'),
-        highlight: { label: 'Popular Non-Veg', tone: 'orange' },
-      },
-    ],
-  },
-  {
-    id: 'night-desserts',
-    label: 'Desserts',
-    eyebrow: 'Sweet Treats',
-    title: 'Desserts',
-    note: 'Chilled in Room',
-    items: [
-      {
-        id: 'room-tiramisu',
-        ref: 'tiramisu',
-        variant: 'compact',
-        size: 'sm',
-        diet: 'veg',
-        name: 'Italian Tiramisu',
-        price: 200,
-        description: 'Honey mascarpone cream with espresso dust.',
-        image: photo('tiramisu'),
-        highlight: { label: 'Veg', tone: 'ink' },
-      },
-      {
-        id: 'room-mango-mousse',
-        ref: 'orange-mango-mousse',
-        variant: 'compact',
-        size: 'sm',
-        diet: 'veg',
-        name: 'Malda Mango Mousse',
-        price: 200,
-        description: 'Fluffy local mango purée whipped with cream.',
-        highlight: { label: 'Malda Treat', tone: 'ink' },
-      },
-    ],
-  },
-]
+
+  // Tandoor
+  'tandoori-murgh': fullHalf(550, 300),
+
+  // Pan Asian
+  'paneer-in-sauce': fullHalf(310, 180),
+  'fish-in-sauce': fullHalf(370, 230),
+  'prawn-in-sauce': fullHalf(470, 270),
+  'chicken-in-sauce': fullHalf(330, 200),
+
+  // Indian vegetarian
+  'paneer-butter-masala': fullHalf(320, 190),
+  'kadhai-paneer': fullHalf(320, 190),
+  'shahi-paneer': fullHalf(330, 200),
+  'palak-paneer': fullHalf(320, 190),
+  'mushroom-babycorn-masala': fullHalf(340, 190),
+  'veg-jhal-frezi': fullHalf(220, 140),
+  'dum-aloo': fullHalf(240, 150),
+  'dal-tadkewali': fullHalf(210, 130),
+  'yellow-dal-fry': fullHalf(210, 130),
+  'dal-makhani': fullHalf(270, 160),
+
+  // Indian non-vegetarian
+  'fish-tikka-masala': fullHalf(390, 230),
+  'home-style-chicken-curry': fullHalf(300, 180),
+  'kadhai-chicken': fullHalf(310, 180),
+  'chicken-do-pyaza': fullHalf(310, 180),
+  'chicken-butter-masala': fullHalf(340, 190),
+  'home-style-mutton-curry': fullHalf(410, 240),
+  'mutton-keema-masala': fullHalf(440, 270),
+  'mutton-kasha': fullHalf(410, 240),
+}
+
+export const ROOMS_MENU = copySections(RESTAURANT_MENU, {
+  prefix: 'room',
+  sections: [
+    'breakfast',
+    'soups',
+    'salads',
+    'continental',
+    'pasta',
+    'continental-mains',
+    'tandoor',
+    'chinese',
+    'noodles-rice',
+    'pan-asian',
+    'indian-veg',
+    'indian-nonveg',
+    'rice',
+    'breads',
+    'bengali',
+    'desserts',
+    'beverages',
+  ],
+  exclude: ['paneer-tikka-lababdar'],
+  overrides: ROOM_OVERRIDES,
+})

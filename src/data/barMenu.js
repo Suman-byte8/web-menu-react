@@ -12,6 +12,7 @@
  * restaurantMenu.js rather than copied — one price change updates both.
  */
 
+import { copySections } from '../lib/menu.js'
 import { photo } from '../lib/photos.js'
 import { RESTAURANT_MENU } from './restaurantMenu.js'
 
@@ -339,10 +340,6 @@ const BAR_FOOD_SECTIONS = [
   'desserts',
 ]
 
-const FOOD = RESTAURANT_MENU.filter((category) => BAR_FOOD_SECTIONS.includes(category.id)).map((category) => ({
-  ...category,
-  id: `bar-${category.id}`,
-  items: category.items.map((item) => ({ ...item, id: `bar-${item.id}`, ref: item.id })),
-}))
+const FOOD = copySections(RESTAURANT_MENU, { prefix: 'bar', sections: BAR_FOOD_SECTIONS })
 
 export const BAR_MENU = [...DRINKS, ...FOOD]

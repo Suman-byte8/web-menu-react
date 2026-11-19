@@ -58,3 +58,35 @@ export function formatPriceRange({ min, max }) {
 export function categoryAnchor(id) {
   return `cat-${id}`
 }
+
+/**
+ * Re-use sections of another menu (e.g. the restaurant's) on a second menu.
+ * Items get `${prefix}-${id}` ids and a `ref` back to the source dish, so
+ * dish details are shared and availability lists both menus.
+ *
+ *   sections   source category ids, in display order
+ *   exclude    source item ids this menu doesn't serve
+ *   overrides  { [sourceItemId]: patch } — e.g. different prices
+ */
+export function copySections(categories, { prefix, sections, exclude = [], overrides = {} }) {
+  const copied = sections.map((sectionId) => {
+    const category = categories.find((c) => c.id === sectionId)
+    if (!category) throw new Error(`copySections: unknown section "${sectionId}"`)
+
+    return {
+      ...category,
+      id: `${prefix}-${category.id}`,
+      items: category.items
+        .filter((item) => !exclude.includes(item.id))
+        .map((item) => ({ ...item, ...overrides[item.id], id: `${prefix}-${item.id}`, ref: item.ref ?? item.id })),
+    }
+  })
+
+  const sourceIds = new Set(
+    categories.filter((c) => sections.includes(c.id)).flatMap((c) => c.items.map((item) => item.id)),
+  )
+  const unknown = [...exclude, ...Object.keys(overrides)].filter((id) => !sourceIds.has(id))
+  if (unknown.length) console.warn(`copySections(${prefix}): unknown item ids`, unknown)
+
+  return copied
+}

@@ -550,6 +550,13 @@ export const DISH_PHOTOS = {
     "license": "CC BY-SA 4.0",
     "page": "https://commons.wikimedia.org/wiki/File:Whiskey_Old_Fashioned1.jpg"
   },
+  "room-service": {
+    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a2/Boon_Hotel_%2B_Spa_-_Sarah_Stierch_-_April_2019_-_9.jpg/500px-Boon_Hotel_%2B_Spa_-_Sarah_Stierch_-_April_2019_-_9.jpg",
+    "article": "Room service",
+    "author": "Missvain",
+    "license": "CC BY 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Boon_Hotel_%2B_Spa_-_Sarah_Stierch_-_April_2019_-_9.jpg"
+  },
   "gulab-jamun": {
     "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Gulab-jamun-wallpaper-1.jpg/500px-Gulab-jamun-wallpaper-1.jpg",
     "article": "Gulab jamun",

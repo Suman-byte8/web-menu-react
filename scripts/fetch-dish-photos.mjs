@@ -108,6 +108,7 @@ const PHOTO_SOURCES = {
 
   // Bar
   'old-fashioned': ['Old fashioned (cocktail)', 'Whisky sour'],
+  'room-service': ['Room service'],
 
   // Desserts
   'gulab-jamun': ['Gulab jamun'],
