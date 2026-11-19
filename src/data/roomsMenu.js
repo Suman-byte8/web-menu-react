@@ -18,11 +18,13 @@ export const ROOMS = {
     eyebrow: 'In-Room Dining',
     title: 'Dine in Your Room',
     description:
-      'Whichever meal you choose, our executive chef has created unique culinary offerings for every guest of the Silk Inn.',
+      'Whichever meal you choose, our executive chef has created unique culinary offerings for all guests of the Silk Inn to enjoy throughout the hotel, so relax and take in one of the most exciting dining experiences in the city.',
     image: photo('room-service'),
     alt: 'Room service tray',
   },
-  notice: '5% GST applicable · Leftover food parcels are charged extra · Ordered items cannot be cancelled.',
+  /** Shown on its own line, on the in-room menu only. Menu prices are before GST. */
+  gst: '5% GST applicable',
+  notice: 'Leftover food parcels are charged extra · Ordered items cannot be cancelled.',
   empty: {
     icon: 'room_service',
     title: 'No items found',

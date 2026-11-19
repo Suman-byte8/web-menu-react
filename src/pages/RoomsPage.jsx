@@ -12,7 +12,10 @@ function RoomsPage() {
       intro={
         <>
           <MenuIntro {...ROOMS.intro} />
-          <InfoNote icon="receipt_long">{ROOMS.notice}</InfoNote>
+          <InfoNote icon="receipt_long">
+            <strong className="block font-semibold text-deep-charcoal">{ROOMS.gst}</strong>
+            {ROOMS.notice}
+          </InfoNote>
         </>
       }
     />
