@@ -2,7 +2,7 @@ import { useFavourite } from '../../hooks/useFavourite.js'
 import { cn } from '../../lib/cn.js'
 import { Icon } from '../../UI/index.js'
 
-/** Heart toggle in the header; the choice is remembered on this device. */
+/** Floating heart; turns red when saved. The choice is remembered on this device. */
 function FavouriteButton({ dishId, dishName }) {
   const [isFavourite, toggle] = useFavourite(dishId)
 
@@ -12,13 +12,12 @@ function FavouriteButton({ dishId, dishName }) {
       onClick={toggle}
       aria-pressed={isFavourite}
       aria-label={isFavourite ? `Remove ${dishName} from favourites` : `Add ${dishName} to favourites`}
-      className="icon-button"
+      className={cn(
+        'flex size-11 shrink-0 items-center justify-center rounded-full transition-all duration-300 ease-relaxed active:scale-90',
+        isFavourite ? 'bg-nonveg shadow-[0_6px_22px_-4px_rgb(240_72_62/0.8)]' : 'glass',
+      )}
     >
-      <Icon
-        name="favorite"
-        filled={isFavourite}
-        className={cn('text-body-lg', isFavourite ? 'text-nonveg-red' : 'text-deep-charcoal')}
-      />
+      <Icon name="favorite" filled className={cn('text-[21px] transition-transform', isFavourite ? 'scale-110 text-white' : 'text-white/90')} />
     </button>
   )
 }

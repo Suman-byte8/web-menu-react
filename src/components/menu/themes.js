@@ -1,24 +1,28 @@
 /**
  * Colour themes for menu pages. Full class strings so Tailwind detects them.
- *   warm    restaurant: orange accents, olive eyebrows
- *   lounge  bar: olive accents, charcoal section labels
- *   suite   rooms: soft-gold accents, charcoal section labels
- * Section notes use the same orange NoteChip on every menu so they stand out.
+ * Controls (filters, active chips, prices) stay orange on every menu; the
+ * theme only tints the hero lighting and section eyebrows.
+ *   warm    restaurant: orange
+ *   lounge  bar: golden, a darker, moodier hero
+ *   suite   rooms: warm amber
  */
 export const MENU_THEMES = {
   warm: {
-    badge: 'text-deep-charcoal',
-    tabHover: 'hover:border-vibrant-orange',
-    eyebrow: 'text-muted-olive',
+    icon: 'restaurant',
+    eyebrow: 'text-ember',
+    heroGlow: 'bg-[radial-gradient(90%_55%_at_85%_100%,rgb(255_138_0/0.3),transparent_70%)]',
+    heroShade: 'from-night via-night/55 to-night/5',
   },
   lounge: {
-    badge: 'text-muted-olive',
-    tabHover: 'hover:border-muted-olive',
-    eyebrow: 'text-deep-charcoal',
+    icon: 'local_bar',
+    eyebrow: 'text-gold',
+    heroGlow: 'bg-[radial-gradient(90%_55%_at_15%_100%,rgb(229_166_75/0.3),transparent_70%)]',
+    heroShade: 'from-night via-night/70 to-night/25',
   },
   suite: {
-    badge: 'text-soft-gold',
-    tabHover: 'hover:border-soft-gold',
-    eyebrow: 'text-deep-charcoal',
+    icon: 'room_service',
+    eyebrow: 'text-honey',
+    heroGlow: 'bg-[radial-gradient(90%_55%_at_85%_100%,rgb(255_179_71/0.28),transparent_70%)]',
+    heroShade: 'from-night via-night/60 to-night/10',
   },
 }

@@ -1,28 +1,23 @@
-import BrandTitle from './BrandTitle.jsx'
+import { Link } from 'react-router'
+import { ROUTES } from '../data/site.js'
+import Logo from './Logo.jsx'
 
 /**
- * Sticky page header.
- *   leading         element before the logo (back button)
- *   badge           small label beside the logo
- *   badgeClassName  text colour for the badge
- *   tagline         uppercase line under the badge
- *   logoClassName   logo height (default h-12)
- *   trailing        element on the right (item count)
- *   children        extra rows under the brand row (filters, tabs)
+ * Top row of a page: an action on each side, floating on the page.
+ *   leading   element on the left (back button); the logo when omitted
+ *   center    element in the middle (e.g. the logo when there is a back button)
+ *   trailing  element on the right (location, favourite)
  */
-function Header({ leading, badge, badgeClassName, tagline, logoClassName, trailing, children }) {
+function Header({ leading, center, trailing }) {
   return (
-    <header className="frosted sticky top-0 z-40 border-b border-line bg-warm-ivory/95 py-3">
-      <div className="app-container">
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex min-w-0 items-center gap-2.5">
-            {leading}
-            <BrandTitle badge={badge} badgeClassName={badgeClassName} tagline={tagline} logoClassName={logoClassName} />
-          </div>
-          {trailing && <div className="flex shrink-0 items-center gap-2">{trailing}</div>}
-        </div>
-        {children}
-      </div>
+    <header className="app-container flex items-center justify-between gap-3 pt-[max(env(safe-area-inset-top),0.875rem)] pb-1">
+      {leading ?? (
+        <Link to={ROUTES.home} aria-label="Silk Inn — home">
+          <Logo className="h-12" />
+        </Link>
+      )}
+      {center}
+      {trailing}
     </header>
   )
 }

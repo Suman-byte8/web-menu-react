@@ -12,6 +12,13 @@ export const RESTAURANT = {
   pageTitle: 'SILK INN Malda — Cocoon Restaurant Menu',
   badge: 'Restaurant',
   tagline: 'Cocoon • Multi-Cuisine',
+  intro: {
+    eyebrow: 'Cocoon • Multi-Cuisine',
+    title: 'Cocoon Restaurant',
+    description: 'Breakfast, Continental, Tandoor, Chinese, Indian & Bengali — breakfast, lunch & dinner.',
+    image: photo('butter-chicken'),
+    alt: 'Chicken butter masala',
+  },
   empty: {
     icon: 'restaurant_menu',
     title: 'No items found',

@@ -3,38 +3,49 @@ import { NAV_ITEMS } from '../data/site.js'
 import { cn } from '../lib/cn.js'
 import { Icon } from '../UI/index.js'
 
-const ACCENTS = {
-  orange: 'text-vibrant-orange',
-  olive: 'text-muted-olive',
-  gold: 'text-soft-gold',
-}
-
-function NavItem({ href, icon, label, accent = 'orange' }) {
+function NavItem({ href, icon, label }) {
   return (
     <NavLink
       to={href}
       end
       className={({ isActive }) =>
         cn(
-          'flex flex-col items-center gap-0.5 px-3 py-1 font-body text-deep-charcoal transition-colors duration-200 ease-swift',
-          isActive ? 'font-semibold' : 'hover:text-vibrant-orange',
+          'relative flex flex-1 flex-col items-center gap-1 py-2 font-body transition-colors duration-300 ease-swift active:scale-95',
+          isActive ? 'text-ember' : 'text-smoke hover:text-mist',
         )
       }
     >
       {({ isActive }) => (
         <>
-          <Icon name={icon} className={cn('text-title-lg', isActive && ACCENTS[accent])} />
-          <span className="text-label-sm">{label}</span>
+          {isActive && (
+            <span
+              aria-hidden="true"
+              className="absolute top-1 left-1/2 size-10 -translate-x-1/2 rounded-full bg-ember/25 blur-xl"
+            />
+          )}
+          <Icon
+            name={icon}
+            filled={isActive}
+            className={cn(
+              'relative text-[22px] transition-all duration-300 ease-swift',
+              isActive && 'drop-shadow-[0_0_8px_rgb(255_138_0/0.8)]',
+            )}
+          />
+          <span className="relative text-[10px] leading-3 font-semibold tracking-wide">{label}</span>
         </>
       )}
     </NavLink>
   )
 }
 
+/** Floating glass dock at the bottom of the screen; the active tab glows orange. */
 function BottomNav() {
   return (
-    <nav aria-label="Primary" className="fixed inset-x-4 bottom-3 z-50 mx-auto max-w-md">
-      <div className="frosted flex items-center justify-around rounded-2xl border border-line bg-white/95 px-2 py-1.5 shadow-lg">
+    <nav
+      aria-label="Primary"
+      className="pointer-events-none fixed inset-x-0 bottom-0 z-50 px-4 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]"
+    >
+      <div className="glass-bar pointer-events-auto mx-auto flex max-w-md items-center rounded-[24px] px-2 py-1.5">
         {NAV_ITEMS.map((item) => (
           <NavItem key={item.href} {...item} />
         ))}

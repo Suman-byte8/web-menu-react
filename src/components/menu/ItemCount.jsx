@@ -1,10 +1,11 @@
 import { Pill } from '../../UI/index.js'
 
-/** "160 Items" pill for a menu header; updates as the diet filter changes. */
+/** Glass "160 items" pill; updates as the filters change. */
 function ItemCount({ count }) {
   return (
-    <Pill variant="cream" className="px-2.5" aria-live="polite">
-      {count} {count === 1 ? 'Item' : 'Items'}
+    <Pill variant="glass" className="h-11 px-4 text-label-md" aria-live="polite">
+      <span className="font-bold text-ember tabular-nums">{count}</span>
+      {count === 1 ? 'item' : 'items'}
     </Pill>
   )
 }

@@ -15,7 +15,7 @@ function BackButton({ to = ROUTES.home, history = false, label = 'Back to home' 
   if (!history) {
     return (
       <Link to={to} aria-label={label} className="icon-button">
-        <Icon name="arrow_back" className="text-body-lg" />
+        <Icon name="arrow_back" className="text-[20px]" />
       </Link>
     )
   }
@@ -30,7 +30,7 @@ function BackButton({ to = ROUTES.home, history = false, label = 'Back to home' 
       onClick={() => (canGoBack ? navigate(-1) : navigate(to))}
       className="icon-button"
     >
-      <Icon name="arrow_back" className="text-body-lg" />
+      <Icon name="arrow_back" className="text-[20px]" />
     </button>
   )
 }

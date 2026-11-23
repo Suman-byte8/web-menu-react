@@ -1,21 +1,18 @@
 import { DIETS } from '../../data/diets.js'
 import { cn } from '../../lib/cn.js'
-import { Dot } from '../../UI/index.js'
+import { DietMark } from './DietDots.jsx'
 
 const SIZES = {
-  sm: { badge: 'bg-white', dot: 'sm' },
-  lg: { badge: 'gap-1.5 bg-white/95 px-3 py-1 shadow-xs backdrop-blur-sm', dot: 'md' },
+  sm: 'px-2 py-1',
+  lg: 'gap-1.5 px-3 py-1.5',
 }
 
-/** White "● VEG" / "● NON-VEG" badge used on photos. */
+/** Glass "▣ VEG" / "▣ NON-VEG" badge used on photos. */
 function DietBadge({ diet, size = 'sm' }) {
-  const d = DIETS[diet]
-  const s = SIZES[size]
-
   return (
-    <span className={cn('badge border font-bold', s.badge, d.text, d.badgeBorder)}>
-      <Dot size={s.dot} className={d.dot} />
-      {d.label}
+    <span className={cn('badge glass font-bold text-white', SIZES[size])}>
+      <DietMark diet={diet} size="sm" />
+      {DIETS[diet].label}
     </span>
   )
 }

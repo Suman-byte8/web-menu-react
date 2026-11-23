@@ -6,14 +6,14 @@ function ColumnPrice({ item, column }) {
   const option = item.options?.find((o) => o.label === column)
 
   return (
-    <span className="w-16 shrink-0 text-right font-headline text-title-md font-bold tabular-nums">
+    <span className="w-16 shrink-0 text-right font-headline text-title-md font-bold text-honey tabular-nums">
       {option ? (
         <>
           <span className="sr-only">{column}: </span>
           {formatPrice(option.price)}
         </>
       ) : (
-        <span aria-hidden="true" className="text-line">
+        <span aria-hidden="true" className="text-white/20">
           —
         </span>
       )}
@@ -22,19 +22,21 @@ function ColumnPrice({ item, column }) {
 }
 
 /**
- * Printed-menu style list for drinks: one card, one row per item, with
+ * Printed-menu style list for drinks: one glass card, one row per item, with
  * optional price columns (e.g. 60 ml / 30 ml) matched to option labels.
  */
 function PriceList({ items, columns }) {
   return (
-    <div className="surface-card px-4 py-1 shadow-xs">
+    <div className="glass-card rounded-[24px] px-4 py-1">
       {columns && (
-        <div aria-hidden="true" className="flex items-center justify-end gap-2 border-b border-cream py-2.5">
-          <Icon name="local_drink" filled className="mr-auto text-body-lg text-vibrant-orange" />
+        <div aria-hidden="true" className="flex items-center justify-end gap-2 border-b border-white/8 py-3">
+          <span className="mr-auto flex size-8 items-center justify-center rounded-full bg-ember/12 text-ember">
+            <Icon name="local_bar" filled className="text-[17px]" />
+          </span>
           {columns.map((column) => (
             <span
               key={column}
-              className="w-16 rounded-full border border-vibrant-orange/30 bg-vibrant-orange/10 py-0.5 text-center font-body text-label-md font-bold whitespace-nowrap text-deep-charcoal"
+              className="w-16 rounded-full border border-ember/25 bg-ember/10 py-1 text-center font-body text-label-sm font-bold whitespace-nowrap text-honey"
             >
               {column}
             </span>
@@ -42,18 +44,18 @@ function PriceList({ items, columns }) {
         </div>
       )}
 
-      <ul className="divide-y divide-cream">
+      <ul className="divide-y divide-white/6">
         {items.map((item) => (
-          <li key={item.id} className="flex items-center gap-2 py-2.5">
+          <li key={item.id} className="flex items-center gap-2 py-3">
             <div className="min-w-0 flex-1">
-              <p className="font-headline text-title-md font-bold">{item.name}</p>
-              {item.description && <p className="font-body text-body-sm text-ink-soft">{item.description}</p>}
+              <p className="font-headline text-title-md font-semibold text-white">{item.name}</p>
+              {item.description && <p className="font-body text-body-sm text-smoke">{item.description}</p>}
             </div>
 
             {columns ? (
               columns.map((column) => <ColumnPrice key={column} item={item} column={column} />)
             ) : (
-              <span className="shrink-0 font-headline text-title-md font-bold whitespace-nowrap tabular-nums">
+              <span className="shrink-0 font-headline text-title-md font-bold whitespace-nowrap text-honey tabular-nums">
                 {formatPriceRange(priceRange(item))}
               </span>
             )}

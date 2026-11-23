@@ -2,19 +2,26 @@ import { cn } from '../../lib/cn.js'
 import { formatPriceRange } from '../../lib/menu.js'
 
 /**
- * Price text: a single amount or a range ("₹160 – 180").
- * `pill` wraps it in a white floating chip for photo cards.
+ * Orange price text: a single amount or a range ("₹160 – 180").
+ *   large  bigger figures, for photo cards and the dish page
+ *   pill   wrapped in a floating glass chip
  */
-function PriceTag({ amount, max = amount, pill = false, className }) {
-  const text = formatPriceRange({ min: amount, max })
-
-  if (!pill) return <span className={cn('text-price whitespace-nowrap', className)}>{text}</span>
-
-  return (
-    <div className={cn('rounded-full border border-line bg-white px-3 py-1 shadow-xs', className)}>
-      <span className="text-price whitespace-nowrap">{text}</span>
-    </div>
+function PriceTag({ amount, max = amount, large = false, pill = false, className }) {
+  const text = (
+    <span
+      className={cn(
+        'whitespace-nowrap',
+        large ? 'font-headline text-headline-md-mobile font-extrabold text-ember tabular-nums' : 'text-price',
+        !pill && className,
+      )}
+    >
+      {formatPriceRange({ min: amount, max })}
+    </span>
   )
+
+  if (!pill) return text
+
+  return <div className={cn('glass rounded-full px-3 py-1', className)}>{text}</div>
 }
 
 export default PriceTag

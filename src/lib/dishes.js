@@ -2,7 +2,7 @@ import { BAR_MENU } from '../data/barMenu.js'
 import { RESTAURANT_MENU } from '../data/restaurantMenu.js'
 import { ROOMS_MENU } from '../data/roomsMenu.js'
 import { ROUTES } from '../data/site.js'
-import { itemDiets, priceRange } from './menu.js'
+import { categoryAnchor, categoryIcon, itemDiets, priceRange, searchMenu } from './menu.js'
 import { photoCredit } from './photos.js'
 
 /** Every menu. Each lists its own items; a dish page belongs to exactly one menu. */
@@ -53,6 +53,7 @@ export function getDish(id) {
     badge: item.badge?.label,
     ingredients: item.tags ?? [],
     style: category.style ?? 'Chef Prepared',
+    icon: categoryIcon(category),
     availability: menu.label,
     category: category.title,
     eyebrow: category.eyebrow,
@@ -85,4 +86,28 @@ export function getRelatedDishes(dish, limit = 3) {
   }
 
   return related
+}
+
+/**
+ * Search every menu at once (home page search). Drinks have no detail page,
+ * so their results link to their section of the menu instead.
+ * Returns the first `limit` matches and the total number found.
+ */
+export function searchAllMenus(query, limit = 12) {
+  const results = MENUS.flatMap((menu) =>
+    searchMenu(menu.categories, query).flatMap((category) =>
+      category.items.map((item) => ({
+        id: item.id,
+        name: item.name,
+        image: item.image,
+        placeholder: item.placeholder,
+        diets: itemDiets(item),
+        price: priceRange(item),
+        category: category.title,
+        menu: menu.label,
+        href: hasDetailPage(item) ? dishPath(item.id) : `${menu.route}#${categoryAnchor(category.id)}`,
+      })),
+    ),
+  )
+  return { results: results.slice(0, limit), total: results.length }
 }

@@ -40,6 +40,7 @@ export const BAR = {
     image: photo('old-fashioned'),
     alt: 'Whisky cocktail',
   },
+  search: 'Search drinks & dishes',
   empty: {
     icon: 'wine_bar',
     title: 'No items found',

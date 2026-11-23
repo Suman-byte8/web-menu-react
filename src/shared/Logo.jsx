@@ -6,6 +6,7 @@ import { cn } from '../lib/cn.js'
  * The Silk Inn logo, built from two stacked layers of the original artwork
  * (the orange butterfly and the "ilk Inn" lettering) so they can animate
  * separately. Size it with a height class; the width follows the artwork.
+ * The lettering is dark in the artwork, so it is drawn white for the dark UI.
  *
  *   animation  'enter'   butterfly flutters in, lettering is written in
  *              'splash'  same, then the wings keep beating (transition screen)
@@ -37,7 +38,7 @@ function Logo({ animation = 'enter', className }) {
         alt=""
         draggable="false"
         className={cn(
-          'absolute inset-0 size-full select-none',
+          'absolute inset-0 size-full brightness-0 invert select-none',
           animated && 'animate-logo-word motion-reduce:animate-none',
         )}
       />

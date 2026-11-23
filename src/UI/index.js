@@ -1,4 +1,3 @@
-export { default as Dot } from './Dot.jsx'
 export { default as EmptyState } from './EmptyState.jsx'
 export { default as Icon } from './Icon.jsx'
 export { default as IconText } from './IconText.jsx'

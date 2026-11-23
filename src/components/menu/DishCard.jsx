@@ -12,7 +12,8 @@ const CARDS = {
 
 /**
  * Picks the card layout from `dish.variant`. Dishes link to their detail
- * page; drinks (text cards) don't have one.
+ * page; drinks (text cards) don't have one. The link is the hover `group`
+ * the cards use for their image zoom and arrow highlight.
  */
 function DishCard({ dish }) {
   const Card = CARDS[dish.variant] ?? CompactDishCard
@@ -22,7 +23,7 @@ function DishCard({ dish }) {
   return (
     <Link
       to={dishPath(dish.id)}
-      className="block rounded-2xl transition-shadow duration-200 ease-swift hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vibrant-orange"
+      className="pressable group block h-full rounded-[22px] hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember"
     >
       <Card dish={dish} />
     </Link>

@@ -49,7 +49,7 @@ function PageTransition() {
     <div
       aria-hidden="true"
       className={cn(
-        'paper-texture fixed inset-0 z-[100] flex items-center justify-center bg-warm-ivory transition-opacity ease-smooth',
+        'ambient fixed inset-0 z-[100] flex items-center justify-center bg-night transition-opacity ease-smooth',
         visible ? 'opacity-100 duration-[260ms]' : 'pointer-events-none opacity-0 duration-[380ms]',
       )}
     >

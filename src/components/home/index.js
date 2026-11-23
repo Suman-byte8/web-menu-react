@@ -1,3 +1,7 @@
 export { default as BrandNote } from './BrandNote.jsx'
+export { default as ChefPicks } from './ChefPicks.jsx'
 export { default as HeroSection } from './HeroSection.jsx'
+export { default as HomeSearch } from './HomeSearch.jsx'
 export { default as MenuCollections } from './MenuCollections.jsx'
+export { default as PromoCard } from './PromoCard.jsx'
+export { default as QuickLinks } from './QuickLinks.jsx'

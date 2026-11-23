@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { cn } from '../lib/cn.js'
+import { largePhoto } from '../lib/photos.js'
 
 const SCRIMS = {
   soft: 'image-scrim',
@@ -8,25 +9,30 @@ const SCRIMS = {
 }
 
 /**
- * Image with an optional dark gradient scrim and overlaid content.
+ * Colour-graded image with an optional dark scrim and overlaid content.
+ *   large    try a sharper copy first (full-width photos), then the normal one
+ *   scrim    "soft" | "strong" | "none"
+ *   eager    load straight away (photos above the fold)
  * If there is no image, or it fails to load, the image is dropped and
- * `fallback` (if any) shows on the cream backdrop instead, so the card never
+ * `fallback` (if any) shows on the dark backdrop instead, so the card never
  * shows a broken-image icon or stray alt text.
- * `scrim`: "soft" | "strong" | "none"
  */
-function ImageOverlay({ src, alt, scrim = 'soft', fallback, className, imgClassName, children }) {
-  const [failed, setFailed] = useState(false)
-  const showImage = Boolean(src) && !failed
+function ImageOverlay({ src, alt, scrim = 'soft', large = false, eager = false, fallback, className, imgClassName, children }) {
+  const sources = [large && largePhoto(src), src].filter(Boolean)
+  const [attempt, setAttempt] = useState(0)
+  const current = sources[attempt]
 
   return (
-    <div className={cn('relative overflow-hidden bg-cream', className)}>
-      {showImage ? (
+    <div className={cn('relative overflow-hidden bg-graphite', className)}>
+      {current ? (
         <img
-          src={src}
+          src={current}
           alt={alt}
-          loading="lazy"
-          onError={() => setFailed(true)}
-          className={cn('size-full object-cover', imgClassName)}
+          loading={eager ? 'eager' : 'lazy'}
+          fetchPriority={eager ? 'high' : undefined}
+          decoding="async"
+          onError={() => setAttempt((n) => n + 1)}
+          className={cn('photo-grade size-full object-cover', imgClassName)}
         />
       ) : (
         fallback

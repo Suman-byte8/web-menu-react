@@ -1,60 +1,73 @@
-import { useMemo, useState } from 'react'
+import { useDeferredValue, useMemo, useState } from 'react'
 import { ALL_DIETS } from '../../data/diets.js'
 import { useDocumentTitle } from '../../hooks/useDocumentTitle.js'
-import { countDishes, filterMenuByDiet } from '../../lib/menu.js'
-import BackButton from '../../shared/BackButton.jsx'
-import Header from '../../shared/Header.jsx'
+import { countDishes, filterMenuByDiet, searchMenu } from '../../lib/menu.js'
 import PageLayout from '../../shared/PageLayout.jsx'
 import { EmptyState } from '../../UI/index.js'
 import CategoryTabs from './CategoryTabs.jsx'
 import DietFilter from './DietFilter.jsx'
-import ItemCount from './ItemCount.jsx'
+import MenuHero from './MenuHero.jsx'
+import MenuSearch from './MenuSearch.jsx'
 import MenuSection from './MenuSection.jsx'
 import { MENU_THEMES } from './themes.js'
 
-const renderItemCount = (count) => <ItemCount count={count} />
-
 /**
- * Template shared by every menu page (restaurant, bar, ...).
+ * Template shared by every menu page (restaurant, bar, rooms).
  *
- *   config          { pageTitle, badge, tagline, empty: { icon, title, message } }
- *   categories      full, unfiltered category list
- *   theme           key of MENU_THEMES
- *   renderTrailing  (visibleCount) => element for the header's right side;
- *                   defaults to an item count
- *   intro           optional element shown above the sections
- *   mainClassName   gap between sections
+ *   config      { pageTitle, intro: { eyebrow, title, description, image, alt },
+ *                 search?, empty: { icon, title, message } }
+ *   categories  full, unfiltered category list
+ *   theme       key of MENU_THEMES
+ *   notice      optional element shown above the sections (e.g. GST note)
  */
-function MenuPage({ config, categories, theme = 'warm', renderTrailing, intro, mainClassName = 'gap-8' }) {
+function MenuPage({ config, categories, theme = 'warm', notice }) {
   useDocumentTitle(config.pageTitle)
 
   const [diet, setDiet] = useState(ALL_DIETS)
-  const visible = useMemo(() => filterMenuByDiet(categories, diet), [categories, diet])
+  const [query, setQuery] = useState('')
+  const deferredQuery = useDeferredValue(query)
+
+  const visible = useMemo(
+    () => searchMenu(filterMenuByDiet(categories, diet), deferredQuery),
+    [categories, diet, deferredQuery],
+  )
   const t = MENU_THEMES[theme]
+  const searching = deferredQuery.trim() !== ''
   const { empty } = config
 
   return (
     <PageLayout
-      mainClassName={mainClassName}
+      mainClassName="gap-10 pt-5"
       header={
-        <Header
-          leading={<BackButton />}
-          badge={config.badge}
-          badgeClassName={t.badge}
-          tagline={config.tagline}
-          trailing={(renderTrailing ?? renderItemCount)(countDishes(visible))}
-        >
-          <DietFilter value={diet} onChange={setDiet} />
-          <CategoryTabs categories={visible} hoverClassName={t.tabHover} />
-        </Header>
+        <>
+          <MenuHero {...config.intro} count={countDishes(visible)} theme={t} />
+
+          <div className="app-container mt-5">
+            <MenuSearch value={query} onChange={setQuery} placeholder={config.search ?? 'Search dishes'} />
+          </div>
+
+          {/* Filters float at the top of the screen while the menu scrolls. */}
+          <div className="sticky top-0 z-40 mt-3 pt-[max(env(safe-area-inset-top),0.5rem)] pb-1">
+            <div className="app-container">
+              <div className="glass-bar flex flex-col gap-1.5 rounded-[26px] p-1.5">
+                <DietFilter value={diet} onChange={setDiet} />
+                {visible.length > 0 && <CategoryTabs categories={visible} />}
+              </div>
+            </div>
+          </div>
+        </>
       }
     >
-      {intro}
+      {notice}
       {visible.length > 0 ? (
-        visible.map((category) => <MenuSection key={category.id} category={category} theme={t} />)
+        <div key={diet} className="flex animate-rise flex-col gap-10 motion-reduce:animate-none">
+          {visible.map((category) => (
+            <MenuSection key={category.id} category={category} theme={t} />
+          ))}
+        </div>
       ) : (
-        <EmptyState icon={empty.icon} title={empty.title}>
-          {empty.message}
+        <EmptyState icon={searching ? 'search_off' : empty.icon} title={empty.title}>
+          {searching ? `Nothing on this menu matches “${deferredQuery.trim()}”.` : empty.message}
         </EmptyState>
       )}
     </PageLayout>

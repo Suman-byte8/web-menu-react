@@ -9,6 +9,15 @@ export function photo(key) {
   return entry?.src
 }
 
+/**
+ * A sharper copy of a Commons photo for large, full-width use (heroes,
+ * featured cards). The stored URLs are 500px thumbnails; Commons also serves
+ * a 960px step. Returns null when there is no larger copy to try.
+ */
+export function largePhoto(src) {
+  return src && /\/500px-[^/]+$/.test(src) ? src.replace(/\/500px-([^/]+)$/, '/960px-$1') : null
+}
+
 /** { author, license, page } for a photo URL, or null for the hotel's own photos. */
 export function photoCredit(src) {
   return BY_SRC.get(src) ?? null

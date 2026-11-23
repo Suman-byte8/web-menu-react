@@ -15,8 +15,8 @@ const page = (path, element) => ({ path, element, loader: transitionLoader })
 const router = createBrowserRouter([
   {
     element: <RootLayout />,
-    // Shown for a moment before the first page is ready (same ivory as the logo screen).
-    hydrateFallbackElement: <div className="fixed inset-0 bg-warm-ivory" />,
+    // Shown for a moment before the first page is ready (same dark as the logo screen).
+    hydrateFallbackElement: <div className="fixed inset-0 bg-night" />,
     children: [
       {
         // Pages with the bottom navigation dock

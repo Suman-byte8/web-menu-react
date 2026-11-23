@@ -42,6 +42,38 @@ export function filterMenuByDiet(categories, diet) {
     .filter((category) => category.items.length > 0)
 }
 
+/** Lower-case, accent-free text for matching ("Crème" → "creme"). */
+const normalise = (text) =>
+  String(text ?? '')
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+
+/**
+ * Keep only items whose name, description or versions match every word of
+ * `query`. A word that matches a section title ("soup", "biryani") keeps the
+ * whole section. Empty sections are dropped.
+ */
+export function searchMenu(categories, query) {
+  const words = normalise(query).split(/\s+/).filter(Boolean)
+  if (!words.length) return categories
+
+  return categories
+    .map((category) => {
+      const section = normalise(`${category.title} ${category.label} ${category.eyebrow ?? ''}`)
+      return {
+        ...category,
+        items: category.items.filter((item) => {
+          const text = `${section} ${normalise(
+            [item.name, item.description, ...(item.options ?? []).map((option) => option.label)].join(' '),
+          )}`
+          return words.every((word) => text.includes(word))
+        }),
+      }
+    })
+    .filter((category) => category.items.length > 0)
+}
+
 export function countDishes(categories) {
   return categories.reduce((total, category) => total + category.items.length, 0)
 }
@@ -61,6 +93,32 @@ export function noteIcon(note) {
   if (/\d\s*ml\b|bottle|litre/i.test(note)) return 'local_drink'
   if (/\bpcs\b/i.test(note)) return 'restaurant'
   return 'info'
+}
+
+/** Material icon for a menu section, picked from its name. */
+const CATEGORY_ICONS = [
+  [/breakfast/, 'egg_alt'],
+  [/salad/, 'eco'],
+  [/soup/, 'soup_kitchen'],
+  [/dessert|sweet/, 'icecream'],
+  [/pasta/, 'dinner_dining'],
+  [/biryani|rice/, 'rice_bowl'],
+  [/bread|roti|naan/, 'bakery_dining'],
+  [/noodle|chinese|asian|wok/, 'ramen_dining'],
+  [/appetizer|starter|tandoor|kebab|munch/, 'outdoor_grill'],
+  [/bengali|fish/, 'set_meal'],
+  [/malt|scotch|whisk/, 'liquor'],
+  [/wine/, 'wine_bar'],
+  [/beer/, 'sports_bar'],
+  [/vodka|rum|gin|liqueur|cocktail/, 'local_bar'],
+  [/mocktail|soft|juice|water|soda|shake/, 'local_drink'],
+  [/beverage|tea|coffee|thirst/, 'local_cafe'],
+  [/main|curry|indian|veg/, 'skillet'],
+]
+
+export function categoryIcon(category) {
+  const text = `${category.label} ${category.title}`.toLowerCase()
+  return CATEGORY_ICONS.find(([pattern]) => pattern.test(text))?.[1] ?? 'restaurant'
 }
 
 export function categoryAnchor(id) {

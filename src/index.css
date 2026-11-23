@@ -3,94 +3,92 @@
 /* ==========================================================================
    DESIGN TOKENS
    Every token below becomes a Tailwind class automatically, e.g.
-   --color-cream        → bg-cream, text-cream, border-cream
+   --color-ember        → bg-ember, text-ember, border-ember/40
    --text-label-sm      → text-label-sm  (size + line-height + tracking + weight)
    --font-headline      → font-headline
    ========================================================================== */
 @theme {
-  /* Brand palette */
-  --color-warm-ivory: #fff9ec;
-  --color-cream: #f5ebd8;
-  --color-vibrant-orange: #b25200;
-  --color-deep-charcoal: #24211d;
-  --color-muted-olive: #434720;
-  --color-soft-gold: #876426;
-  --color-white: #ffffff;
+  /* Backgrounds: near-black to charcoal */
+  --color-night: #0b0b0d;
+  --color-coal: #121214;
+  --color-graphite: #18181b;
 
-  /* Semantic aliases */
-  --color-line: #dacfba;          /* hairline borders */
-  --color-ink-soft: #38342e;      /* secondary text */
+  /* Accents */
+  --color-ember: #ff8a00; /* primary orange */
+  --color-honey: #ffb347; /* amber */
+  --color-gold: #e5a64b; /* golden accent */
 
-  /* Dietary markers */
-  --color-veg-green: #15803d;
-  --color-nonveg-red: #b91c1c;
-  --color-other-amber: #b45309;
+  /* Text on dark */
+  --color-mist: #c4c4c4; /* secondary */
+  --color-smoke: #888888; /* muted */
 
-  /* Typefaces */
-  --font-headline: "Fraunces", ui-serif, Georgia, serif;
+  /* Dietary markers (tuned for dark backgrounds) */
+  --color-veg: #2fbf71;
+  --color-nonveg: #f0483e;
+  --color-other: #ffb347;
+
+  /* Typeface */
+  --font-headline: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 
   /* Type scale */
-  --text-display-lg: 44px;
+  --text-display-lg: 48px;
   --text-display-lg--line-height: 52px;
-  --text-display-lg--letter-spacing: -0.5px;
-  --text-display-lg--font-weight: 600;
-  --text-display-lg-mobile: 32px;
-  --text-display-lg-mobile--line-height: 40px;
-  --text-display-lg-mobile--letter-spacing: -0.5px;
-  --text-display-lg-mobile--font-weight: 600;
+  --text-display-lg--letter-spacing: -1.5px;
+  --text-display-lg--font-weight: 700;
+  --text-display-lg-mobile: 38px;
+  --text-display-lg-mobile--line-height: 42px;
+  --text-display-lg-mobile--letter-spacing: -1.2px;
+  --text-display-lg-mobile--font-weight: 700;
   --text-display-md: 36px;
-  --text-display-md--line-height: 44px;
-  --text-display-md--letter-spacing: -0.25px;
-  --text-display-md--font-weight: 600;
-  --text-display-md-mobile: 28px;
+  --text-display-md--line-height: 42px;
+  --text-display-md--letter-spacing: -1px;
+  --text-display-md--font-weight: 700;
+  --text-display-md-mobile: 30px;
   --text-display-md-mobile--line-height: 36px;
-  --text-display-md-mobile--letter-spacing: -0.25px;
-  --text-display-md-mobile--font-weight: 600;
+  --text-display-md-mobile--letter-spacing: -0.8px;
+  --text-display-md-mobile--font-weight: 700;
 
   --text-headline-lg: 28px;
   --text-headline-lg--line-height: 34px;
-  --text-headline-lg--font-weight: 600;
+  --text-headline-lg--letter-spacing: -0.5px;
+  --text-headline-lg--font-weight: 700;
   --text-headline-lg-mobile: 24px;
   --text-headline-lg-mobile--line-height: 30px;
-  --text-headline-lg-mobile--font-weight: 600;
+  --text-headline-lg-mobile--letter-spacing: -0.4px;
+  --text-headline-lg-mobile--font-weight: 700;
   --text-headline-md: 22px;
   --text-headline-md--line-height: 28px;
-  --text-headline-md--font-weight: 600;
+  --text-headline-md--letter-spacing: -0.3px;
+  --text-headline-md--font-weight: 700;
   --text-headline-md-mobile: 20px;
   --text-headline-md-mobile--line-height: 26px;
-  --text-headline-md-mobile--font-weight: 600;
+  --text-headline-md-mobile--letter-spacing: -0.3px;
+  --text-headline-md-mobile--font-weight: 700;
 
-  --text-title-lg: 18px;
-  --text-title-lg--line-height: 24px;
-  --text-title-lg--letter-spacing: 0.2px;
-  --text-title-lg--font-weight: 600;
+  --text-title-lg: 17px;
+  --text-title-lg--line-height: 23px;
+  --text-title-lg--letter-spacing: -0.1px;
+  --text-title-lg--font-weight: 700;
   --text-title-md: 15px;
-  --text-title-md--line-height: 22px;
-  --text-title-md--letter-spacing: 0.1px;
+  --text-title-md--line-height: 21px;
   --text-title-md--font-weight: 600;
 
   --text-body-lg: 16px;
   --text-body-lg--line-height: 24px;
   --text-body-md: 14px;
-  --text-body-md--line-height: 20px;
-  --text-body-sm: 12px;
-  --text-body-sm--line-height: 16px;
+  --text-body-md--line-height: 21px;
+  --text-body-sm: 12.5px;
+  --text-body-sm--line-height: 18px;
 
   --text-label-md: 13px;
   --text-label-md--line-height: 18px;
-  --text-label-md--letter-spacing: 0.5px;
+  --text-label-md--letter-spacing: 0.2px;
   --text-label-md--font-weight: 600;
-  --text-label-sm: 10px;
+  --text-label-sm: 10.5px;
   --text-label-sm--line-height: 14px;
-  --text-label-sm--letter-spacing: 0.5px;
+  --text-label-sm--letter-spacing: 0.4px;
   --text-label-sm--font-weight: 600;
-
-  /* Radii */
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
 
   /* Motion */
   --ease-swift: cubic-bezier(0.2, 0, 0, 1);
@@ -101,6 +99,9 @@
   --animate-logo-mark: logo-mark-in 900ms var(--ease-relaxed) both;
   --animate-logo-word: logo-word-in 700ms var(--ease-smooth) 250ms both;
   --animate-logo-flap: logo-flap 1400ms ease-in-out 900ms infinite;
+
+  /* Content settling in after a filter / search change → animate-rise */
+  --animate-rise: rise 420ms var(--ease-relaxed) both;
 
   /* Butterfly flutters in from below-left */
   @keyframes logo-mark-in {
@@ -140,6 +141,17 @@
       transform: perspective(600px) rotateY(24deg);
     }
   }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
 }
 
 /* ==========================================================================
@@ -148,94 +160,192 @@
 @layer base {
   html {
     font-family: var(--font-body);
-    /* Fraunces is loaded up to semibold (600); never fake a heavier bold. */
-    font-synthesis-weight: none;
+    color-scheme: dark;
+    background-color: var(--color-night);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
     min-width: 320px;
     min-height: 100vh;
     margin: 0;
-    background-color: var(--color-warm-ivory);
-    color: var(--color-deep-charcoal);
+    /* Transparent on purpose: <html> carries the base colour, and an opaque
+       body would paint over each page's fixed ambient light (z-index -10). */
+    background-color: transparent;
+    color: #ffffff;
+  }
+
+  ::selection {
+    background-color: rgb(255 138 0 / 0.35);
+    color: #ffffff;
+  }
+
+  /* Hide the native clear button; the search field draws its own. */
+  input[type="search"]::-webkit-search-cancel-button {
+    appearance: none;
   }
 }
 
 /* ==========================================================================
    GLOBAL UTILITY CLASSES
-   Reusable class names you can use anywhere and combine with variants,
-   e.g. <div className="surface-card hover:border-vibrant-orange">.
+   Reusable class names you can use anywhere and combine with variants.
    ========================================================================== */
 
-/* Layout */
+/* Layout: a phone-width column that widens on tablets and desktops */
 @utility app-container {
-  @apply mx-auto w-full max-w-md px-4;
+  @apply mx-auto w-full max-w-md px-4 md:max-w-3xl md:px-6 lg:max-w-5xl;
 }
 
-/* Backgrounds */
-@utility paper-texture {
-  background-image: radial-gradient(rgb(135 100 38 / 0.08) 1px, transparent 0);
-  background-size: 16px 16px;
+/* Backgrounds ------------------------------------------------------------ */
+
+/* Fixed ambient lighting behind every page: warm, out-of-focus restaurant
+   glow (bokeh) over a dark brown-to-black base. Glass surfaces pick it up. */
+@utility ambient {
+  background:
+    radial-gradient(42% 26% at 12% 4%, rgb(255 138 0 / 0.3), transparent 70%),
+    radial-gradient(36% 22% at 92% 14%, rgb(255 110 20 / 0.2), transparent 70%),
+    radial-gradient(30% 18% at 70% 46%, rgb(229 166 75 / 0.1), transparent 70%),
+    radial-gradient(45% 26% at 8% 72%, rgb(255 138 0 / 0.12), transparent 70%),
+    radial-gradient(55% 30% at 95% 102%, rgb(255 138 0 / 0.16), transparent 70%),
+    linear-gradient(180deg, #1c130c 0%, #120e0b 40%, var(--color-night) 100%);
 }
 
-@utility frosted {
-  @apply backdrop-blur-md;
-}
-
+/* Fade photos into the page: dark at the bottom, clear at the top. */
 @utility image-scrim {
-  @apply bg-linear-to-t from-deep-charcoal/90 via-deep-charcoal/30 to-transparent;
+  @apply bg-linear-to-t from-night via-night/50 to-transparent;
 }
 
 @utility image-scrim-strong {
-  @apply bg-linear-to-t from-deep-charcoal via-deep-charcoal/40 to-transparent;
+  @apply bg-linear-to-t from-night via-night/70 to-night/10;
 }
 
-/* Surfaces */
-@utility surface-card {
-  @apply rounded-2xl border border-line bg-white;
+/* One colour grade for every photo, so images from different sources sit
+   together: slightly deeper, warmer and more contrasty. */
+@utility photo-grade {
+  filter: saturate(1.12) contrast(1.06) brightness(0.9) sepia(0.06);
 }
 
-@utility surface-cream {
-  @apply rounded-2xl border border-line bg-cream;
+/* Glass ------------------------------------------------------------------- */
+
+/* Frosted glass for floating UI over photos and content: buttons, pills,
+   info panels. Uses backdrop blur, so keep it to a handful per screen. */
+@utility glass {
+  background-color: rgb(255 255 255 / 0.08);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgb(255 255 255 / 0.1);
+  box-shadow:
+    0 8px 32px rgb(0 0 0 / 0.3),
+    inset 0 1px 0 rgb(255 255 255 / 0.06);
 }
 
-/* Typography */
+/* Darker glass for bars that float over scrolling content (filters, dock). */
+@utility glass-bar {
+  background-color: rgb(30 24 20 / 0.86);
+  -webkit-backdrop-filter: blur(28px) saturate(170%);
+  backdrop-filter: blur(28px) saturate(170%);
+  border: 1px solid rgb(255 255 255 / 0.08);
+  box-shadow:
+    0 14px 40px rgb(0 0 0 / 0.5),
+    inset 0 1px 0 rgb(255 255 255 / 0.06);
+}
+
+/* Smoky glass for text panels laid over photos: darker, so text stays
+   readable whatever the photo underneath. */
+@utility glass-panel {
+  background-color: rgb(28 22 18 / 0.62);
+  -webkit-backdrop-filter: blur(26px) saturate(170%);
+  backdrop-filter: blur(26px) saturate(170%);
+  border: 1px solid rgb(255 255 255 / 0.1);
+  box-shadow:
+    0 16px 48px rgb(0 0 0 / 0.45),
+    inset 0 1px 0 rgb(255 255 255 / 0.08);
+}
+
+/* Glass look for repeated cards: translucent, so the warm ambient light shows
+   through. No backdrop blur — behind a card there is only the smooth page
+   gradient, so blur would cost scroll performance and change nothing. */
+@utility glass-card {
+  background-color: rgb(255 255 255 / 0.045);
+  background-image: linear-gradient(160deg, rgb(255 255 255 / 0.08), rgb(255 255 255 / 0.01) 55%);
+  border: 1px solid rgb(255 255 255 / 0.09);
+  box-shadow:
+    0 14px 34px -18px rgb(0 0 0 / 0.8),
+    inset 0 1px 0 rgb(255 255 255 / 0.07);
+}
+
+/* Selected tile / chip: orange-tinted glass with an orange rim and glow. */
+@utility glass-active {
+  background-color: rgb(255 138 0 / 0.2);
+  background-image: linear-gradient(160deg, rgb(255 179 71 / 0.28), rgb(255 138 0 / 0.08));
+  border: 1px solid rgb(255 138 0 / 0.75);
+  box-shadow:
+    0 0 22px -4px rgb(255 138 0 / 0.55),
+    inset 0 1px 0 rgb(255 255 255 / 0.15);
+  color: #ffffff;
+}
+
+/* Orange buttons and active pills: orange-to-amber fill with a soft glow. */
+@utility fill-ember {
+  background-image: linear-gradient(135deg, #ffa53a, var(--color-ember) 50%, #f06a00);
+  color: #ffffff;
+  text-shadow: 0 1px 1px rgb(120 50 0 / 0.35);
+  box-shadow:
+    0 8px 22px -8px rgb(255 138 0 / 0.75),
+    inset 0 1px 0 rgb(255 255 255 / 0.35);
+}
+
+/* Typography --------------------------------------------------------------- */
+
 @utility text-eyebrow {
-  @apply font-body text-label-sm uppercase tracking-widest;
+  @apply font-body text-label-sm uppercase tracking-[0.16em];
+}
+
+@utility text-gradient-ember {
+  background-image: linear-gradient(100deg, var(--color-honey), var(--color-ember) 70%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 @utility heading-section {
-  @apply font-headline text-headline-lg-mobile text-deep-charcoal;
+  @apply font-headline text-headline-md-mobile text-white md:text-headline-md;
 }
 
 @utility heading-card {
-  @apply font-headline text-headline-md-mobile font-bold;
+  @apply font-headline text-headline-md-mobile text-white;
 }
 
 @utility text-price {
-  @apply font-headline text-title-lg font-bold text-deep-charcoal tabular-nums;
+  @apply font-headline text-title-lg font-bold text-ember tabular-nums;
 }
 
-/* Pills & chips */
+/* Pills & buttons ------------------------------------------------------- */
+
 @utility pill {
-  @apply inline-flex w-max items-center gap-1.5 rounded-full border border-line px-3 py-1 font-body text-label-sm;
+  @apply inline-flex w-max items-center gap-1.5 rounded-full px-3 py-1 font-body text-label-sm;
 }
 
-/* Round 36px cream button for header actions (back, favourite) */
+/* Round glass button for floating actions (back, favourite) */
 @utility icon-button {
-  @apply flex size-9 shrink-0 items-center justify-center rounded-full border border-line bg-cream text-deep-charcoal transition-transform duration-200 ease-swift hover:bg-cream/80 active:scale-90;
+  @apply glass flex size-11 shrink-0 items-center justify-center rounded-full text-white transition-transform duration-200 ease-swift active:scale-90;
 }
 
-/* Small uppercase status badge (diet, "Popular", "Signature", ...) */
+/* Small status badge (diet, "Chef's Special", ...); add padding per size */
 @utility badge {
-  @apply inline-flex items-center gap-1 rounded-full px-2 py-0.5 font-body text-label-sm uppercase tracking-wider;
+  @apply inline-flex items-center gap-1 rounded-full font-body text-label-sm uppercase tracking-wider;
 }
 
-/* Square-cornered ingredient tag */
+/* Small rounded tag (ingredients, option labels) */
 @utility tag {
-  @apply rounded bg-cream px-2 py-0.5;
+  @apply rounded-md bg-white/6 px-2 py-0.5;
+}
+
+/* Press feedback for anything tappable */
+@utility pressable {
+  @apply transition-transform duration-200 ease-swift active:scale-[0.98];
 }
 
 /* Horizontal scrollers without a visible scrollbar */

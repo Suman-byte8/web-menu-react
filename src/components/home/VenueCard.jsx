@@ -1,74 +1,82 @@
 import { Link } from 'react-router'
 import { cn } from '../../lib/cn.js'
-import { Dot, Icon, ImageOverlay, Pill } from '../../UI/index.js'
+import { Icon, ImageOverlay, Pill } from '../../UI/index.js'
 
 /** Full class strings so Tailwind can detect them at build time. */
 const ACCENTS = {
-  orange: {
-    border: 'hover:border-vibrant-orange',
-    dot: 'bg-vibrant-orange',
-    icon: 'text-vibrant-orange',
-    cta: 'group-hover:text-vibrant-orange',
-  },
-  olive: {
-    border: 'hover:border-muted-olive',
-    dot: 'bg-muted-olive',
-    icon: 'text-soft-gold',
-    cta: 'group-hover:text-muted-olive',
-  },
-  gold: {
-    border: 'hover:border-soft-gold',
-    dot: 'bg-soft-gold',
-    icon: 'text-cream',
-    cta: 'group-hover:text-vibrant-orange',
-  },
+  ember: { icon: 'text-ember', glow: 'bg-[radial-gradient(80%_60%_at_85%_100%,rgb(255_138_0/0.3),transparent_70%)]' },
+  gold: { icon: 'text-gold', glow: 'bg-[radial-gradient(80%_60%_at_15%_100%,rgb(229_166_75/0.3),transparent_70%)]' },
+  honey: { icon: 'text-honey', glow: 'bg-[radial-gradient(80%_60%_at_85%_100%,rgb(255_179_71/0.26),transparent_70%)]' },
 }
 
-function VenueCard({ href, accent = 'orange', badge, title, description, detail, cta, image, alt }) {
+function Arrow({ className }) {
+  return (
+    <span
+      className={cn(
+        'flex shrink-0 items-center justify-center rounded-full transition-all duration-300 ease-swift group-hover:-rotate-45',
+        className,
+      )}
+    >
+      <Icon name="arrow_forward" className="text-[18px]" />
+    </span>
+  )
+}
+
+/**
+ * Photo card for one menu. `large` makes it the tall lead card; the others
+ * are compact enough to sit two across on a phone.
+ */
+function VenueCard({ href, accent = 'ember', badge, title, description, detail, image, alt, large = false }) {
   const theme = ACCENTS[accent]
 
   return (
     <Link
       to={href}
-      className={cn(
-        'surface-card group relative block overflow-hidden shadow-xs transition-all duration-300 ease-smooth',
-        theme.border,
-      )}
+      className="pressable group block h-full rounded-[28px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember"
     >
-      <ImageOverlay src={image} alt={alt} className="h-44">
+      <ImageOverlay
+        src={image}
+        alt={alt}
+        large={large}
+        scrim="none"
+        className={cn(
+          'rounded-[28px] border border-white/8 shadow-xl shadow-black/50',
+          large ? 'h-72 md:h-full md:min-h-80' : 'h-64',
+        )}
+        imgClassName="transition-transform duration-700 ease-relaxed group-hover:scale-105"
+      >
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-night via-night/45 to-night/5" />
+        <div className={cn('pointer-events-none absolute inset-0', theme.glow)} />
+
         <Pill
-          variant="dark"
+          variant="glass"
           icon={badge.icon}
           iconClassName={theme.icon}
-          className="absolute top-3 left-3 gap-1 px-2.5 uppercase tracking-wider"
+          className="absolute top-3 left-3 uppercase tracking-[0.12em]"
         >
           {badge.label}
         </Pill>
 
-        <div className="absolute right-4 bottom-3 left-4 text-white">
-          <h3 className="heading-card">{title}</h3>
-          <p className="line-clamp-1 font-body text-body-sm text-cream">{description}</p>
+        {large && <Arrow className="glass absolute top-3 right-3 size-10 text-white group-hover:fill-ember" />}
+
+        <div className={cn('absolute inset-x-0 bottom-0', large ? 'p-5' : 'p-3.5')}>
+          <div className="flex items-end justify-between gap-2">
+            <h3 className={cn('font-headline text-white', large ? 'text-headline-lg-mobile' : 'text-title-lg')}>
+              {title}
+            </h3>
+            {!large && <Arrow className="fill-ember size-8" />}
+          </div>
+          <p className={cn('mt-1 font-body text-body-sm text-pretty text-mist', !large && 'line-clamp-3')}>
+            {description}
+          </p>
+          {large && (
+            <span className="mt-3 inline-flex items-center gap-1.5 font-body text-label-md text-honey">
+              <Icon name="schedule" className="text-[15px]" />
+              {detail}
+            </span>
+          )}
         </div>
       </ImageOverlay>
-
-      <div className="flex items-center justify-between border-t border-cream bg-white p-4">
-        <div className="flex items-center gap-2">
-          <Dot className={theme.dot} />
-          <span className="font-body text-body-sm font-medium">{detail}</span>
-        </div>
-        <span
-          className={cn(
-            'inline-flex items-center gap-1 font-body text-label-md transition-colors',
-            theme.cta,
-          )}
-        >
-          <span>{cta}</span>
-          <Icon
-            name="arrow_forward"
-            className="text-body-lg transition-transform duration-200 ease-swift group-hover:translate-x-0.5"
-          />
-        </span>
-      </div>
     </Link>
   )
 }
