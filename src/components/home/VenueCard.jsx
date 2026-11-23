@@ -59,16 +59,19 @@ function VenueCard({ href, accent = 'ember', badge, title, description, detail, 
 
         {large && <Arrow className="glass absolute top-3 right-3 size-10 text-white group-hover:fill-ember" />}
 
-        <div className={cn('absolute inset-x-0 bottom-0', large ? 'p-5' : 'p-3.5')}>
-          <div className="flex items-end justify-between gap-2">
-            <h3 className={cn('font-headline text-white', large ? 'text-headline-lg-mobile' : 'text-title-lg')}>
+        <div
+          className={cn(
+            'glass-panel absolute',
+            large ? 'inset-x-2.5 bottom-2.5 rounded-[22px] p-4' : 'inset-x-2 bottom-2 rounded-[18px] p-3',
+          )}
+        >
+          <div className="flex items-center justify-between gap-2">
+            <h3 className={cn('font-headline text-white', large ? 'text-headline-lg-mobile' : 'text-title-md font-bold')}>
               {title}
             </h3>
-            {!large && <Arrow className="fill-ember size-8" />}
+            {!large && <Arrow className="fill-ember size-7" />}
           </div>
-          <p className={cn('mt-1 font-body text-body-sm text-pretty text-mist', !large && 'line-clamp-3')}>
-            {description}
-          </p>
+          <p className="mt-1 line-clamp-2 font-body text-body-sm text-pretty text-mist">{description}</p>
           {large && (
             <span className="mt-3 inline-flex items-center gap-1.5 font-body text-label-md text-honey">
               <Icon name="schedule" className="text-[15px]" />

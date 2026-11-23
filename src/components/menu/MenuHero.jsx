@@ -33,18 +33,22 @@ function MenuHero({ eyebrow, title, description, image, alt, count, theme = MENU
         </span>
       </div>
 
-      <div className="app-container pt-36 pb-7 md:pt-44">
-        {eyebrow && (
-          <Pill variant="glass" icon={theme.icon} iconClassName="text-ember" className="uppercase tracking-[0.14em]">
-            {eyebrow}
-          </Pill>
-        )}
-        <h1 className="mt-3 font-headline text-display-md-mobile text-balance text-white md:text-display-md">{title}</h1>
-        {description && (
-          <p className="mt-2 max-w-lg font-body text-body-sm leading-relaxed text-pretty text-mist md:text-body-md">
-            {description}
-          </p>
-        )}
+      <div className="app-container pt-32 pb-5 md:pt-40">
+        <div className="glass-panel rounded-[28px] p-5 md:max-w-xl">
+          {eyebrow && (
+            <Pill variant="glass" icon={theme.icon} iconClassName="text-ember" className="uppercase tracking-[0.14em]">
+              {eyebrow}
+            </Pill>
+          )}
+          <h1 className="mt-3 font-headline text-display-md-mobile text-balance text-white md:text-display-md">
+            {title}
+          </h1>
+          {description && (
+            <p className="mt-2 font-body text-body-sm leading-relaxed text-pretty text-mist md:text-body-md">
+              {description}
+            </p>
+          )}
+        </div>
       </div>
     </section>
   )
