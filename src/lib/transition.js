@@ -5,7 +5,7 @@
  *   intro   longer hold on the very first load, so the logo animation can finish
  *   reveal  logo screen fades away
  */
-export const TRANSITION_MS = { cover: 260, hold: 420, intro: 950, reveal: 380 }
+export const TRANSITION_MS = { cover: 180, hold: 220, intro: 950, reveal: 300 }
 
 export function prefersReducedMotion() {
   return typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches

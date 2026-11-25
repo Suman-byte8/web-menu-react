@@ -1,7 +1,9 @@
-import { useDeferredValue, useMemo, useState } from 'react'
+import { useDeferredValue, useEffect, useMemo, useState } from 'react'
+import { useLocation } from 'react-router'
 import { ALL_DIETS } from '../../data/diets.js'
 import { useDocumentTitle } from '../../hooks/useDocumentTitle.js'
 import { countDishes, filterMenuByDiet, searchMenu } from '../../lib/menu.js'
+import { holdScrollOn } from '../../lib/smoothScroll.js'
 import PageLayout from '../../shared/PageLayout.jsx'
 import { EmptyState } from '../../UI/index.js'
 import CategoryTabs from './CategoryTabs.jsx'
@@ -22,6 +24,15 @@ import { MENU_THEMES } from './themes.js'
  */
 function MenuPage({ config, categories, theme = 'warm', notice }) {
   useDocumentTitle(config.pageTitle)
+  const { hash } = useLocation()
+
+  // Opened on a #section link (e.g. from a home page tile): the router jumps
+  // there, then keep the section in place while lazily rendered sections
+  // around it settle to their real heights.
+  useEffect(() => {
+    const target = hash && document.getElementById(decodeURIComponent(hash.slice(1)))
+    if (target) holdScrollOn(target)
+  }, [hash])
 
   const [diet, setDiet] = useState(ALL_DIETS)
   const [query, setQuery] = useState('')

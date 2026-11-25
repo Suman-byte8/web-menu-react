@@ -6,7 +6,7 @@ function HeroSection() {
     <section className="relative">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-12 -left-20 -z-10 size-72 animate-breathe rounded-full bg-ember/20 blur-[90px]"
+        className="pointer-events-none absolute -top-12 -left-20 -z-10 size-72 rounded-full bg-ember/20 blur-[90px]"
       />
       <p className="stagger animate-enter font-body text-body-md text-mist" style={{ '--i': 0 }}>
         {HERO.greeting} <span aria-hidden="true">👋</span>

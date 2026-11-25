@@ -18,7 +18,14 @@ function MenuSection({ category, theme = MENU_THEMES.warm }) {
   const icon = categoryIcon(category)
 
   return (
-    <section id={anchor} aria-labelledby={`${anchor}-title`} className="flex scroll-mt-[8.75rem] flex-col gap-4">
+    <section
+      id={anchor}
+      aria-labelledby={`${anchor}-title`}
+      // Off-screen sections are not rendered until they come near (lazy rendering).
+      // The extra padding (cancelled by negative margins) keeps card shadows
+      // inside the area the browser paints.
+      className="-mx-4 -mb-6 flex scroll-mt-[8.75rem] flex-col gap-4 px-4 pb-6 [contain-intrinsic-size:auto_800px] [content-visibility:auto]"
+    >
       <div className="reveal flex flex-col gap-2.5">
         <div className="flex items-center gap-3">
           <span className="glass-card flex size-11 shrink-0 items-center justify-center rounded-2xl text-ember">

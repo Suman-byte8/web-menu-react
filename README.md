@@ -45,6 +45,20 @@ All menu content lives in `src/data/` — no component changes needed.
 - `shared/PageTransition.jsx` shows the logo full-screen between pages. Timings are in
   `src/lib/transition.js`. Visitors with "reduce motion" turned on skip it.
 
+## Performance
+
+- **Pages load on demand.** Each route is its own chunk (`src/App.jsx`), downloaded
+  the first time it's visited.
+- **Menu sections render lazily.** Off-screen sections use `content-visibility: auto`
+  (`MenuSection.jsx`), so the browser only lays out and paints what's near the screen.
+- **Icons are subset.** Only the Material Symbols listed in `src/lib/icons.js` are
+  downloaded (~8 KB instead of ~1.1 MB). **Add a name there when you use a new icon**,
+  otherwise it shows as text; in development `<Icon>` warns about missing names.
+- **Smooth scrolling** uses [Locomotive Scroll](https://github.com/locomotivemtl/locomotive-scroll)
+  v5 (built on Lenis), loaded lazily by `src/lib/smoothScroll.js`. It's only switched
+  on for mouse / trackpad devices; phones keep their native momentum scrolling, and
+  it's off for visitors who prefer reduced motion.
+
 ## Photos
 
 Menu items have no photos. Dish cards and dish pages show the section's icon

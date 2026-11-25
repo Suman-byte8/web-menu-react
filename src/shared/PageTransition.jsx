@@ -50,7 +50,7 @@ function PageTransition() {
       aria-hidden="true"
       className={cn(
         'ambient fixed inset-0 z-[100] flex items-center justify-center bg-night transition-opacity ease-smooth',
-        visible ? 'opacity-100 duration-[260ms]' : 'pointer-events-none opacity-0 duration-[380ms]',
+        visible ? 'opacity-100 duration-[180ms]' : 'pointer-events-none opacity-0 duration-[300ms]',
       )}
     >
       <Logo key={run} animation="splash" className="h-36" />

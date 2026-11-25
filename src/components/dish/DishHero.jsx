@@ -22,7 +22,7 @@ function DishHero({ dish }) {
         aria-hidden="true"
         className="absolute top-1/2 left-1/2 size-52 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/8"
       />
-      <IconOrb icon={dish.icon} size="xl" />
+      <IconOrb icon={dish.icon} size="xl" animated />
     </div>
   )
 }

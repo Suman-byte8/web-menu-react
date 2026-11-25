@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { cn } from '../../lib/cn.js'
 import { categoryAnchor, categoryIcon } from '../../lib/menu.js'
+import { scrollToElement } from '../../lib/smoothScroll.js'
 import { Icon } from '../../UI/index.js'
 
 const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -72,8 +73,8 @@ function CategoryTabs({ categories }) {
 
     event.preventDefault()
     setActive(id)
-    lockUntil.current = performance.now() + 900 // ignore the sections we fly past
-    target.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'start' })
+    lockUntil.current = performance.now() + 1200 // ignore the sections we fly past
+    scrollToElement(target)
   }
 
   return (

@@ -35,7 +35,7 @@ function PromoCard() {
       </div>
 
       <span className="absolute top-1/2 right-5 -translate-y-1/2 transition-transform duration-700 ease-relaxed group-hover:scale-105">
-        <IconOrb icon={dish?.icon} size="lg" />
+        <IconOrb icon={dish?.icon} size="lg" animated />
       </span>
 
       {dish && (
