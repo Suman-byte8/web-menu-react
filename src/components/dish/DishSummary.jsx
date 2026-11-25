@@ -34,22 +34,14 @@ function DishSummary({ dish, choice, onChoose }) {
 
   return (
     <section className="glass-panel flex flex-col rounded-[30px] p-5 md:p-6">
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex flex-wrap items-center gap-1.5">
-          {dish.diets.map((diet) => (
-            <span
-              key={diet}
-              className={cn('badge border px-2.5 py-1 font-bold text-white', DIET_TAGS[diet])}
-            >
-              <DietMark diet={diet} size="sm" />
-              {DIETS[diet].label}
-            </span>
-          ))}
-          {dish.badge && <LabelBadge tone="accent">{dish.badge}</LabelBadge>}
-        </div>
-        <span className="glass flex size-10 shrink-0 items-center justify-center rounded-xl text-honey" title={dish.category}>
-          <Icon name={dish.icon} className="text-[20px]" />
-        </span>
+      <div className="flex flex-wrap items-center gap-1.5">
+        {dish.diets.map((diet) => (
+          <span key={diet} className={cn('badge border px-2.5 py-1 font-bold text-white', DIET_TAGS[diet])}>
+            <DietMark diet={diet} size="sm" />
+            {DIETS[diet].label}
+          </span>
+        ))}
+        {dish.badge && <LabelBadge tone="accent">{dish.badge}</LabelBadge>}
       </div>
 
       <h1 className="mt-3 font-headline text-display-md-mobile text-balance text-white md:text-display-md">

@@ -1,5 +1,3 @@
-import { photo } from '../lib/photos.js'
-
 export const ROUTES = {
   home: '/',
   restaurant: '/restaurant',
@@ -31,8 +29,6 @@ export const HERO = {
     title: 'Tandoori Murgh',
     titleAccent: 'King of Kebabs',
     dishId: 'tandoori-murgh',
-    image: photo('tandoori-chicken'),
-    alt: 'Tandoori Murgh',
     href: '/dish/tandoori-murgh',
     cta: 'View Dish',
   },

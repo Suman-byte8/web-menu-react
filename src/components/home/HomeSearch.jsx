@@ -5,7 +5,7 @@ import { searchAllMenus } from '../../lib/dishes.js'
 import { dietLabels, formatPriceRange } from '../../lib/menu.js'
 import { EmptyState, Icon } from '../../UI/index.js'
 import DietDots from '../menu/DietDots.jsx'
-import DishThumb from '../menu/DishThumb.jsx'
+import DishIcon from '../menu/DishIcon.jsx'
 import MenuSearch from '../menu/MenuSearch.jsx'
 
 function ResultRow({ result }) {
@@ -15,7 +15,7 @@ function ResultRow({ result }) {
         to={result.href}
         className="group flex items-center gap-3 rounded-2xl p-2 transition-colors hover:bg-white/5 focus-visible:outline-2 focus-visible:outline-ember"
       >
-        <DishThumb image={result.image} alt="" placeholder={result.placeholder} size="xs" />
+        <DishIcon icon={result.icon} />
         <div className="min-w-0 flex-1">
           <p className="truncate font-headline text-title-md font-semibold text-white">
             {result.name}

@@ -2,19 +2,18 @@
  * Shorthand for writing menu items. Every menu file (restaurant, bar, rooms)
  * lists its own items with these; no items are shared between menus.
  *
+ * Menu items have no photos: cards show the section icon instead.
+ *
  * Item shape
- *   variant      'compact' (thumbnail row) | 'featured' (large photo card)
- *                | 'text' (no image, no detail page — used for drinks)
+ *   variant      'compact' (row card) | 'featured' (large highlighted card)
+ *                | 'text' (row card with no detail page — used for drinks)
  *   diet         key of DIETS: 'veg' | 'nonveg' | 'other' (egg dishes)
  *   price        number, in rupees — or `options` for several versions:
  *   options      [{ label, price, diet? }]  e.g. Plain ₹130 / Grilled ₹165,
  *                or Veg ₹160 / Non-Veg ₹180 (option diet overrides the dish's)
  *   description  optional
- *   image        photo('key') for Wikimedia Commons photos (see
- *                scripts/fetch-dish-photos.mjs) or publicImage('file') for
- *                the hotel's own photos in /public/images
- *   highlight    { label } — highlighted chip on compact cards (portion size)
- *   featured:    size 'lg' | 'md' | 'sm', badge { label, tone }, tags []
+ *   highlight    { label } — highlighted chip on the card (portion size)
+ *   featured:    badge { label, tone }, tags []
  *   text:        note (italic footer), tag (footer chip), altPrice
  *
  * Section shape: { id, label (tab), eyebrow?, title, note?, style?, layout?,
@@ -22,7 +21,7 @@
  * (default "Chef Prepared"); `layout: 'list'` renders a drinks price list.
  */
 
-/** Food on a compact card with an 80px thumbnail. */
+/** Food on a row card. */
 export const dish = (id, name, diet, price, more = {}) => ({
   id,
   variant: 'compact',

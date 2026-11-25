@@ -3,7 +3,6 @@ import { RESTAURANT_MENU } from '../data/restaurantMenu.js'
 import { ROOMS_MENU } from '../data/roomsMenu.js'
 import { ROUTES } from '../data/site.js'
 import { categoryAnchor, categoryIcon, itemDiets, priceRange, searchMenu } from './menu.js'
-import { photoCredit } from './photos.js'
 
 /** Every menu. Each lists its own items; a dish page belongs to exactly one menu. */
 const MENUS = [
@@ -46,9 +45,6 @@ export function getDish(id) {
     diets: itemDiets(item),
     price: priceRange(item),
     options: item.options ?? [],
-    image: item.image,
-    imageCredit: item.image ? photoCredit(item.image) : null,
-    placeholder: item.placeholder,
     description: item.description,
     badge: item.badge?.label,
     ingredients: item.tags ?? [],
@@ -99,8 +95,7 @@ export function searchAllMenus(query, limit = 12) {
       category.items.map((item) => ({
         id: item.id,
         name: item.name,
-        image: item.image,
-        placeholder: item.placeholder,
+        icon: categoryIcon(category),
         diets: itemDiets(item),
         price: priceRange(item),
         category: category.title,

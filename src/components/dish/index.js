@@ -1,5 +1,5 @@
 export { default as DishActionBar } from './DishActionBar.jsx'
-export { default as DishHero, PhotoCredit } from './DishHero.jsx'
+export { default as DishHero } from './DishHero.jsx'
 export { default as DishSummary } from './DishSummary.jsx'
 export { default as FavouriteButton } from './FavouriteButton.jsx'
 export { default as RelatedDishes } from './RelatedDishes.jsx'

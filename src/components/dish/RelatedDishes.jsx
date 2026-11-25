@@ -23,8 +23,8 @@ function RelatedDishes({ dishes, menu }) {
             key={dish.id}
             href={dishPath(dish.id)}
             name={dish.name}
-            image={dish.image}
-            placeholder={dish.placeholder}
+            icon={dish.icon}
+            category={dish.category}
             diets={dish.diets}
             price={dish.price}
             className="w-40 shrink-0 snap-start"

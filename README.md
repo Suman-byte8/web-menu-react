@@ -45,17 +45,19 @@ All menu content lives in `src/data/` — no component changes needed.
 - `shared/PageTransition.jsx` shows the logo full-screen between pages. Timings are in
   `src/lib/transition.js`. Visitors with "reduce motion" turned on skip it.
 
-## Dish photos
+## Photos
 
-Photos are free-licensed images from Wikimedia Commons, loaded by URL.
+Menu items have no photos. Dish cards and dish pages show the section's icon
+(picked from the section name by `categoryIcon` in `src/lib/menu.js`) on a
+glowing glass orb instead.
+
+Photos are used only for atmosphere: the Restaurant / Bar / Rooms page heroes
+(`intro.image` in each menu file) and the venue cards on the home page
+(`src/data/venues.js`). They are free-licensed images from Wikimedia Commons,
+loaded by URL with `photo('key')`.
 
 - `scripts/fetch-dish-photos.mjs` maps photo keys to Wikipedia articles.
   Run `node scripts/fetch-dish-photos.mjs` to regenerate `src/data/dishPhotos.js`.
-- Use a photo in the menu data with `image: photo('key')`.
-- The photographer and licence are credited under the photo on each dish page.
-  Keep that credit: most of these licences require it.
-- To use the hotel's own photos instead, put them in `public/images/` and use
-  `image: publicImage('file.jpg')`.
 
 ## Deployment
 
@@ -77,8 +79,8 @@ src/
   pages/        one component per route (Home, Restaurant, Bar, Rooms, Dish)
   components/   home/, menu/ (cards, filters, sections), dish/ (detail page)
   shared/       layout pieces used on every page (headers, bottom nav)
-  UI/           small reusable primitives (Icon, Pill, Dot, InfoNote, ...)
+  UI/           small reusable primitives (Icon, IconOrb, Pill, InfoNote, ...)
   data/         menu content (see above)
-  lib/          helpers (menu filtering, dish lookup, photos)
+  lib/          helpers (menu filtering and search, dish lookup, photos)
 public/         logo, icons, robots.txt, manifest, share image, .htaccess
 ```

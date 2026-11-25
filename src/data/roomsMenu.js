@@ -5,7 +5,6 @@
  * Item and section shapes: see menuBuilders.js.
  */
 
-import { publicImage } from '../lib/assets.js'
 import { prefixIds } from '../lib/menu.js'
 import { photo } from '../lib/photos.js'
 import { choice, dish, drink, drinkChoice, fullHalf, pcs, vegNonVeg, versions, wok } from './menuBuilders.js'
@@ -43,44 +42,32 @@ export const ROOMS_MENU = prefixIds('room', [
     items: [
       dish('farm-fresh-eggs', 'Farm Fresh Eggs', 'other', 90, {
         description: 'Poached, fried, scrambled or boiled.',
-        image: photo('fried-egg'),
       }),
-      dish('omelette', 'Omelette', 'other', 90, { description: 'Plain or masala.', image: photo('omelette') }),
+      dish('omelette', 'Omelette', 'other', 90, { description: 'Plain or masala.' }),
       dish('bread-butter-jam', 'Bread', 'veg', 100, {
         description: 'Plain or toasted, served with butter & jam.',
-        image: photo('toast'),
       }),
-      choice('veg-sandwich', 'Veg Sandwich', 'veg', versions(['Plain', 130], ['Grilled', 165]), {
-        image: photo('veg-sandwich'),
-      }),
-      choice('veg-cheese-sandwich', 'Veg & Cheese Sandwich', 'veg', versions(['Plain', 200], ['Grilled', 220]), {
-        image: photo('cheese-sandwich'),
-      }),
-      choice('chicken-sandwich', 'Chicken Sandwich', 'nonveg', versions(['Plain', 210], ['Grilled', 230]), {
-        image: photo('chicken-sandwich'),
-      }),
+      choice('veg-sandwich', 'Veg Sandwich', 'veg', versions(['Plain', 130], ['Grilled', 165])),
+      choice('veg-cheese-sandwich', 'Veg & Cheese Sandwich', 'veg', versions(['Plain', 200], ['Grilled', 220])),
+      choice('chicken-sandwich', 'Chicken Sandwich', 'nonveg', versions(['Plain', 210], ['Grilled', 230])),
       choice(
         'chicken-cheese-sandwich',
         'Chicken & Cheese Sandwich',
         'nonveg',
         versions(['Plain', 240], ['Grilled', 265]),
-        { image: photo('club-sandwich') },
       ),
       choice('paratha', 'Aloo / Paneer Paratha', 'veg', versions(['Aloo', 150], ['Paneer', 180]), {
         description: 'Served with natural yogurt & pickle.',
-        image: photo('aloo-paratha'),
         highlight: pcs(2),
       }),
       dish('poori-bhaji', 'Poori Bhaji', 'veg', 120, {
         description: 'Deep-fried whole wheat breads, home style, served with bhaji.',
-        image: photo('puri-bhaji'),
         highlight: pcs(4),
       }),
-      dish('idly-vada', 'Idly / Vada', 'veg', 110, { image: photo('idli'), highlight: pcs(3) }),
-      dish('upma', 'Upma', 'veg', 110, { image: photo('upma') }),
+      dish('idly-vada', 'Idly / Vada', 'veg', 110, { highlight: pcs(3) }),
+      dish('upma', 'Upma', 'veg', 110),
       dish('poha', 'Poha', 'veg', 110),
       choice('uttapam', 'Uttapam', 'veg', versions(['Plain', 130], ['Masala', 150]), {
-        image: photo('uttapam'),
         highlight: pcs(2),
       }),
       drink('breakfast-tea', 'Selection of Tea', 55, { description: 'Regular, masala or green.' }),
@@ -98,17 +85,13 @@ export const ROOMS_MENU = prefixIds('room', [
     items: [
       dish('green-salad', 'Green Salad', 'veg', 75, {
         description: 'Garden-fresh green vegetable salad.',
-        image: photo('green-salad'),
       }),
       dish('kachumber-salad', 'Kachumber Salad', 'veg', 80, {
         description: 'Cubes of salad vegetables tossed with Indian herbs & spices.',
-        image: photo('kachumber'),
       }),
-      dish('plain-curd', 'Plain Curd', 'veg', 70, { image: photo('curd') }),
-      choice('raita', 'Raita', 'veg', versions(['Plain', 80], ['Mixed', 90]), { image: photo('raita') }),
-      choice('roasted-papad', 'Roasted Papad', 'veg', versions(['Plain', 60], ['Masala', 90]), {
-        image: photo('papadum'),
-      }),
+      dish('plain-curd', 'Plain Curd', 'veg', 70),
+      choice('raita', 'Raita', 'veg', versions(['Plain', 80], ['Mixed', 90])),
+      choice('roasted-papad', 'Roasted Papad', 'veg', versions(['Plain', 60], ['Masala', 90])),
     ],
   },
   {
@@ -117,9 +100,9 @@ export const ROOMS_MENU = prefixIds('room', [
     eyebrow: "Cocoon's Favourites",
     title: 'Soups',
     items: [
-      choice('hot-sour-soup', 'Hot & Sour Soup', null, vegNonVeg(160, 180), { image: photo('hot-and-sour-soup') }),
-      choice('manchow-soup', 'Manchow Soup', null, vegNonVeg(160, 180), { image: photo('manchow-soup') }),
-      choice('sweet-corn-soup', 'Sweet Corn Soup', null, vegNonVeg(160, 180), { image: photo('corn-soup') }),
+      choice('hot-sour-soup', 'Hot & Sour Soup', null, vegNonVeg(160, 180)),
+      choice('manchow-soup', 'Manchow Soup', null, vegNonVeg(160, 180)),
+      choice('sweet-corn-soup', 'Sweet Corn Soup', null, vegNonVeg(160, 180)),
       choice('lemon-coriander-soup', 'Lemon Coriander Soup', null, vegNonVeg(160, 180)),
       choice('clear-soup', 'Clear Soup', null, vegNonVeg(160, 180)),
     ],
@@ -155,10 +138,8 @@ export const ROOMS_MENU = prefixIds('room', [
     eyebrow: 'Continental Menu',
     title: 'Soup',
     items: [
-      choice('cream-of-mushroom', 'Cream of Mushroom / Chicken', null, vegNonVeg(160, 180, ['Mushroom', 'Chicken']), {
-        image: photo('mushroom-soup'),
-      }),
-      dish('cream-of-tomato', 'Cream of Tomato Soup with Croutons', 'veg', 160, { image: photo('tomato-soup') }),
+      choice('cream-of-mushroom', 'Cream of Mushroom / Chicken', null, vegNonVeg(160, 180, ['Mushroom', 'Chicken'])),
+      dish('cream-of-tomato', 'Cream of Tomato Soup with Croutons', 'veg', 160),
     ],
   },
   {
@@ -166,7 +147,7 @@ export const ROOMS_MENU = prefixIds('room', [
     label: 'Conti Salad',
     eyebrow: 'Continental Menu',
     title: 'Salad',
-    items: [dish('chicken-hawaiian-salad', 'Chicken Hawaiian Salad', 'nonveg', 250, { image: photo('chicken-salad') })],
+    items: [dish('chicken-hawaiian-salad', 'Chicken Hawaiian Salad', 'nonveg', 250)],
   },
   {
     id: 'munching',
@@ -174,9 +155,7 @@ export const ROOMS_MENU = prefixIds('room', [
     eyebrow: 'Continental Menu',
     title: 'Munching',
     items: [
-      choice('tacos', 'Tacos with Chef Special Sauce', null, vegNonVeg(270, 290), {
-        image: photo('taco'),
-      }),
+      choice('tacos', 'Tacos with Chef Special Sauce', null, vegNonVeg(270, 290)),
     ],
   },
   {
@@ -185,8 +164,8 @@ export const ROOMS_MENU = prefixIds('room', [
     eyebrow: 'Continental Menu',
     title: 'Starter',
     items: [
-      dish('baked-veg-au-gratin', 'Baked Veg Au-Gratin', 'veg', 290, { image: photo('gratin') }),
-      dish('cheese-ball', 'Cheese Ball with Chef Special Dip', 'veg', 380, { image: photo('fried-cheese') }),
+      dish('baked-veg-au-gratin', 'Baked Veg Au-Gratin', 'veg', 290),
+      dish('cheese-ball', 'Cheese Ball with Chef Special Dip', 'veg', 380),
       choice('sauteed-exotic', 'Sautéed Exotic Vegetable / Chicken', null, vegNonVeg(270, 310, ['Vegetable', 'Chicken'])),
       choice(
         'shashlik',
@@ -194,7 +173,6 @@ export const ROOMS_MENU = prefixIds('room', [
         null,
         vegNonVeg(370, 370, ['Cottage Cheese', 'Chicken']),
         {
-          image: photo('shashlik'),
         },
       ),
       choice(
@@ -203,7 +181,6 @@ export const ROOMS_MENU = prefixIds('room', [
         null,
         vegNonVeg(370, 370, ['Cottage Cheese', 'Chicken']),
         {
-          image: photo('popcorn-chicken'),
         },
       ),
       dish('chicken-roulade', 'Cheese Chicken Roulade with Cheese White Sauce', 'nonveg', 410),
@@ -218,12 +195,10 @@ export const ROOMS_MENU = prefixIds('room', [
     items: [
       choice('spaghetti-carbonara', 'Spaghetti alla Carbonara', null, vegNonVeg(290, 290), {
         size: 'md',
-        image: publicImage('spaghetti-carbonara.png'),
       }),
       choice('penne-al-funghi', 'Penne al Funghi', null, vegNonVeg(350, 370), { size: 'md' }),
       choice('penne-arrabbiata', 'Penne Arrabbiata', null, vegNonVeg(350, 370), {
         size: 'md',
-        image: photo('arrabbiata'),
       }),
       choice('mixed-sauce-pasta', 'Choice of Mixed Sauce Pasta', null, vegNonVeg(350, 370), { size: 'md' }),
     ],
@@ -241,7 +216,6 @@ export const ROOMS_MENU = prefixIds('room', [
         diet: 'nonveg',
         name: 'Grilled Chicken Steak with Espagnole Sauce',
         price: 450,
-        image: publicImage('grilled-chicken-steak.png'),
       },
       {
         id: 'chicken-stroganoff',
@@ -249,7 +223,6 @@ export const ROOMS_MENU = prefixIds('room', [
         diet: 'nonveg',
         name: 'Chicken Stroganoff with Pilaf Rice',
         price: 450,
-        image: photo('stroganoff'),
       },
       {
         id: 'grilled-fish-steak',
@@ -257,7 +230,6 @@ export const ROOMS_MENU = prefixIds('room', [
         diet: 'nonveg',
         name: 'Grilled Fish Steak with Lemon Butter Sauce',
         price: 520,
-        image: publicImage('grilled-fish-steak.png'),
       },
     ],
   },
@@ -267,7 +239,7 @@ export const ROOMS_MENU = prefixIds('room', [
     eyebrow: 'Continental Menu',
     title: 'Dessert',
     items: [
-      dish('tiramisu', 'McVities & Honey Italian Tiramisu', 'veg', 200, { image: photo('tiramisu') }),
+      dish('tiramisu', 'McVities & Honey Italian Tiramisu', 'veg', 200),
       dish('orange-mango-mousse', 'Orange / Mango Mousse', 'veg', 200),
     ],
   },
@@ -282,7 +254,6 @@ export const ROOMS_MENU = prefixIds('room', [
     items: [
       dish('paneer-achari-tikka', 'Paneer Achari Tikka', 'veg', 310, {
         description: 'Cottage cheese marinated in Indian spices, cooked in tandoor.',
-        image: photo('paneer-tikka'),
       }),
       dish('lasooni-paneer-tikka', 'Lasooni Paneer Tikka', 'veg', 320),
       dish('cheese-chilli-paneer-tikka', 'Cheese Chilli Paneer Tikka', 'veg', 350, {
@@ -303,12 +274,10 @@ export const ROOMS_MENU = prefixIds('room', [
       dish('murgh-tikka', 'Murgh Tikka', 'nonveg', 310, {
         description:
           'Boneless chicken marinated overnight in hung curd with cashewnut paste and spices, cooked in tandoor.',
-        image: photo('chicken-tikka'),
       }),
       dish('murgh-malai-kebab', 'Murgh Reshmi / Malai Kebab', 'nonveg', 330, {
         description:
           "Boneless chicken marinated overnight with yogurt, cheese (malai) or cream (reshmi), cashewnut paste and chef's special spices.",
-        image: photo('malai-kebab'),
       }),
       dish('tangri-kebab', 'Tangri Kebab', 'nonveg', 350, {
         description:
@@ -325,13 +294,11 @@ export const ROOMS_MENU = prefixIds('room', [
         name: 'Tandoori Murgh',
         options: fullHalf(550, 300),
         description: 'The king of kebabs.',
-        image: photo('tandoori-chicken'),
         badge: { label: "Chef's Special", tone: 'accent' },
       },
       dish('mutton-seekh-kebab', 'Mutton Seekh Kebab', 'nonveg', 410, {
         description:
           "A Mughlai delicacy: mildly spiced minced mutton blended with chef's special spices & onion, skewered and cooked till succulent.",
-        image: photo('seekh-kebab'),
       }),
       dish('mutton-boti-kebab', 'Mutton Boti Kebab', 'nonveg', 410, {
         description: 'Marinated in spiced yogurt and Indian spices, cooked in tandoor.',
@@ -364,34 +331,29 @@ export const ROOMS_MENU = prefixIds('room', [
       }),
       dish('veg-dumplings', 'Veg Dumplings', 'veg', 210, {
         description: 'Stuffed with different veggies, wrapped in a thin layer of dough.',
-        image: photo('momo'),
       }),
-      dish('french-fry', 'Basket of French Fry', 'veg', 190, { image: photo('french-fries') }),
+      dish('french-fry', 'Basket of French Fry', 'veg', 190),
       dish('nonveg-dumplings', 'Non-Veg Dumplings', 'nonveg', 270, {
         description: 'Stuffed with chicken and different veggies, wrapped in a thin layer of dough.',
       }),
       dish('chilli-fish', 'Chilli Fish / Pan Fried Chilli Fish Dry', 'nonveg', 370, {
         description: 'Stir-fried fish with onion and capsicum tossed in chilli soya sauce.',
       }),
-      dish('fish-finger', 'Fish Finger', 'nonveg', 350, { image: photo('fish-finger') }),
-      dish('chilli-chicken-dry', 'Chilli Chicken Dry', 'nonveg', 295, { image: photo('chilli-chicken') }),
+      dish('fish-finger', 'Fish Finger', 'nonveg', 350),
+      dish('chilli-chicken-dry', 'Chilli Chicken Dry', 'nonveg', 295),
       dish('chicken-salt-pepper', 'Chicken Salt & Pepper', 'nonveg', 295, { description: 'An all-time favourite.' }),
       dish('crispy-honey-chicken', 'Crispy Fried Honey Chicken', 'nonveg', 310, {
         description: 'Juliennes of chicken, fried crispy, tossed in Chinese sauce and drizzled with honey.',
       }),
-      dish('chicken-lollipop', 'Chicken Lollipop / Drums of Heaven', 'nonveg', 295, {
-        image: photo('chicken-lollipop'),
-      }),
-      dish('korean-chicken-wings', 'Korean Chicken Wings', 'nonveg', 295, { image: photo('korean-fried-chicken') }),
+      dish('chicken-lollipop', 'Chicken Lollipop / Drums of Heaven', 'nonveg', 295),
+      dish('korean-chicken-wings', 'Korean Chicken Wings', 'nonveg', 295),
       dish('kung-pao-chicken', 'Kung Pao Chicken', 'nonveg', 295, {
         description: 'A combination of savoury & sweet with a mild spicy kick of nuts.',
-        image: photo('kung-pao-chicken'),
       }),
-      dish('chicken-65', 'Chicken 65', 'nonveg', 295, { image: photo('chicken-65') }),
+      dish('chicken-65', 'Chicken 65', 'nonveg', 295),
       dish('chilli-prawn-dry', 'Pan Fried Chilli Prawn Dry', 'nonveg', 470),
       dish('golden-fried-prawn', 'Golden Fried Prawn', 'nonveg', 470, {
         description: 'Prawns seasoned and coated in batter, fried crispy.',
-        image: photo('fried-shrimp'),
       }),
       dish('double-cooked-lamb', 'Double Cooked Lamb', 'nonveg', 410),
     ],
@@ -406,20 +368,16 @@ export const ROOMS_MENU = prefixIds('room', [
     items: [
       choice('paneer-butter-masala', 'Paneer Butter Masala', 'veg', fullHalf(320, 190), {
         description: 'Cubes of paneer cooked in rich, creamy cashewnut & tomato gravy.',
-        image: photo('paneer-butter-masala'),
       }),
       choice('kadhai-paneer', 'Kadhai Paneer / Do-Payaza', 'veg', fullHalf(320, 190), {
         description:
           'Paneer fingers with julienned capsicum cooked in onion tomato masala, aromatic with crushed coriander & chilli flakes.',
-        image: photo('kadai-paneer'),
       }),
       choice('shahi-paneer', 'Shahi Paneer', 'veg', fullHalf(330, 200), {
         description: 'Paneer cubes cooked in a buttery almond & cashewnut base.',
-        image: photo('shahi-paneer'),
       }),
       choice('palak-paneer', 'Palak Paneer', 'veg', fullHalf(320, 190), {
         description: 'Cubes of paneer cooked in creamy spinach gravy.',
-        image: photo('palak-paneer'),
       }),
       dish('malai-kofta', 'Malai Kofta / Navaratan Korma', 'veg', 340, {
         description:
@@ -432,15 +390,12 @@ export const ROOMS_MENU = prefixIds('room', [
       choice('veg-jhal-frezi', 'Veg Jhal Frezi / Jaipuri', 'veg', fullHalf(220, 140), {
         description:
           'Baton-shaped vegetables with capsicum & onion tossed in spicy onion tomato masala, with roasted cumin & vinegar.',
-        image: photo('jalfrezi'),
       }),
       dish('aloo-jeera', 'Aloo Jeera', 'veg', 200, {
         description: 'Roasted potatoes cooked with ground and roasted cumin.',
-        image: photo('jeera-aloo'),
       }),
       choice('dum-aloo', 'Dum Aloo Kashmiri / Punjabi', 'veg', fullHalf(240, 150), {
         description: 'Golden fried potatoes simmered in a gravy of yogurt & brown onion.',
-        image: photo('dum-aloo'),
       }),
       choice('dal-tadkewali', 'Dal Tadkewali', 'veg', fullHalf(210, 130), {
         description: 'Yellow dal tempered with cumin, garlic & red chilli, finished with coriander leaf.',
@@ -448,7 +403,6 @@ export const ROOMS_MENU = prefixIds('room', [
       choice('yellow-dal-fry', 'Yellow Dal Fry', 'veg', fullHalf(210, 130)),
       choice('dal-makhani', 'Dal Makhani', 'veg', fullHalf(270, 160), {
         description: 'Slow-cooked black lentils with cream, butter and spices.',
-        image: photo('dal-makhani'),
       }),
     ],
   },
@@ -466,44 +420,38 @@ export const ROOMS_MENU = prefixIds('room', [
       choice('home-style-chicken-curry', 'Home Style Chicken Curry', 'nonveg', fullHalf(300, 180), {
         description: 'Chicken on the bone cooked in a thin onion tomato gravy with potato, Bengali style.',
       }),
-      dish('chicken-chettinad', 'Chicken Chettinad', 'nonveg', 330, { image: photo('chicken-chettinad') }),
+      dish('chicken-chettinad', 'Chicken Chettinad', 'nonveg', 330),
       dish('hyderabadi-chicken-masala', 'Hyderabadi Chicken Masala', 'nonveg', 370, {
         description: "Marinated with yogurt and chef's special spices.",
       }),
       choice('kadhai-chicken', 'Kadhai Chicken', 'nonveg', fullHalf(310, 180), {
         description:
           'Chicken on the bone cooked in spicy onion tomato masala with capsicum, crushed coriander & red chilli.',
-        image: photo('kadai-chicken'),
       }),
       choice('chicken-do-pyaza', 'Chicken Do Pyaza', 'nonveg', fullHalf(310, 180), {
         description:
           'Curry-cut chicken tempered with whole cumin, tossed with onion & peppers and cooked in tangy brown gravy.',
-        image: photo('do-piaza'),
       }),
       dish('chicken-tikka-lababdar', 'Chicken Tikka Lababdar', 'nonveg', 330, {
         description: 'Chicken tikka cooked in creamy butter masala gravy.',
       }),
       choice('chicken-butter-masala', 'Chicken Butter Masala', 'nonveg', fullHalf(340, 190), {
         description: 'Chicken cooked in rich cashewnut, almond & tangy tomato gravy.',
-        image: photo('butter-chicken'),
       }),
       dish('chicken-bharta', 'Chicken Bharta', 'nonveg', 330),
       dish('murgh-tikka-masala', 'Murgh Tikka Masala', 'nonveg', 330, {
         description: 'Chicken tikka cooked in spicy onion tomato masala.',
-        image: photo('chicken-tikka-masala'),
       }),
       choice('home-style-mutton-curry', 'Home Style Mutton Curry', 'nonveg', fullHalf(410, 240), {
         description: 'Mutton pieces cooked in a thin onion tomato gravy with potato, Bengali style.',
-        image: photo('mutton-curry'),
       }),
       dish('mutton-roganjosh', 'Mutton Roganjosh', 'nonveg', 410, {
         description: 'A unique Kashmiri delicacy.',
-        image: photo('rogan-josh'),
       }),
-      choice('mutton-keema-masala', 'Mutton Keema Masala', 'nonveg', fullHalf(440, 270), { image: photo('keema') }),
+      choice('mutton-keema-masala', 'Mutton Keema Masala', 'nonveg', fullHalf(440, 270)),
       choice('mutton-kasha', 'Mutton Kasha / Mutton Bhuna', 'nonveg', fullHalf(410, 240)),
       dish('rahra-mutton', 'Rahra Mutton', 'nonveg', 450),
-      dish('kadai-prawn', 'Kadai Prawn', 'nonveg', 490, { image: photo('prawn-curry') }),
+      dish('kadai-prawn', 'Kadai Prawn', 'nonveg', 490),
       dish('egg-curry', 'Egg Curry / Masala', 'other', 180),
     ],
   },
@@ -514,9 +462,9 @@ export const ROOMS_MENU = prefixIds('room', [
     label: 'Rice',
     title: 'Rice',
     items: [
-      dish('steamed-rice', 'Steamed Rice', 'veg', 140, { image: photo('steamed-rice') }),
-      dish('jeera-rice', 'Jeera Rice', 'veg', 170, { image: photo('jeera-rice') }),
-      dish('pulao', 'Pulao Aap ki Pasand', 'veg', 180, { description: 'Veg or green peas.', image: photo('pilaf') }),
+      dish('steamed-rice', 'Steamed Rice', 'veg', 140),
+      dish('jeera-rice', 'Jeera Rice', 'veg', 170),
+      dish('pulao', 'Pulao Aap ki Pasand', 'veg', 180, { description: 'Veg or green peas.' }),
       dish('kashmiri-pulao', 'Kashmiri Pulao', 'veg', 240),
       {
         id: 'biryani',
@@ -526,7 +474,6 @@ export const ROOMS_MENU = prefixIds('room', [
         name: 'Biryani Aap ki Pasand',
         options: versions(['Chicken', 270], ['Mutton', 350]),
         description: 'Chicken or mutton biryani, accompanied with raita & salad.',
-        image: photo('biryani'),
       },
     ],
   },
@@ -535,13 +482,11 @@ export const ROOMS_MENU = prefixIds('room', [
     label: 'Bread',
     title: 'Bread',
     items: [
-      choice('roti', 'Roti', 'veg', versions(['Plain', 35], ['Butter', 40]), { image: photo('chapati') }),
-      choice('naan', 'Naan', 'veg', versions(['Plain', 60], ['Butter', 65], ['Garlic', 75]), { image: photo('naan') }),
+      choice('roti', 'Roti', 'veg', versions(['Plain', 35], ['Butter', 40])),
+      choice('naan', 'Naan', 'veg', versions(['Plain', 60], ['Butter', 65], ['Garlic', 75])),
       dish('cheese-naan', 'Cheese Naan', 'veg', 190),
-      dish('masala-kulcha', 'Masala Kulcha', 'veg', 85, { image: photo('kulcha') }),
-      choice('lachha-paratha', 'Lachha Paratha', 'veg', versions(['Methi', 65], ['Pudina', 70]), {
-        image: photo('lachha-paratha'),
-      }),
+      dish('masala-kulcha', 'Masala Kulcha', 'veg', 85),
+      choice('lachha-paratha', 'Lachha Paratha', 'veg', versions(['Methi', 65], ['Pudina', 70])),
     ],
   },
   {
@@ -554,16 +499,16 @@ export const ROOMS_MENU = prefixIds('room', [
       dish('sona-moong-dal', 'Sona Moong Dal', 'veg', 200),
       dish('aloo-bhaja', 'Jhur Jhure Aloo Bhaja', 'veg', 130),
       dish('chanar-dalna', 'Chanar Dalna', 'veg', 270),
-      dish('elish', 'Bhapa / Sorse Elish', 'nonveg', 370, { image: photo('shorshe-ilish') }),
+      dish('elish', 'Bhapa / Sorse Elish', 'nonveg', 370),
       dish('pomfret-jhal', 'Pomfret Jhal / Sorse', 'nonveg', 450),
-      dish('katla', 'Gondhoraj Fish / Doi Katla / Katla Kalia', 'nonveg', 270, { image: photo('machher-jhol') }),
+      dish('katla', 'Gondhoraj Fish / Doi Katla / Katla Kalia', 'nonveg', 270),
       choice('chicken-dak-bunglow', 'Chicken Dak Bunglow', 'nonveg', fullHalf(370, 220), {
         description: 'An old-style chicken curry served with egg and potato.',
       }),
       choice('mutton-dak-bunglow', 'Mutton Dak Bunglow', 'nonveg', fullHalf(470, 270), {
         description: 'An old-style mutton curry served with egg and potato.',
       }),
-      dish('chingri-malai-curry', 'Chingri Malai Curry', 'nonveg', 490, { image: photo('chingri-malai-curry') }),
+      dish('chingri-malai-curry', 'Chingri Malai Curry', 'nonveg', 490),
     ],
   },
 
@@ -576,11 +521,11 @@ export const ROOMS_MENU = prefixIds('room', [
     note: 'Veg / Egg / Chicken / Mixed',
     style: 'Wok Tossed',
     items: [
-      choice('hakka-noodles', 'Hakka Noodles', null, wok(200, 230, 270, 300), { image: photo('hakka-noodles') }),
+      choice('hakka-noodles', 'Hakka Noodles', null, wok(200, 230, 270, 300)),
       choice('schezwan-noodles', 'Schezwan Style Noodles', null, wok(200, 230, 270, 300)),
       choice('chilli-garlic-noodles', 'Chilli Garlic Noodles', null, wok(200, 230, 270, 300)),
-      choice('gravy-noodles', 'Gravy Noodles', null, wok(210, 240, 280, 310), { image: photo('noodle-soup') }),
-      choice('fried-rice', 'Selection of Fried Rice', null, wok(210, 240, 280, 310), { image: photo('fried-rice') }),
+      choice('gravy-noodles', 'Gravy Noodles', null, wok(210, 240, 280, 310)),
+      choice('fried-rice', 'Selection of Fried Rice', null, wok(210, 240, 280, 310)),
       choice('chilli-garlic-fried-rice', 'Chilli Garlic Fried Rice', null, wok(220, 240, 280, 330)),
     ],
   },
@@ -592,7 +537,6 @@ export const ROOMS_MENU = prefixIds('room', [
     items: [
       choice('paneer-in-sauce', 'Paneer in Choice of Sauce', 'veg', fullHalf(310, 180), {
         description: 'Hot garlic, chilli, schezwan or manchurian.',
-        image: photo('manchurian'),
       }),
       choice('fish-in-sauce', 'Fish in Choice of Sauce', 'nonveg', fullHalf(370, 230), {
         description: 'Hot garlic, chilli, schezwan or manchurian.',
@@ -610,18 +554,15 @@ export const ROOMS_MENU = prefixIds('room', [
     label: 'Desserts',
     title: 'Dessert',
     items: [
-      dish('gulab-jamun-ice-cream', 'Hot Gulab Jamun with Ice Cream & Chocolate Sauce', 'veg', 170, {
-        image: photo('gulab-jamun'),
-      }),
+      dish('gulab-jamun-ice-cream', 'Hot Gulab Jamun with Ice Cream & Chocolate Sauce', 'veg', 170),
       dish('gulab-jamun', 'Hot Gulab Jamun', 'veg', 80),
-      dish('brownie-ice-cream', 'Chocolate Brownie with Ice Cream', 'veg', 160, { image: photo('brownie') }),
+      dish('brownie-ice-cream', 'Chocolate Brownie with Ice Cream', 'veg', 160),
       dish('ice-cream', 'Choice of Ice Cream', 'veg', 150, {
         description: 'Vanilla, butterscotch, strawberry or chocolate.',
-        image: photo('ice-cream'),
       }),
-      dish('kesar-phirni', 'Kesar Phirni', 'veg', 130, { image: photo('phirni') }),
+      dish('kesar-phirni', 'Kesar Phirni', 'veg', 130),
       dish('darshan-ice-cream', 'Darshan with Ice Cream', 'veg', 220),
-      dish('fried-ice-cream', 'Fried Ice Cream', 'veg', 170, { image: photo('fried-ice-cream') }),
+      dish('fried-ice-cream', 'Fried Ice Cream', 'veg', 170),
     ],
   },
 ])

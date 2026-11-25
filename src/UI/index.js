@@ -1,6 +1,6 @@
 export { default as EmptyState } from './EmptyState.jsx'
 export { default as Icon } from './Icon.jsx'
-export { default as IconText } from './IconText.jsx'
+export { default as IconOrb } from './IconOrb.jsx'
 export { default as ImageOverlay } from './ImageOverlay.jsx'
 export { default as InfoNote } from './InfoNote.jsx'
 export { default as NoteChip } from './NoteChip.jsx'
