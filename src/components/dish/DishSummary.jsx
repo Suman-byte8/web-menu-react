@@ -33,7 +33,7 @@ function DishSummary({ dish, choice, onChoose }) {
   const price = selected ? selected.price : dish.price.min
 
   return (
-    <section className="glass-panel flex flex-col rounded-[30px] p-5 md:p-6">
+    <section className="glass-panel stagger flex animate-enter flex-col rounded-[30px] p-5 md:p-6" style={{ '--i': 1 }}>
       <div className="flex flex-wrap items-center gap-1.5">
         {dish.diets.map((diet) => (
           <span key={diet} className={cn('badge border px-2.5 py-1 font-bold text-white', DIET_TAGS[diet])}>
@@ -55,7 +55,9 @@ function DishSummary({ dish, choice, onChoose }) {
         </span>
         <span className="shrink-0 font-headline text-headline-lg-mobile font-extrabold text-ember tabular-nums" aria-live="polite">
           {!hasVersions && dish.price.min !== dish.price.max && <span className="mr-1 text-label-md text-smoke">from</span>}
-          {formatPrice(price)}
+          <span key={price} className="inline-block animate-pop">
+            {formatPrice(price)}
+          </span>
         </span>
       </div>
 

@@ -17,7 +17,7 @@ function TextItemCard({ dish, linked = false }) {
   const hasFooter = Boolean(highlight || note || tag)
 
   return (
-    <article className="glass-card flex h-full flex-col rounded-[22px] p-4">
+    <article className="glass-card reveal flex h-full flex-col rounded-[22px] p-4">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="flex items-start gap-2">

@@ -17,10 +17,10 @@ function FeaturedDishCard({ dish, icon, linked = false }) {
   const { min, max } = priceRange(dish)
 
   return (
-    <article className="glass-card relative overflow-hidden rounded-[26px] p-5">
+    <article className="glass-card reveal relative overflow-hidden rounded-[26px] p-5">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-16 -right-12 size-56 rounded-full bg-ember/25 blur-3xl"
+        className="pointer-events-none absolute -top-16 -right-12 size-56 animate-breathe rounded-full bg-ember/25 blur-3xl"
       />
 
       <div className="relative flex items-start gap-4">

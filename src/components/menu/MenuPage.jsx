@@ -42,14 +42,14 @@ function MenuPage({ config, categories, theme = 'warm', notice }) {
         <>
           <MenuHero {...config.intro} count={countDishes(visible)} theme={t} />
 
-          <div className="app-container mt-5">
+          <div className="app-container stagger mt-5 animate-enter" style={{ '--i': 2 }}>
             <MenuSearch value={query} onChange={setQuery} placeholder={config.search ?? 'Search dishes'} />
           </div>
 
           {/* Filters float at the top of the screen while the menu scrolls. */}
           <div className="sticky top-0 z-40 mt-3 pt-[max(env(safe-area-inset-top),0.5rem)] pb-1">
             <div className="app-container">
-              <div className="glass-bar flex flex-col gap-1.5 rounded-[26px] p-1.5">
+              <div className="glass-bar stagger flex animate-enter flex-col gap-1.5 rounded-[26px] p-1.5" style={{ '--i': 3 }}>
                 <DietFilter value={diet} onChange={setDiet} />
                 {visible.length > 0 && <CategoryTabs categories={visible} />}
               </div>

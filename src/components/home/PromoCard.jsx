@@ -16,7 +16,8 @@ function PromoCard() {
   return (
     <Link
       to={href}
-      className="glass-card pressable group relative flex min-h-48 overflow-hidden rounded-[26px] p-5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember"
+      style={{ '--i': 8 }}
+      className="glass-card pressable group stagger animate-enter relative flex min-h-48 overflow-hidden rounded-[26px] p-5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember"
     >
       <div className="relative z-10 flex max-w-[60%] flex-col items-start">
         <span className="flex items-center gap-1 font-body text-label-sm text-mist">
@@ -27,7 +28,7 @@ function PromoCard() {
           {title}
           <span className="block text-gradient-ember">{titleAccent}</span>
         </p>
-        <span className="fill-ember mt-auto inline-flex items-center gap-1.5 rounded-xl px-5 py-2.5 font-body text-label-md font-bold transition-transform duration-300 group-hover:translate-x-0.5">
+        <span className="fill-ember shine mt-auto inline-flex items-center gap-1.5 rounded-xl px-5 py-2.5 font-body text-label-md font-bold transition-transform duration-300 group-hover:translate-x-0.5">
           {cta}
           <Icon name="arrow_forward" className="text-[16px]" />
         </span>

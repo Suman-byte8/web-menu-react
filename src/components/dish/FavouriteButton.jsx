@@ -17,7 +17,12 @@ function FavouriteButton({ dishId, dishName }) {
         isFavourite ? 'bg-nonveg shadow-[0_6px_22px_-4px_rgb(240_72_62/0.8)]' : 'glass',
       )}
     >
-      <Icon name="favorite" filled className={cn('text-[21px] transition-transform', isFavourite ? 'scale-110 text-white' : 'text-white/90')} />
+      <Icon
+        key={String(isFavourite)}
+        name="favorite"
+        filled
+        className={cn('text-[21px]', isFavourite ? 'animate-pop text-white' : 'text-white/90')}
+      />
     </button>
   )
 }

@@ -11,7 +11,7 @@ function ChefPicks() {
   if (!PICKS.length) return null
 
   return (
-    <section className="flex flex-col gap-3">
+    <section className="reveal flex flex-col gap-3">
       <SectionHeader
         title="Chef's Picks"
         aside={

@@ -32,7 +32,7 @@ function VenueCard({ href, accent = 'ember', badge, title, description, detail, 
   return (
     <Link
       to={href}
-      className="pressable group block h-full rounded-[28px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember"
+      className="pressable group reveal block h-full rounded-[28px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember"
     >
       <ImageOverlay
         src={image}

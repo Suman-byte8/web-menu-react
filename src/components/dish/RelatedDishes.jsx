@@ -8,7 +8,7 @@ function RelatedDishes({ dishes, menu }) {
   if (!dishes.length) return null
 
   return (
-    <section className="flex flex-col gap-3">
+    <section className="reveal flex flex-col gap-3">
       <SectionHeader
         title="You May Also Like"
         aside={

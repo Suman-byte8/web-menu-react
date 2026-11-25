@@ -27,7 +27,7 @@ function ColumnPrice({ item, column }) {
  */
 function PriceList({ items, columns }) {
   return (
-    <div className="glass-card rounded-[24px] px-4 py-1">
+    <div className="glass-card reveal rounded-[24px] px-4 py-1">
       {columns && (
         <div aria-hidden="true" className="flex items-center justify-end gap-2 border-b border-white/8 py-3">
           <span className="mr-auto flex size-8 items-center justify-center rounded-full bg-ember/12 text-ember">

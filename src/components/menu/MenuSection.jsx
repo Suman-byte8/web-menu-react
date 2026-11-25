@@ -19,7 +19,7 @@ function MenuSection({ category, theme = MENU_THEMES.warm }) {
 
   return (
     <section id={anchor} aria-labelledby={`${anchor}-title`} className="flex scroll-mt-[8.75rem] flex-col gap-4">
-      <div className="flex flex-col gap-2.5">
+      <div className="reveal flex flex-col gap-2.5">
         <div className="flex items-center gap-3">
           <span className="glass-card flex size-11 shrink-0 items-center justify-center rounded-2xl text-ember">
             <Icon name={icon} className="text-[22px]" />

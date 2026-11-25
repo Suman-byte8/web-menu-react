@@ -34,7 +34,7 @@ function MenuHero({ eyebrow, title, description, image, alt, count, theme = MENU
       </div>
 
       <div className="app-container pt-32 pb-5 md:pt-40">
-        <div className="glass-panel rounded-[28px] p-5 md:max-w-xl">
+        <div className="glass-panel stagger animate-enter rounded-[28px] p-5 md:max-w-xl" style={{ '--i': 1 }}>
           {eyebrow && (
             <Pill variant="glass" icon={theme.icon} iconClassName="text-ember" className="uppercase tracking-[0.14em]">
               {eyebrow}

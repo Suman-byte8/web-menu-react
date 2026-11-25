@@ -32,7 +32,9 @@ function HomePage() {
     <PageLayout mainClassName="gap-7 pt-3" header={<Header trailing={<LocationTag />} />}>
       <div className="flex flex-col gap-5">
         <HeroSection />
-        <HomeSearch query={query} onQueryChange={setQuery} />
+        <div className="stagger animate-enter" style={{ '--i': 3 }}>
+          <HomeSearch query={query} onQueryChange={setQuery} />
+        </div>
       </div>
 
       {/* While searching, the results replace the rest of the page. */}
